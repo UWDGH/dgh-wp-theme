@@ -1,4 +1,4 @@
-# UW WordPress Theme - Child Theme
+# UW Global Health Theme - Child Theme
 
 A child theme for use with the [UW WordPress Theme](https://github.com/uweb/uw_wp_theme).
 
