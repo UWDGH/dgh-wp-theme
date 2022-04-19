@@ -115,6 +115,11 @@ footer.site-footer ul.footer-links li a:hover {
   text-decoration: underline;
 }
 
+footer.site-footer ul.footer-social {
+  padding: 0;
+  margin-left: 1em;
+}
+
 footer.site-footer ul.footer-social li a.smugmug {
   background: url("assets/img/smugmug.svg");
   background-repeat: no-repeat;
