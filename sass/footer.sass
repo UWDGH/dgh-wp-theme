@@ -1,0 +1,55 @@
+/* footer
+@mixin footer-wordmark-declarations
+  background: url('assets/img/UW-DGH-logo-reversed-centered.png') no-repeat 0 0 transparent
+  height: 100px
+  background-size: 335px
+@mixin footer-wordmark-declarations-breakpoint-gte-400
+  @media (min-width: 400px)
+    width: 395px
+    background-size: 395px
+@mixin footer-wordmark-ruleset
+  a
+    &.footer-wordmark
+      @include footer-wordmark-declarations
+      @include footer-wordmark-declarations-breakpoint-gte-400
+      &:hover
+        @include footer-wordmark-declarations
+        @include footer-wordmark-declarations-breakpoint-gte-400
+
+@mixin footer-links-ruleset
+  ul
+    &.footer-links
+      li
+        a
+          text-decoration: none
+          &:hover
+            text-decoration: underline
+
+@mixin smugmug-declarations
+  background-repeat: no-repeat
+  background-size: 25.625px
+  padding-top: 0.625px
+  padding-bottom: 4px
+  background-position: initial
+@mixin smugmug-selector
+  &.smugmug
+    background: url('assets/img/smugmug.svg')
+    @include smugmug-declarations
+  &:hover,
+  &:focus
+    &.smugmug
+      background: url('assets/img/smugmug-brand.svg')
+      @include smugmug-declarations
+
+@mixin footer-social-ruleset
+  ul
+    &.footer-social
+      li
+        a
+          @include smugmug-selector
+
+footer
+  &.site-footer
+    @include footer-wordmark-ruleset
+    @include footer-links-ruleset
+    @include footer-social-ruleset

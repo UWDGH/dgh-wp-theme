@@ -1,0 +1,66 @@
+/* header
+@mixin uw-wordmark-declarations-breakpoint-lte-320
+  @media (max-width: 320px)
+    background: url('assets/img/DeptGlobalHealth_DeptSigs-Stack-White_wp-theme.png') no-repeat 0 0 transparent
+    background-size: contain
+    height: auto
+    display: block
+@mixin uw-wordmark-declarations-breakpoint-320_600
+  @media (min-width: 321px) and (max-width: 600px)
+    background: url('assets/img/DeptGlobalHealth_DeptSigs-Stack-White_wp-theme.png') no-repeat 0 0 transparent
+    background-size: contain
+    height: 45px
+    top: 1px
+    left: -30px
+    transform: scale(0.8)
+@mixin uw-wordmark-declarations-breakpoint-600_768
+  @media (min-width: 600px) and (max-width: 768px)
+    background: url('assets/img/DeptGlobalHealth_DeptSigs-Left-White_wp-theme.png') no-repeat 0 0 transparent
+    background-size: contain
+    width: 360px
+    height: 45px
+    top: 5px
+    left: 5px
+    transform: none
+@mixin uw-wordmark-declarations-breakpoint-768_991
+  @media (min-width: 768px) and (max-width: 991px)
+    background: url('assets/img/DeptGlobalHealth_DeptSigs-UWLeft-White_wp-theme.png') no-repeat 0 0 transparent
+    background-size: contain
+    width: 400px
+    height: 90px
+    top: 11px
+    left: 15px
+    transform: none
+@mixin uw-wordmark-declarations-breakpoint-992_1439
+  @media (min-width: 992px) and (max-width: 1439px)
+    background: url('assets/img/DeptGlobalHealth_DeptSigs-UWStack-White_wp-theme.png') no-repeat 0 0 transparent
+    background-size: contain
+    width: 320px
+    height: 75px
+    top: 2px
+    left: 15px
+    transform: none
+@mixin uw-wordmark-declarations-breakpoint-gte-1440
+  @media (min-width: 1440px)
+    background: url('assets/img/DeptGlobalHealth_DeptSigs-UWLeft-White_wp-theme.png') no-repeat 0 0 transparent
+    background-size: contain
+    width: 560px
+    height: 90px
+    top: 10px
+    left: 15px
+    transform: none
+
+@mixin uw-wordmark-selector
+  .uw-wordmark
+    @include uw-wordmark-declarations-breakpoint-lte-320
+    @include uw-wordmark-declarations-breakpoint-320_600
+    @include uw-wordmark-declarations-breakpoint-600_768
+    @include uw-wordmark-declarations-breakpoint-768_991
+    @include uw-wordmark-declarations-breakpoint-992_1439
+    @include uw-wordmark-declarations-breakpoint-gte-1440
+
+header
+  &.site-header
+    nav.navbar
+      .site-branding
+        @include uw-wordmark-selector
