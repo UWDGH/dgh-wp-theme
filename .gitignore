@@ -1,0 +1,10 @@
+# it is not recommended saving translation files in the theme directory
+# preferred location for .po an .mo translation files is: wp-content/languages/themes/<theme-slug>-<xx_XX>[.po|.mo]
+*.po
+*.mo
+
+# (manually created) bak files
+*.bak
+
+# composer
+composer.phar
