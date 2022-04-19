@@ -31,12 +31,13 @@
 
 			<nav aria-label="footer navigation global health">
 				<ul class="footer-links">
-					<li><a href="https://globalhealth.washington.edu/contact">Contact Global Health</a></li>
+					<li><a href="https://globalhealth.washington.edu/contact">Contact</a></li>
+					<li><a href="https://globalhealth.washington.edu/support-us">Donate</a></li>
 					<li><a href="https://globalhealth.washington.edu/about-us/jobs">Jobs</a></li>
 					<li><a href="https://globalhealth.washington.edu/events">Events</a></li>
 					<li><a href="https://globalhealth.washington.edu/news">News</a></li>
 					<li><a href="https://globalhealth.washington.edu/intranet">Intranet</a></li>
-					<li><a href="https://globalhealth.washington.edu/support-us">Donate</a></li>
+					<li><?php UW_GlobalHealth::login_link(); ?></li>
 				</ul>
 			</nav>
 
@@ -52,12 +53,6 @@
 					<li><a href="https://www.washington.edu/online/terms/">Terms</a></li>
 				</ul>
 			</nav>
-
-      <nav aria-label="footer navigation login">
-          <ul class="footer-links">
-              <li><?php //UWDGH::login_link(); ?></li>
-          </ul>
-      </nav>
 
 			<div class="site-info">
 				<p>&copy; <?php echo date( 'Y' ); ?> University of Washington  |  Seattle, WA</p>
