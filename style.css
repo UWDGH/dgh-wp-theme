@@ -14,7 +14,7 @@
   Text Domain:      uw_globalhealth */
 /* header */
 @media (max-width: 320px) {
-  header.site-header nav.navbar .site-branding .uw-wordmark {
+  header.site-header div.navbar .site-branding .uw-wordmark {
     background: url("assets/img/DeptGlobalHealth_DeptSigs-Stack-White_wp-theme.png") no-repeat 0 0 transparent;
     background-size: contain;
     height: auto;
@@ -23,7 +23,7 @@
 }
 
 @media (min-width: 321px) and (max-width: 600px) {
-  header.site-header nav.navbar .site-branding .uw-wordmark {
+  header.site-header div.navbar .site-branding .uw-wordmark {
     background: url("assets/img/DeptGlobalHealth_DeptSigs-Stack-White_wp-theme.png") no-repeat 0 0 transparent;
     background-size: contain;
     height: 45px;
@@ -34,7 +34,7 @@
 }
 
 @media (min-width: 600px) and (max-width: 768px) {
-  header.site-header nav.navbar .site-branding .uw-wordmark {
+  header.site-header div.navbar .site-branding .uw-wordmark {
     background: url("assets/img/DeptGlobalHealth_DeptSigs-Left-White_wp-theme.png") no-repeat 0 0 transparent;
     background-size: contain;
     width: 360px;
@@ -46,7 +46,7 @@
 }
 
 @media (min-width: 768px) and (max-width: 991px) {
-  header.site-header nav.navbar .site-branding .uw-wordmark {
+  header.site-header div.navbar .site-branding .uw-wordmark {
     background: url("assets/img/DeptGlobalHealth_DeptSigs-UWLeft-White_wp-theme.png") no-repeat 0 0 transparent;
     background-size: contain;
     width: 400px;
@@ -58,7 +58,7 @@
 }
 
 @media (min-width: 992px) and (max-width: 1439px) {
-  header.site-header nav.navbar .site-branding .uw-wordmark {
+  header.site-header div.navbar .site-branding .uw-wordmark {
     background: url("assets/img/DeptGlobalHealth_DeptSigs-UWStack-White_wp-theme.png") no-repeat 0 0 transparent;
     background-size: contain;
     width: 320px;
@@ -70,7 +70,7 @@
 }
 
 @media (min-width: 1440px) {
-  header.site-header nav.navbar .site-branding .uw-wordmark {
+  header.site-header div.navbar .site-branding .uw-wordmark {
     background: url("assets/img/DeptGlobalHealth_DeptSigs-UWLeft-White_wp-theme.png") no-repeat 0 0 transparent;
     background-size: contain;
     width: 560px;
