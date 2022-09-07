@@ -80,7 +80,7 @@
 			<div class="navbar navbar-expand-lg">
 				<div class="navbar-brand site-branding">
 					<a href="https://uw.edu" title="University of Washington Home" class="uw-patch">University of Washington</a>
-					<a href="https://globalhealth.washington.edu" title="University of Washington - Department of Global Health Home" class="uw-wordmark" tabindex="-1" aria-hidden="true">University of Washington - Department of Global Health</a>
+					<a href="<?php echo home_url('/'); ?>" title="<?php echo get_bloginfo('name'); ?> Home" class="uw-wordmark" tabindex="-1" aria-hidden="true"><?php echo get_bloginfo('name'); ?></a>
 				</div><!-- .site-branding -->
 
 				<div id="site-navigation" class="main-navigation" aria-label="<?php esc_attr_e( 'Main menu', 'uw_wp_theme' ); ?>">
