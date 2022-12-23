@@ -12,45 +12,27 @@
 ?>
 
 		<footer id="colophon" class="site-footer">
-			<a href="https://globalhealth.washington.edu" class="footer-wordmark" title="University of Washington - Department of Global Health">University of Washington - Department of Global Health</a>
+			<a href="<?php echo home_url('/'); ?>" class="footer-wordmark" title="<?php echo get_bloginfo('name'); ?> Home"><?php echo get_bloginfo('name'); ?></a>
 
-			<a hidden class="hide" href="https://www.washington.edu/boundless/"><h3 class="be-boundless">Be boundless</h3></a>
+			<a hidden class="hide" aria-hidden="true" href="https://www.washington.edu/boundless/"><h3 class="be-boundless">Be boundless</h3></a>
 
-			<h4>Connect with us:</h4>
-			<nav aria-label="social networking">
+			<div class="h4" id="social_preface">Connect with us:</div>
+			<nav aria-labelledby="social_preface">
 				<ul class="footer-social">
 					<li><a class="facebook" href="https://www.facebook.com/UWDGH">Facebook</a></li>
-					<li><a class="twitter" href="https://twitter.com/uwdgh">Twitter</a></li>
+					<li hidden class="hide" aria-hidden="true"><a class="twitter" href="https://twitter.com/uwdgh">Twitter</a></li>
 					<li><a class="instagram" href="https://www.instagram.com/globalhealthuw/">Instagram</a></li>
 					<li><a class="youtube" href="https://www.youtube.com/channel/UC7hLYa-wDea1W_-V1C8Yz0Q">YouTube</a></li>
 					<li><a class="linkedin" href="https://www.linkedin.com/company/globalhealthuw/">LinkedIn</a></li>
-					<li hidden class="hide"><a class="pinterest" href="https://www.pinterest.com/uofwa/">Pinterest</a></li>
+					<li hidden class="hide" aria-hidden="true"><a class="pinterest" href="https://www.pinterest.com/uofwa/">Pinterest</a></li>
 					<li><a class="smugmug" href="https://uw-globalhealth.smugmug.com/">SmugMug</a></li>
 				</ul>
 			</nav>
 
-			<nav aria-label="footer navigation global health">
-				<ul class="footer-links">
-					<li><a href="https://globalhealth.washington.edu/contact">Contact</a></li>
-					<li><a href="https://globalhealth.washington.edu/support-us">Donate</a></li>
-					<li><a href="https://globalhealth.washington.edu/about-us/jobs">Jobs</a></li>
-					<li><a href="https://globalhealth.washington.edu/events">Events</a></li>
-					<li><a href="https://globalhealth.washington.edu/news">News</a></li>
-					<li><a href="https://globalhealth.washington.edu/intranet">Intranet</a></li>
+			<nav aria-label="footer navigation">
+				<?php uw_wp_theme_footer_menu(); ?>
+				<ul id="footer-login" class="footer-links small">
 					<li><?php UW_GlobalHealth::login_link(); ?></li>
-				</ul>
-			</nav>
-
-			<nav aria-label="footer navigation uw">
-				<ul class="footer-links">
-					<li><a href="https://www.uw.edu/accessibility">Accessibility</a></li>
-					<li hidden class="hide"><a href="https://uw.edu/contact">Contact Us</a></li>
-					<li hidden class="hide"><a href="https://www.washington.edu/jobs">Jobs</a></li>
-					<li><a href="https://www.washington.edu/safety">Campus Safety</a></li>
-					<li><a href="https://my.uw.edu/">My UW</a></li>
-					<li hidden class="hide"><a href="https://www.washington.edu/rules/wac">Rules Docket</a></li>
-					<li><a href="https://www.washington.edu/online/privacy/">Privacy</a></li>
-					<li><a href="https://www.washington.edu/online/terms/">Terms</a></li>
 				</ul>
 			</nav>
 

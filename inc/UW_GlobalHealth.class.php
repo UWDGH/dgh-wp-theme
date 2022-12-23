@@ -16,7 +16,7 @@ if ( !class_exists( 'UW_GlobalHealth' ) ) {
       add_action( 'wp_enqueue_scripts', array( __CLASS__, 'uw_globalhealth_enqueue_styles' ), 11 );
 
       // add menu item
-      //add_action('admin_menu', array( __CLASS__, 'uw_globalhealth_admin_menu_item' ));
+      add_action('admin_menu', array( __CLASS__, 'uw_globalhealth_admin_menu_item' ));
 
       // create the dgh audience menu
       self::uw_globalhealth_audience_menu();

@@ -15,6 +15,7 @@
 <head>
 	<meta charset="<?php bloginfo( 'charset' ); ?>">
 	<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+	<link rel="shortcut icon" href="<?php echo esc_url( get_template_directory_uri() ); ?>/favicon.ico">
 	<link rel="profile" href="http://gmpg.org/xfn/11">
 
 	<script>document.documentElement.classList.remove("no-js");</script>
@@ -71,11 +72,13 @@
 	</div>
 </div>
 
+
 <div id="page" class="site">
 <?php if ( ! get_option( 'quicklinks-hide' ) ) {
 	get_template_part( 'template-parts/menu', 'quicklinks' );
  } ?>
 	<div id="page-inner">
+
 		<header id="masthead" class="site-header">
 			<div class="navbar navbar-expand-lg">
 				<div class="navbar-brand site-branding">
@@ -104,6 +107,12 @@
 			</div><!-- .navbar.navbar-expand-lg -->
 		</header><!-- #masthead -->
 
+		<?php if ( is_active_sidebar( 'uw-widget-area' ) ) : ?>
+			<?php  dynamic_sidebar( 'uw-widget-area' ); ?>
+		<?php endif; ?>
+
+
+
 	<?php
 	$nav_option = get_option( 'nav_menu_options' );
 
@@ -119,5 +128,7 @@
 		// load the classic but updated 2014 menu.
 		uw_wp_theme_white_bar_menu();
 	}
-
 	?>
+<?php echo add_sitewide_banner(); ?>
+
+
