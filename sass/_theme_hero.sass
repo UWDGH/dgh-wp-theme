@@ -1,3 +1,8 @@
+@mixin hashtag-position-fix
+	#hashtag
+		@media (max-width: 767px)
+			position: relative
+
 /* hero default
 .uw-hero-image
 	.uw-site-title
@@ -11,10 +16,12 @@
 				text-transform: none
 			@media (min-width: 768px)
 				font-size: 60px
+		@include hashtag-position-fix
 /* small hero title
 .hero-height2
 	h1
 		text-transform: none
+	@include hashtag-position-fix
 /* jumbo hero title
 .uw-hero-image
 	&.hero-heightjumbo

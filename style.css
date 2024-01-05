@@ -27,10 +27,21 @@
     font-size: 60px;
   }
 }
+@media (max-width: 767px) {
+  .uw-hero-image.hero-height #hashtag,
+  .no-uw-hero-image.hero-height #hashtag {
+    position: relative;
+  }
+}
 
 /* small hero title */
 .hero-height2 h1 {
   text-transform: none;
+}
+@media (max-width: 767px) {
+  .hero-height2 #hashtag {
+    position: relative;
+  }
 }
 
 /* jumbo hero title */
