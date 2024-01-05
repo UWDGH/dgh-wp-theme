@@ -1,5 +1,15 @@
 # Changelog
 
+
+## 3.0.1.5 / 2024‑01‑04
+
+- Text Domain update
+- Tested with uw_wp_theme version 3.0
+- Tested with WordPress 6.4
+- Tested with PHP 8.2
+- Code refactoring using WordPress hooks
+
+
 ## 2022-12-23 - 2.1.1.4
 
 - template updates for the uw_wp_theme 2.x version
