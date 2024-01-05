@@ -1,0 +1,56 @@
+/* header
+@mixin uw-patch
+	.uw-patch
+		@media (max-width: 320px)
+			display: none
+@mixin uw-wordmark-declarations
+	@media (max-width: 576px)
+		background: url('assets/img/DeptGlobalHealth_DeptSigs-Stack-White_wp-theme.png') no-repeat 0 0 transparent
+		background-size: contain
+		width: 150px
+		height: 45px
+		top: 5px
+		left: 0
+		transform: none
+		display: block
+@mixin uw-wordmark-declarations-breakpoint-576
+	@media (min-width: 576px) and (max-width: 768px)
+		background: url('assets/img/DeptGlobalHealth_DeptSigs-Left-White_wp-theme.png') no-repeat 0 0 transparent
+		background-size: contain
+		width: 360px
+		height: 45px
+		top: 5px
+		left: 5px
+		transform: none
+@mixin uw-wordmark-declarations-breakpoint-768
+	@media (min-width: 768px) and (max-width: 1400px)
+		background: url('assets/img/DeptGlobalHealth_DeptSigs-UWStack-White_wp-theme.png') no-repeat 0 0 transparent
+		background-size: contain
+		width: 320px
+		height: 75px
+		top: 2px
+		left: 15px
+		transform: none
+@mixin uw-wordmark-declarations-breakpoint-1400
+	@media (min-width: 1400px)
+		background: url('assets/img/DeptGlobalHealth_DeptSigs-UWLeft-White_wp-theme.png') no-repeat 0 0 transparent
+		background-size: contain
+		width: 560px
+		height: 90px
+		top: 10px
+		left: 15px
+		transform: none
+
+@mixin uw-wordmark-selector
+	.uw-wordmark
+		@include uw-wordmark-declarations
+		@include uw-wordmark-declarations-breakpoint-576
+		@include uw-wordmark-declarations-breakpoint-768
+		@include uw-wordmark-declarations-breakpoint-1400
+
+header
+	&.site-header
+		div.navbar
+			.site-branding
+				@include uw-patch
+				@include uw-wordmark-selector

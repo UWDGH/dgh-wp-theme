@@ -32,7 +32,7 @@
 			<nav aria-label="footer navigation">
 				<?php uw_wp_theme_footer_menu(); ?>
 				<ul id="footer-login" class="footer-links small">
-					<li><?php UW_GlobalHealth::login_link(); ?></li>
+					<li><?php do_action( 'uw_wp_child_theme_login_link' ); ?></li>
 				</ul>
 			</nav>
 
