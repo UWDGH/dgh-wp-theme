@@ -102,6 +102,10 @@
 }
 
 /* footer */
+footer.site-footer {
+  background: url("assets/img/footer.png") no-repeat center bottom;
+  background-size: cover;
+}
 footer.site-footer a.footer-wordmark {
   background: url("assets/img/UW-DGH-logo-reversed-centered.png") no-repeat 0 0 transparent;
   height: 100px;

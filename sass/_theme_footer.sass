@@ -1,49 +1,53 @@
 /* footer
+@mixin footer-background
+	background: url('assets/img/footer.png' ) no-repeat center bottom
+	background-size: cover
 @mixin footer-wordmark-declarations
-  background: url('assets/img/UW-DGH-logo-reversed-centered.png') no-repeat 0 0 transparent
-  height: 100px
-  background-size: 335px
+	background: url('assets/img/UW-DGH-logo-reversed-centered.png') no-repeat 0 0 transparent
+	height: 100px
+	background-size: 335px
 @mixin footer-wordmark-declarations-breakpoint-gte-400
-  @media (min-width: 400px)
-    width: 395px
-    background-size: 395px
+	@media (min-width: 400px)
+		width: 395px
+		background-size: 395px
 @mixin footer-wordmark-ruleset
-  a
-    &.footer-wordmark
-      @include footer-wordmark-declarations
-      @include footer-wordmark-declarations-breakpoint-gte-400
-      &:hover
-        @include footer-wordmark-declarations
-        @include footer-wordmark-declarations-breakpoint-gte-400
+	a
+		&.footer-wordmark
+			@include footer-wordmark-declarations
+			@include footer-wordmark-declarations-breakpoint-gte-400
+			&:hover
+				@include footer-wordmark-declarations
+				@include footer-wordmark-declarations-breakpoint-gte-400
 
 @mixin footer-links-ruleset
-  ul
-    &.footer-links
-      li
-        a
-          text-decoration: none
-          &:hover
-            text-decoration: underline
+	ul
+		&.footer-links
+			li
+				a
+					text-decoration: none
+					&:hover
+						text-decoration: underline
 
 @mixin smugmug-selector
-  &.smugmug
-    background: url('assets/svg/smugmug-uw-white.svg') no-repeat 0 11.5px transparent
-  &:hover,
-  &:focus
-    &.smugmug
-      background: url('assets/svg/smugmug-brand.svg') no-repeat 0 11.5px transparent
+	&.smugmug
+		background: url('assets/svg/smugmug-uw-white.svg') no-repeat 0 11.5px transparent
+	&:hover,
+	&:focus
+		&.smugmug
+			background: url('assets/svg/smugmug-brand.svg') no-repeat 0 11.5px transparent
 
 @mixin footer-social-ruleset
-  ul
-    &.footer-social
-      padding: 0
-      margin-left: 1em
-      li
-        a
-          @include smugmug-selector
+	ul
+		&.footer-social
+			padding: 0
+			margin-left: 1em
+			li
+				a
+					@include smugmug-selector
 
 footer
-  &.site-footer
-    @include footer-wordmark-ruleset
-    @include footer-links-ruleset
-    @include footer-social-ruleset
+	&.site-footer
+		@include footer-background
+		@include footer-wordmark-ruleset
+		@include footer-links-ruleset
+		@include footer-social-ruleset
