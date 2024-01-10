@@ -1,6 +1,12 @@
 # Changelog
 
 
+## 3.0.1.6 / 2024‑01‑10
+
+- New footer background image
+- style update: hashtag position fix on small screens
+
+
 ## 3.0.1.5 / 2024‑01‑04
 
 - Text Domain update
