@@ -15,6 +15,31 @@
 .uw-hero-image .uw-site-title {
   text-transform: none;
 }
+.uw-hero-image.hero-heightjumbo #banner {
+  background: #85754d;
+  color: #ffffff;
+  display: inline-block;
+}
+@media (min-width: 992px) {
+  .uw-hero-image.hero-heightjumbo #banner {
+    margin-left: -1rem;
+  }
+}
+.uw-hero-image.hero-heightjumbo .jumbo {
+  background: rgba(75, 46, 131, 0.9);
+}
+.uw-hero-image.hero-heightjumbo .jumbo h1,
+.uw-hero-image.hero-heightjumbo .jumbo .jumbo-subhead {
+  background: none;
+}
+.uw-hero-image.hero-heightjumbo .btn {
+  margin-top: 20px;
+}
+@media (min-width: 992px) {
+  .uw-hero-image.hero-heightjumbo .btn {
+    margin-left: -1rem;
+  }
+}
 
 /* large hero title */
 .uw-hero-image.hero-height h1.uw-site-title,
