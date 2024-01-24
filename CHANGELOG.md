@@ -1,6 +1,12 @@
 # Changelog
 
 
+## 3.0.1.7 / 2024‑01‑23
+
+- Added [WP Dependency Installer](https://github.com/afragen/wp-dependency-installer)
+- Customized Jumbotron Hero template
+
+
 ## 3.0.1.6 / 2024‑01‑10
 
 - New footer background image
