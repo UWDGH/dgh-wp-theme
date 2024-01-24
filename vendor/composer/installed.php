@@ -1,0 +1,41 @@
+<?php return array(
+    'root' => array(
+        'pretty_version' => 'dev-main',
+        'version' => 'dev-main',
+        'type' => 'library',
+        'install_path' => __DIR__ . '/../../',
+        'aliases' => array(),
+        'reference' => 'fe12c84202193bab7a2faaa2500ebe9114277d61',
+        'name' => '__root__',
+        'dev' => true,
+    ),
+    'versions' => array(
+        '__root__' => array(
+            'pretty_version' => 'dev-main',
+            'version' => 'dev-main',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../../',
+            'aliases' => array(),
+            'reference' => 'fe12c84202193bab7a2faaa2500ebe9114277d61',
+            'dev_requirement' => false,
+        ),
+        'afragen/wp-dependency-installer' => array(
+            'pretty_version' => '4.3.13',
+            'version' => '4.3.13.0',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../afragen/wp-dependency-installer',
+            'aliases' => array(),
+            'reference' => '6a6366d21710a34f134d747b1ae673daa165b78c',
+            'dev_requirement' => false,
+        ),
+        'afragen/wp-dismiss-notice' => array(
+            'pretty_version' => '0.3.7',
+            'version' => '0.3.7.0',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../afragen/wp-dismiss-notice',
+            'aliases' => array(),
+            'reference' => '3e2c694ca891fe94771457f54a3a5457a70c0aec',
+            'dev_requirement' => false,
+        ),
+    ),
+);
