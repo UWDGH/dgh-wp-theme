@@ -11,6 +11,11 @@
  * License URI:      https://www.gnu.org/licenses/gpl-3.0.html
  * Tags:             two-columns, right-sidebar, responsive-layout, accessibility-ready
  * Text Domain:      dgh-wp-theme */
+/* Global overrides */
+h3, .h3 {
+  margin-top: 0;
+}
+
 /* hero default */
 .uw-hero-image .uw-site-title {
   text-transform: none;
