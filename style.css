@@ -21,7 +21,7 @@ h3, .h3 {
   text-transform: none;
 }
 .uw-hero-image.hero-heightjumbo #banner {
-  background: #85754d;
+  background: rgba(133, 117, 77, 0.9);
   color: #ffffff;
   display: inline-block;
 }
