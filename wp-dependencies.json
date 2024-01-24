@@ -1,0 +1,94 @@
+[
+	{
+    "name": "'Classic Editor'",
+    "host": "wordpress",
+		"slug": "classic-editor/classic-editor.php",
+		"uri": "https://wordpress.org/plugins/classic-editor/",
+    "required": true
+	},
+	{
+    "name": "'Classic Widgets'",
+    "host": "wordpress",
+		"slug": "classic-widgets/classic-widgets.php",
+		"uri": "https://wordpress.org/plugins/classic-widgets/",
+    "required": true
+	},
+  {
+    "name": "'Enable Media Replace'",
+    "host": "wordpress",
+    "slug": "enable-media-replace/enable-media-replace.php",
+    "uri": "https://wordpress.org/plugins/enable-media-replace/",
+    "optional": true
+  },
+  {
+    "name": "'Simple Page Ordering'",
+    "host": "wordpress",
+    "slug": "simple-page-ordering/simple-page-ordering.php",
+    "uri": "https://wordpress.org/plugins/simple-page-ordering/",
+    "optional": true
+  },
+  {
+    "name": "'Query Monitor'",
+    "host": "wordpress",
+    "slug": "query-monitor/query-monitor.php",
+    "uri": "https://wordpress.org/plugins/query-monitor/",
+    "optional": true
+  },
+  {
+    "name": "'User Switching'",
+    "host": "wordpress",
+    "slug": "user-switching/user-switching.php",
+    "uri": "https://wordpress.org/plugins/user-switching/",
+    "optional": true
+  },
+  {
+    "name": "'Membership & User Role Editor'",
+    "host": "wordpress",
+    "slug": "members/members.php",
+    "uri": "https://wordpress.org/plugins/members/",
+    "optional": true
+  },
+  {
+    "name": "'WP-Optimize'",
+    "host": "wordpress",
+    "slug": "wp-optimize/wp-optimize.php",
+    "uri": "https://wordpress.org/plugins/wp-optimize/",
+    "optional": true
+  },
+  {
+    "name": "'Git Updater'",
+    "host": "github",
+    "slug": "git-updater/git-updater.php",
+    "uri": "afragen/git-updater",
+    "branch": "master",
+    "optional": true,
+    "token": null
+  },
+  {
+    "name": "'UW DGH | Admin Features'",
+    "host": "bitbucket",
+    "slug": "uwdgh-admin-features/uwdgh-admin-features.php",
+    "uri": "uwdgh_elearn/uwdgh-admin-features",
+    "branch": "master",
+    "optional": true,
+    "token": null
+  },
+  {
+    "name": "'UW DGH | SEO Basics'",
+    "host": "bitbucket",
+    "slug": "uwdgh-seo-basics/uwdgh-seo-basics.php",
+    "uri": "uwdgh_elearn/uwdgh-seo-basics",
+    "branch": "master",
+    "optional": true,
+    "token": null
+  },
+  {
+    "name": "'UW DGH | Google Analytics Tracker'",
+    "host": "bitbucket",
+    "slug": "uwdgh-ga-tracker/uwdgh-ga-tracker.php",
+    "uri": "uwdgh_elearn/uwdgh-ga-tracker",
+    "branch": "master",
+    "optional": true,
+    "token": null
+  }
+]
