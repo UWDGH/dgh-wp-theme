@@ -169,3 +169,28 @@ footer.site-footer ul.footer-social li a.smugmug {
 footer.site-footer ul.footer-social li a:hover.smugmug, footer.site-footer ul.footer-social li a:focus.smugmug {
   background: url("assets/svg/smugmug-brand.svg") no-repeat 0 11.5px transparent;
 }
+
+/* home/front page */
+.home .icon-menu {
+  border: none;
+  margin: 0;
+}
+@media (max-width: 767px) {
+  .home .icon-menu {
+    display: none;
+  }
+}
+.home .icon-menu li {
+  padding-left: 20px;
+  padding-right: 20px;
+}
+@media (min-width: 991px) {
+  .home .icon-menu li {
+    padding-left: 30px;
+    padding-right: 30px;
+  }
+  .home .icon-menu [class^=ic-]::before,
+  .home .icon-menu [class*=" ic-"]::before {
+    font-size: 110px;
+  }
+}

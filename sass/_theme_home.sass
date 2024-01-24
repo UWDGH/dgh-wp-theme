@@ -1,11 +1,21 @@
 /* home/front page
 .home
+	// article,
+	// .entry-content
+	// 	margin-top: 0
 	.icon-menu
+		@media (max-width: 767px)
+			display: none
+		border: none
+		margin: 0
+		li
+			padding-left: 20px
+			padding-right: 20px
 		@media (min-width: 991px)
 			li
-				// padding-left: 45px
-				// padding-right: 45px
+				padding-left: 30px
+				padding-right: 30px
 			[class^="ic-"],
 			[class*=" ic-"]
 				&::before
-					font-size: 140px
+					font-size: 110px
