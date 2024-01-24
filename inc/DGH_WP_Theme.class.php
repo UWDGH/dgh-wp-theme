@@ -67,7 +67,7 @@ if ( !class_exists( 'DGH_WP_Theme' ) ) {
 			/**
 			 * implement hook wp_dashboard_setup
 			 */
-			add_action( 'wp_dashboard_setup', array( __CLASS__, 'dgh_wp_theme_dashboard_setup' ), 11 );
+			add_action( 'wp_dashboard_setup', array( __CLASS__, 'dgh_wp_theme_dashboard_setup' ) );
 
 		}
 		
@@ -192,20 +192,64 @@ if ( !class_exists( 'DGH_WP_Theme' ) ) {
 		 */
 		static function dgh_wp_theme_dashboard_setup() {
 			
+			// remove dashboard meta boxes for non-admins
+			$user = wp_get_current_user();
+      if ( ( (!in_array( 'administrator', (array) $user->roles ) || !current_user_can('manage_options')) ) ) {
+
+				// remove core widgets
+				self::clear_core_dashboard_widgets();
+				
+			}
+			
 			// add custom dashboard widgets
 			self::add_custom_dashboard_widgets();
 			
 			/**
 			 * implement hook default_hidden_meta_boxes
 			 */
-			add_filter( 'default_hidden_meta_boxes' , array( __CLASS__, 'dgh_wp_theme_hidden_meta_boxes' ), 10, 2);
+			add_filter( 'default_hidden_meta_boxes' , array( __CLASS__, 'dgh_wp_theme_hidden_meta_boxes' ), 11, 2);
 
 		}
 		
 		/**
+		 * Helper function to clear the core widgets off the dashboard
+		 */
+		private static function clear_core_dashboard_widgets() {
+
+			global $wp_meta_boxes;
+			foreach( $wp_meta_boxes["dashboard"] as $position => $core ) {
+				
+				foreach( $core["core"] as $widget_id => $widget_info ){
+					
+					// keep the 'dashboard_activity' core widget
+					if ( $widget_id != 'dashboard_activity' ) {
+
+						remove_meta_box( $widget_id, 'dashboard', $position );
+
+					}
+
+				}
+
+			}
+
+		}
+				
+		/**
 		 * Helper function adding custom dashboard widgets
 		 */
 		private static function add_custom_dashboard_widgets() {
+			
+			// add resources widget
+			wp_add_dashboard_widget(
+				'dashboard_dgh_wp_theme_resources_widget',		//Widget ID (used in the 'id' attribute for the widget).
+				'WordPress Resources',		//Title of the widget.
+				array( __CLASS__, 'dashboard_dgh_wp_theme_resources_widget_content' ),		//Callback function echoing its output.
+				null,		//Function that outputs controls for the widget.
+				null,		//Data that should be set as the $args property of the widget array (which is the second parameter passed to your callback).
+				'normal',		//The context within the screen where the box should display.
+				'default'		//The priority within the context where the box should show.
+			);
+
 
 			// Little dogs (easter egg)
 			wp_add_dashboard_widget(
@@ -226,9 +270,48 @@ if ( !class_exists( 'DGH_WP_Theme' ) ) {
      */
 		static function dgh_wp_theme_hidden_meta_boxes( $hidden, $screen ) {
 
+			$user = wp_get_current_user();
+      if ( ( (!in_array( 'administrator', (array) $user->roles ) || !current_user_can('manage_options')) ) ) {
+				
+				// hide the UW Theme dashboard widget for non-admins
+				$hidden[] ='uw-dashboard-widget';
+
+			}
+
 			$hidden[] ='dashboard_little_dogs_widget';
 
 			return $hidden;
+
+		}
+			
+    /**
+    * Callback function for wp_add_dashboard_widget
+    */
+		static function dashboard_dgh_wp_theme_resources_widget_content() {
+
+			echo '<style> #dashboard_dgh_wp_theme_resources_widget .columns2 { width: 50%; display: inline-block; vertical-align: top;} </style>';
+
+			echo '<div class="columns2">';
+
+			echo '<h3>WordPress Manual</h3>';
+			echo '<p><a href="' . esc_url('https://ewp.guide/go/wordpress-manual') . '" rel="nofollow noreferrer" target="_blank">Easy WP Guide WordPress Manual for WordPress</a> <span aria-hidden="true" class="dashicons dashicons-external"></span><p>';
+			echo '<ul><li><a href="' . esc_url('https://ewp.guide/go/pages') . '" rel="nofollow noreferrer" target="_blank">—Pages</a> <span aria-hidden="true" class="dashicons dashicons-external"></span></li><li><a href="' . esc_url('https://ewp.guide/go/ce/classic-editor') . '" rel="nofollow noreferrer" target="_blank">—Classic Editor</a> <span aria-hidden="true" class="dashicons dashicons-external"></span></li><li><a href="' . esc_url('https://ewp.guide/go/media-library') . '" rel="nofollow noreferrer" target="_blank">—Media Library</a> <span aria-hidden="true" class="dashicons dashicons-external"></span></li></ul>';
+
+			echo '</div>';
+
+			echo '<div class="columns2">';
+			
+			echo '<h3>UW Theme Shortcodes</h3>';
+			echo '<p><a href="' . esc_url('https://www.washington.edu/docs/shortcode-cookbook/') . '" rel="nofollow noreferrer" target="_blank">UW Shortcode Cookbook</a> <span aria-hidden="true" class="dashicons dashicons-external"></span><p>';
+			
+				
+			echo '<h3>WordPress Training</h3>';
+			echo '<p><a href="' . esc_url('https://www.linkedin.com/learning/wordpress-essential-training-22616273') . '" rel="nofollow noreferrer" target="_blank">WordPress Essential Training (LinkedIn Learning)</a> <span aria-hidden="true" class="dashicons dashicons-external"></span> (UW NetID required)<p>';
+
+			echo '</div>';
+
+			echo '<h3 style="text-align: center">WordPress introduction video</h3>';
+			echo '<iframe width="100%" height="288" src="https://www.youtube.com/embed/8OBfr46Y0cQ" allowfullscreen></iframe>';
 
 		}
 		
