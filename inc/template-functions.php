@@ -56,13 +56,17 @@ if ( !function_exists( 'uw_header_template' ) ) :
 						<div id="banner"><span><span><?php echo $banner[0] ? $banner[0] : ''; ?></span></span></div>
 					<?php } ?>
 					<div class="row col-xs-12 jumbo">
-						<h1 class=" uw-site-title <?php echo $version ?>"><?php the_title(); ?></h1>
-						<?php if( !empty( $subhead ) && $subhead[0] ) { ?>
-							<p class="jumbo-subhead">
-								<span class="udub-slant-divider white" style=""><span></span></span>
-								<?php echo $subhead[0] ? $subhead[0] : '';  ?>
-							</p>
-						<?php } ?>
+						<div class="transparent-overlay">
+							<div class="inner-overlay">
+								<h1 class=" uw-site-title <?php echo $version ?>"><?php the_title(); ?></h1>
+								<?php if( !empty( $subhead ) && $subhead[0] ) { ?>
+									<p class="jumbo-subhead">
+										<span class="udub-slant-divider white" style=""><span></span></span>
+										<?php echo $subhead[0] ? $subhead[0] : '';  ?>
+									</p>
+								<?php } ?>
+							</div>
+						</div>
 					</div>
 					<?php if( !empty( $buttontext ) && $buttontext[0] ) { ?>
 						<a class="btn btn-lg arrow white" href="<?php echo $buttonlink && $buttontext[0] ? $buttonlink[0] : ''; ?>"><span><?php echo $buttontext[0] ? $buttontext[0] : ''; ?></span><span class="arrow-box"><span class="arrow"></span></span></a>

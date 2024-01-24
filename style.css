@@ -25,7 +25,7 @@
     margin-left: -1rem;
   }
 }
-.uw-hero-image.hero-heightjumbo .jumbo {
+.uw-hero-image.hero-heightjumbo .jumbo .transparent-overlay {
   background: rgba(75, 46, 131, 0.9);
 }
 .uw-hero-image.hero-heightjumbo .jumbo h1,
