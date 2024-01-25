@@ -61,7 +61,7 @@ if ( !function_exists( 'uw_header_template' ) ) :
 								<h1 class=" uw-site-title <?php echo $version ?>"><?php the_title(); ?></h1>
 								<?php if( !empty( $subhead ) && $subhead[0] ) { ?>
 									<p class="jumbo-subhead">
-										<span class="udub-slant-divider white" style=""><span></span></span>
+										<span class="udub-slant-divider gold" style=""><span></span></span>
 										<?php echo $subhead[0] ? $subhead[0] : '';  ?>
 									</p>
 								<?php } ?>
