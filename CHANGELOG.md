@@ -1,6 +1,12 @@
 # Changelog
 
 
+## 3.0.1.9 / 2024‑01‑25
+
+- Added custom shortcode udub_slant
+- Misc. style updates
+
+
 ## 3.0.1.8 / 2024‑01‑23
 
 - Added Dashboard widget with WP resources
