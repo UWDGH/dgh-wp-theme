@@ -21,9 +21,10 @@ h3, .h3 {
   text-transform: none;
 }
 .uw-hero-image.hero-heightjumbo #banner {
-  background: rgba(133, 117, 77, 0.9);
-  color: #ffffff;
+  background: rgba(255, 255, 255, 0.9);
+  color: #373a3c;
   display: inline-block;
+  font-weight: 600;
 }
 @media (min-width: 992px) {
   .uw-hero-image.hero-heightjumbo #banner {
