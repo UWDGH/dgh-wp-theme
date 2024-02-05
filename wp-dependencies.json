@@ -63,6 +63,13 @@
     "optional": true
   },
   {
+    "name": "'Widget Options'",
+    "host": "wordpress",
+    "slug": "widget-options/plugin.php",
+    "uri": "https://wordpress.org/plugins/widget-options/",
+    "optional": true
+  },
+  {
     "name": "'Git Updater'",
     "host": "github",
     "slug": "git-updater/git-updater.php",
