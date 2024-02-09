@@ -46,6 +46,34 @@ h3, .h3 {
     margin-left: -1rem;
   }
 }
+.uw-hero-image.hero-heightjumbo #hashtag {
+  position: absolute;
+  top: 0px;
+  font-family: "Encode Sans Compressed", sans-serif;
+  font-weight: 900;
+  color: #4b2e83;
+  font-size: 21px;
+  overflow: hidden;
+  z-index: 100;
+  margin-left: -1rem;
+}
+.uw-hero-image.hero-heightjumbo #hashtag span {
+  background-color: rgba(255, 255, 255, 0.9);
+  transform: skew(-15deg, 0);
+  padding: 2px 25px 3px 28px;
+  display: block;
+  margin: 0 10px 0 -1rem;
+}
+.uw-hero-image.hero-heightjumbo #hashtag span span {
+  transform: skew(15deg, 0);
+  display: block;
+  background-color: transparent;
+}
+@media (max-width: 767px) {
+  .uw-hero-image.hero-heightjumbo #hashtag {
+    position: relative;
+  }
+}
 
 /* large hero title */
 .uw-hero-image.hero-height h1.uw-site-title,

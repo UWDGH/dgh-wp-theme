@@ -53,7 +53,7 @@ if ( !function_exists( 'uw_header_template' ) ) :
 					<?php $subhead = get_post_meta( $post->ID, 'subhead' ); ?>
 
 					<?php if( !empty( $banner ) && $banner[0] ) { ?>
-						<div id="banner"><span><span><?php echo $banner[0] ? $banner[0] : ''; ?></span></span></div>
+						<div id="hashtag"><span><span><?php echo $banner[0] ? $banner[0] : ''; ?></span></span></div>
 					<?php } ?>
 					<div class="row col-xs-12 jumbo">
 						<div class="transparent-overlay">
