@@ -1,6 +1,11 @@
 # Changelog
 
 
+## 3.0.1.10 / 2024‑02‑08
+
+- Banner text in Jumbotron template now has the hashtag design similar to the Hero templates
+
+
 ## 3.0.1.9 / 2024‑01‑25
 
 - Added custom shortcode udub_slant
