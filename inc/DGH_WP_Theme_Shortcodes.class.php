@@ -64,7 +64,7 @@ if ( !class_exists( 'DGH_WP_Theme_Shortcodes' ) ) {
 			if ( array_key_exists( 'uw_wp_theme', wp_get_themes() ) ) {
 				// heredoc return string
 				$return = <<<UDUB_SLANT
-				<div class="udub-slant-divider udub-slant-divider-dgh-wp-theme {$color}" {$divstyle}><span {$spanstyle}"></span></div>
+				<div class="udub-slant-divider udub-slant-divider-uw-wp-child-theme {$color}" {$divstyle}><span {$spanstyle}"></span></div>
 				UDUB_SLANT;
 			}
 			
