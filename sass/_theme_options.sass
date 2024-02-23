@@ -1,0 +1,22 @@
+/* sticky header
+@mixin sticky
+	position: sticky
+	z-index: 999
+	top: 0px
+	display: flex
+	flex-direction: column
+	flex-wrap: nowrap
+	width: 100%
+#page
+	&.site.site--sticky-header
+		overflow-x: clip
+	@media (min-width: 768px)
+		&.site.site--sticky-header.site--sticky-header-sm
+			overflow-x: hidden
+	#uw-wp-child-theme-sticky-header
+		@include sticky
+	@media (max-width: 768px)
+		&.site.site--sticky-header-sm
+			overflow-x: clip
+		#uw-wp-child-theme-sticky-header-sm
+			@include sticky

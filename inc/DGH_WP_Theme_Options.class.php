@@ -70,6 +70,18 @@ if ( !class_exists( 'DGH_WP_Theme_Options' ) ) {
 		static function dgh_wp_theme_add_settings() {
 
 			add_settings_section( 
+				'dgh-wp-theme-options-global',	//Slug-name to identify the section
+				__('Global settings', 'dgh-wp-theme'),	//Formatted title of the section
+				array( __CLASS__, 'dgh_wp_theme_options_section_global' ),	//Function that echos out any content at the top of the section (between heading and fields)
+				'dgh-wp-theme-options',	//The slug-name of the settings page on which to show the section
+				array(
+					'before_section' => '<section>',
+					'after_section ' => '</section>',
+					'section_class  ' => 'dgh-wp-theme-options-global',
+				)	//Arguments used to create the settings section
+			);
+
+			add_settings_section( 
 				'dgh-wp-theme-options-cards',	//Slug-name to identify the section
 				__('Cards settings', 'dgh-wp-theme'),	//Formatted title of the section
 				array( __CLASS__, 'dgh_wp_theme_options_section_cards' ),	//Function that echos out any content at the top of the section (between heading and fields)
@@ -81,6 +93,40 @@ if ( !class_exists( 'DGH_WP_Theme_Options' ) ) {
 				)	//Arguments used to create the settings section
 			);
 
+			// setting field to enable sticky header
+			add_settings_field(
+				'dgh-wp-theme_enable_sticky_header',	//Slug-name to identify the field. Used in the 'id' attribute of tags
+				__('Enable sticky header', 'dgh-wp-theme'),	//Formatted title of the field. Shown as the label for the field during output
+				array( __CLASS__, 'dgh_wp_theme_enable_sticky_header_callback' ),	//Callback Function that fills the field with the desired form inputs. The function should echo its output
+				'dgh-wp-theme-options',	//The slug-name of the settings page
+				'dgh-wp-theme-options-global',	//The slug-name of the section of the settings page in which to show the box
+				array(
+					'label_for' => 'dgh-wp-theme_enable_sticky_header',
+					'default_value' => 0,
+					'type' => 'checkbox',
+					'id' => 'dgh-wp-theme_enable_sticky_header',
+					'name' => 'dgh-wp-theme_enable_sticky_header',
+					'description' => "Enables sticky header, i.e. makes the purple bar and white menu bar sticky."
+				)	//Extra arguments that get passed to the callback function
+			);
+
+			// setting field to enable sticky header mobile
+			add_settings_field(
+				'dgh-wp-theme_enable_sticky_header_sm',	//Slug-name to identify the field. Used in the 'id' attribute of tags
+				__('Enable sticky header mobile only', 'dgh-wp-theme'),	//Formatted title of the field. Shown as the label for the field during output
+				array( __CLASS__, 'dgh_wp_theme_enable_sticky_header_sm_callback' ),	//Callback Function that fills the field with the desired form inputs. The function should echo its output
+				'dgh-wp-theme-options',	//The slug-name of the settings page
+				'dgh-wp-theme-options-global',	//The slug-name of the section of the settings page in which to show the box
+				array(
+					'label_for' => 'dgh-wp-theme_enable_sticky_header_sm',
+					'default_value' => 0,
+					'type' => 'checkbox',
+					'id' => 'dgh-wp-theme_enable_sticky_header_sm',
+					'name' => 'dgh-wp-theme_enable_sticky_header_sm',
+					'description' => "Enables sticky header on small screens only. This option overrides the 'Enable sticky header' option if checked, and disables stickiness on larger screens."
+				)	//Extra arguments that get passed to the callback function
+			);
+			
 			// setting field to enable the title attribute in card
 			add_settings_field(
 				'dgh-wp-theme_enable_card_title_attribute',	//Slug-name to identify the field. Used in the 'id' attribute of tags
@@ -106,6 +152,20 @@ if ( !class_exists( 'DGH_WP_Theme_Options' ) ) {
 		 */
 		static function dgh_wp_theme_register_settings() {
 			
+			// Option to enable sticky header
+			register_setting(
+				"dgh-wp-theme_options",		//settings group name
+				"dgh-wp-theme_enable_sticky_header",		//name of an option to sanitize and save
+				array('default' => 0,)		//Data used to describe the setting when registered
+			);
+
+			// Option to enable sticky header mobile
+			register_setting(
+				"dgh-wp-theme_options",		//settings group name
+				"dgh-wp-theme_enable_sticky_header_sm",		//name of an option to sanitize and save
+				array('default' => 0,)		//Data used to describe the setting when registered
+			);
+
 			// Option to enable the title attribute on card elements
 			register_setting(
 				"dgh-wp-theme_options",		//settings group name
@@ -133,11 +193,40 @@ if ( !class_exists( 'DGH_WP_Theme_Options' ) ) {
     }
 		
 		/**
+		 * Callback function for settings section dgh-wp-theme-options-global output
+		 */
+		static function dgh_wp_theme_options_section_global( $args ) {
+			?>
+			<p><?php _e('Here you can manage global options for the theme.', 'dgh-wp-theme'); ?></p>
+			<?php
+		}
+
+		/**
 		 * Callback function for settings section dgh-wp-theme-options-cards output
 		 */
 		static function dgh_wp_theme_options_section_cards( $args ) {
 			?>
 			<p><?php _e('Here you can manage options for the Cards.', 'dgh-wp-theme'); ?></p>
+			<?php
+		}
+
+		/**
+		 * Callback function for setting dgh-wp-theme_enable_sticky_header output
+		 */
+		static function dgh_wp_theme_enable_sticky_header_callback( $args ) {
+			?>
+				<input type="<?php echo esc_attr( $args['type'] ); ?>" id="<?php echo esc_attr( $args['id'] ); ?>"  name="<?php echo esc_attr( $args['name'] ); ?>"  value="1" <?php checked(1, get_option('dgh-wp-theme_enable_sticky_header'), true); ?> />
+				<p class="description"><?php echo esc_attr( $args['description'] ); ?></p>
+			<?php
+		}
+
+		/**
+		 * Callback function for setting dgh-wp-theme_enable_sticky_header_sm output
+		 */
+		static function dgh_wp_theme_enable_sticky_header_sm_callback( $args ) {
+			?>
+				<input type="<?php echo esc_attr( $args['type'] ); ?>" id="<?php echo esc_attr( $args['id'] ); ?>"  name="<?php echo esc_attr( $args['name'] ); ?>"  value="1" <?php checked(1, get_option('dgh-wp-theme_enable_sticky_header_sm'), true); ?> />
+				<p class="description"><?php echo esc_attr( $args['description'] ); ?></p>
 			<?php
 		}
 

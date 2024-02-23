@@ -73,12 +73,17 @@
 </div>
 
 
-<div id="page" class="site">
+<div id="page" class="site<?php echo ( get_option('dgh-wp-theme_enable_sticky_header') ) ? ' site--sticky-header' : '' ;?><?php echo ( get_option('dgh-wp-theme_enable_sticky_header_sm') ) ? ' site--sticky-header-sm' : '' ;?>">
 <?php if ( ! get_option( 'quicklinks-hide' ) ) {
 	get_template_part( 'template-parts/menu', 'quicklinks' );
  } ?>
 	<div id="page-inner">
 
+	<?php if ( get_option('dgh-wp-theme_enable_sticky_header') && !get_option('dgh-wp-theme_enable_sticky_header_sm') ) : ?>
+		<div id="uw-wp-child-theme-sticky-header">
+	<?php elseif ( get_option('dgh-wp-theme_enable_sticky_header_sm') ) : ?>
+		<div id="uw-wp-child-theme-sticky-header-sm">
+	<?php endif; ?>
 		<header id="masthead" class="site-header">
 			<div class="navbar navbar-expand-lg">
 				<div class="navbar-brand site-branding">
@@ -129,6 +134,11 @@
 		uw_wp_theme_white_bar_menu();
 	}
 	?>
+
+	<?php if ( get_option('dgh-wp-theme_enable_sticky_header') || get_option('dgh-wp-theme_enable_sticky_header_sm') ) : ?>
+		</div>
+	<?php endif; ?>
+
 <?php echo add_sitewide_banner(); ?>
 
 
