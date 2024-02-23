@@ -6,8 +6,8 @@
 	// At the top of the file, set "wp" to its existing value (if present)
 	window.wp = window.wp || {};
 
-	// object uw_wp_child_theme
-	const uw_wp_child_theme = {
+	// object uw_wp_child_theme_options
+	const uw_wp_child_theme_options = {
 
 		// member function
 		do_card_title_attribute() {
@@ -32,7 +32,7 @@
 	// and the DOM is ready.
 	$(document).ready(function( $ ) {
 		
-		uw_wp_child_theme.do_card_title_attribute();
+		uw_wp_child_theme_options.do_card_title_attribute();
 		
 	});
 
