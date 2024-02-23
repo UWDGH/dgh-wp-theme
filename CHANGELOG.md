@@ -1,6 +1,11 @@
 # Changelog
 
 
+## 3.0.1.11 / 2024‑02‑23
+
+- Added sticky header options.
+
+
 ## 3.0.1.10 / 2024‑02‑08
 
 - Banner text in Jumbotron template now has the hashtag design similar to the Hero templates
