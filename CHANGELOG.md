@@ -1,9 +1,14 @@
 # Changelog
 
 
+## 3.0.1.12 / 2024‑02‑24
+
+- Bug fix: dynamically resize height of sticky menu on small screens
+
+
 ## 3.0.1.11 / 2024‑02‑23
 
-- Added sticky header options.
+- Added sticky header options
 
 
 ## 3.0.1.10 / 2024‑02‑08
