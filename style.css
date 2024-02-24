@@ -247,7 +247,7 @@ footer.site-footer ul.footer-social li a:hover.smugmug, footer.site-footer ul.fo
   flex-wrap: nowrap;
   width: 100%;
 }
-@media (max-width: 768px) {
+@media (max-width: 767px) {
   #page.site.site--sticky-header-sm {
     overflow-x: clip;
   }
