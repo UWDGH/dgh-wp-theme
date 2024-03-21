@@ -1,6 +1,11 @@
 # Changelog
 
 
+## 3.0.1.13 / 2024‑03‑21
+
+- Configuration updates
+
+
 ## 3.0.1.12 / 2024‑02‑24
 
 - Bug fix: dynamically resize height of sticky menu on small screens
