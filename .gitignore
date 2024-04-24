@@ -5,8 +5,9 @@
 
 # (manually created) bak files
 *.bak
-# (manually created) test files
+# (manually created) test/dev files
 *.test.php
+*.dev.*
 
 # composer
 composer.phar
