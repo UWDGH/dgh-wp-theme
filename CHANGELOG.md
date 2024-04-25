@@ -1,6 +1,12 @@
 # Changelog
 
 
+## 3.0.1.14 / 2024‑04‑24
+
+- Style updates
+- Tested with WordPress 6.5
+
+
 ## 3.0.1.13 / 2024‑03‑21
 
 - Configuration updates
