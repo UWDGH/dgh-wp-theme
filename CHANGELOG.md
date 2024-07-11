@@ -1,6 +1,12 @@
 # Changelog
 
 
+## 3.0.1.15 / 2024‑07‑11
+
+- Shortcode override uw_button: added 'external' style option. Added 'display' attribute, with value option 'new', to open in new tab/window: [[uw_button style="external" display="new"]]. Must be used in combination with the color attribute (purple, gold, light-gold, white).
+- Shortcode override uw_modal: Added 'size' attribute, with value options 'small' or 'large'.
+
+
 ## 3.0.1.14 / 2024‑04‑24
 
 - Style updates
