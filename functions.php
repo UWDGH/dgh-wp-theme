@@ -26,8 +26,4 @@ require( get_stylesheet_directory() . '/inc/DGH_WP_Theme.class.php' );
  * uw_wp_theme template-functions.php overrides
  */
 require get_stylesheet_directory() . '/inc/template-functions.php';
-/**
- * uw_wp_theme feature overrides
- */
-include get_stylesheet_directory() . '/inc/uw-overrides/modal-shortcode.php';
-include get_stylesheet_directory() . '/inc/uw-overrides/button-shortcode.php';
+
