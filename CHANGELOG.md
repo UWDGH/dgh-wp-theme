@@ -1,6 +1,12 @@
 # Changelog
 
 
+## 3.0.1.16 / 2024‑07‑20
+
+- Removed shortcode overrides for uw_button and uw_modal. Features moved to plugin uwdgh-shortcode-adds.
+- Tested with WordPress 6.6
+
+
 ## 3.0.1.15 / 2024‑07‑11
 
 - Shortcode override uw_button: added 'external' style option. Added 'display' attribute, with value option 'new', to open in new tab/window: [[uw_button style="external" display="new"]]. Must be used in combination with the color attribute (purple, gold, light-gold, white).
