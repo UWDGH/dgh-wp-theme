@@ -20,9 +20,9 @@ if ( !class_exists( 'DGH_WP_Theme_Shortcodes' ) ) {
 			/**
 			 * add custom shortcode
 			 */
-			if ( !shortcode_exists('udub_slant') ) {
-				add_shortcode( 'udub_slant', array( __CLASS__, 'udub_slant_shortcode' ) );
-			}
+			// if ( !shortcode_exists('udub_slant') ) {
+			// 	add_shortcode( 'udub_slant', array( __CLASS__, 'udub_slant_shortcode' ) );
+			// }
 
 		}
 
