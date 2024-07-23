@@ -1,6 +1,11 @@
 # Changelog
 
 
+## 3.0.1.17 / 2024‑07‑22
+
+- Disabled udub_slant shortcode.
+
+
 ## 3.0.1.16 / 2024‑07‑20
 
 - Removed shortcode overrides for uw_button and uw_modal. Features moved to plugin uwdgh-shortcode-adds.
