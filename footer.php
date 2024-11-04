@@ -14,7 +14,7 @@
 		<footer id="colophon" class="site-footer">
 			<a href="<?php echo home_url('/'); ?>" class="footer-wordmark" title="<?php echo get_bloginfo('name'); ?> Home"><?php echo get_bloginfo('name'); ?></a>
 
-			<a hidden class="hide" aria-hidden="true" href="https://www.washington.edu/boundless/"><h3 class="be-boundless">Be boundless</h3></a>
+			<a hidden class="be-boundless hide" aria-hidden="true" href="https://www.washington.edu/boundless/">Be boundless</a>
 
 			<div class="h4" id="social_preface">Connect with us:</div>
 			<nav aria-labelledby="social_preface">
@@ -29,7 +29,7 @@
 				</ul>
 			</nav>
 
-			<nav aria-label="footer navigation">
+			<nav aria-label="footer">
 				<?php uw_wp_theme_footer_menu(); ?>
 				<ul id="footer-login" class="footer-links small">
 					<li><?php do_action( 'uw_wp_child_theme_login_link' ); ?></li>

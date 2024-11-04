@@ -53,7 +53,7 @@ if ( !function_exists( 'uw_header_template' ) ) :
 					<?php $subhead = get_post_meta( $post->ID, 'subhead' ); ?>
 
 					<?php if( !empty( $banner ) && $banner[0] ) { ?>
-						<div id="hashtag"><span><span><?php echo $banner[0] ? $banner[0] : ''; ?></span></span></div>
+						<div id="banner"><span><span><?php echo $banner[0] ? $banner[0] : ''; ?></span></span></div>
 					<?php } ?>
 					<div class="row col-xs-12 jumbo">
 						<div class="transparent-overlay">
@@ -98,7 +98,7 @@ if ( !function_exists( 'uw_header_template' ) ) :
 			</div>
 		</div>
 		<?php if ( ! empty( $pagetitle ) && $pagetitle[0] ) { ?>
-			<div class="container-fluid mt-3">
+			<div role="region" aria-label="page title" class="container-fluid mt-3">
 				<h1 class="uw-site-title<?php echo esc_attr( $version ); ?> below-hero"><?php the_title(); ?></h1>
 			</div>
 				<?php } else { ?>
