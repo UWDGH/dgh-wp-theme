@@ -36,7 +36,6 @@ if ( !class_exists( 'DGH_WP_Theme' ) ) {
 			 * include files
 			 */
 			include_once( get_stylesheet_directory() . '/inc/DGH_WP_Theme_Options.class.php' );
-			include_once( get_stylesheet_directory() . '/inc/DGH_WP_Theme_Shortcodes.class.php' );
 			
 			/**
 			 * implement hook init
