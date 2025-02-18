@@ -43,7 +43,7 @@ if ( !function_exists( 'uw_header_template' ) ) :
 		$buttonlink = get_post_meta( $post->ID, 'buttonlink' );
 		$pagetitle = get_post_meta( $post->ID, 'pagetitle' );
 		?>
-		<div class="uw-hero-image <?php echo esc_attr( $hasmobileimage ); ?> hero-height<?php echo esc_attr( $version ); ?>" style="background-image: url( <?php echo esc_url( $background_url ); ?> );">
+		<div class="uw-hero-image <?php echo esc_attr( $hasmobileimage ); ?> hero-height<?php echo esc_attr( $version ); ?>" style="background-image: url( <?php echo esc_url( $background_url ); ?> );"<?php echo ('jumbotron' == $type) ? 'role="region" aria-label="page title and banner"' : 'role="presentation"' ?>>
 			<?php if ( isset( $mobileimage ) ) { ?>
 				<div class="mobile-image" style="background-image: url( <?php echo $mobileimage ?> );"></div>
 			<?php } ?>
