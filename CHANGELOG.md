@@ -1,6 +1,14 @@
 # Changelog
 
 
+## 3.3.1.18 / 2024‑07‑22
+
+- Tested with WordPress 6.7
+- Applied uw_wp_theme template updates.
+- Add custom 404 template
+- Refactoring: removed shortcode class implementation. General shortcode add-ons for the UW WP theme have moved to the uwdgh-shortcode-adds plugin.
+
+
 ## 3.0.1.17 / 2024‑07‑22
 
 - Disabled udub_slant shortcode.
