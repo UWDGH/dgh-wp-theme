@@ -13,6 +13,15 @@
 		"uri": "https://wordpress.org/plugins/classic-widgets/",
     "required": true
 	},
+	{
+    "name": "'Global Health Website Custom Post Types'",
+    "host": "github",
+    "slug": "dgh-post-types/dgh-post-types.php",
+    "uri": "UWDGH/dgh-post-types",
+    "branch": "main",
+    "required": true,
+    "token": null
+	},
   {
     "name": "'Enable Media Replace'",
     "host": "wordpress",
