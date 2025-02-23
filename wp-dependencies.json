@@ -22,6 +22,15 @@
     "required": true,
     "token": null
 	},
+	{
+    "name": "'Global Health Website Faculty Sync'",
+    "host": "github",
+    "slug": "dgh-faculty-sync/dgh-faculty-sync.php",
+    "uri": "UWDGH/dgh-faculty-sync",
+    "branch": "main",
+    "required": true,
+    "token": null
+	},
   {
     "name": "'Enable Media Replace'",
     "host": "wordpress",
