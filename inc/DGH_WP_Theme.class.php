@@ -41,6 +41,7 @@ if ( !class_exists( 'DGH_WP_Theme' ) ) {
 			 * implement hook init
 			 */
 			add_action('init', array( __CLASS__, 'dgh_wp_theme_audience_menu' ) );
+			add_action('init', array( __CLASS__, 'dgh_wp_theme_template_faculty' ) );
 
 			/**
 			 * implement hook after_switch_theme
@@ -322,6 +323,28 @@ if ( !class_exists( 'DGH_WP_Theme' ) ) {
 
 			// embed Little Dogs TouTube video
 			echo '<iframe width="100%" height="288" src="https://www.youtube.com/embed/SxM_Bh5lIPk" allowfullscreen></iframe>';
+
+		}
+
+		/**
+		 * callback function for hook init
+		 */
+		static function dgh_wp_theme_template_faculty() {
+
+			// remove post type support features when this template is selected
+			$the_post_ID = null;
+			$the_post_template = null;
+			if ( isset($_GET['post']) ) {
+				$the_post_ID = $_GET['post'];
+				$the_post_template = get_post_meta($the_post_ID, '_wp_page_template', true);
+			}
+			// do_action('qm/debug', $the_post_template);
+			if ( 'templates/template-faculty.php' == $the_post_template ) {
+				$features = array( 'editor','excerpt','author','thumbnail','trackbacks','custom-fields','comments','revisions','post-formats');
+				foreach ($features as $feature) {
+					remove_post_type_support('page', $feature);
+				}
+			}
 
 		}
 
