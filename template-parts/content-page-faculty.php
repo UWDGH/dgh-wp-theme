@@ -28,7 +28,7 @@
 	endif;
 	?>
 
-	<div class="entry-content">
+	<div class="entry-content entry-content-faculty">
 		<?php
 		// do_action('qm/debug',  $_SERVER['QUERY_STRING'] );
 		// do_action('qm/debug',  $_SERVER['REQUEST_URI'] );
@@ -51,7 +51,7 @@
 		$previous_faculty_page_number = -1;
 		$next_faculty_page_number = 1;
 		$offset = 0;
-		$posts_per_page = 3;
+		$posts_per_page = 4;
 		
 		// total number of pages
 		$total_number_of_pages = (int)ceil($fac_total / $posts_per_page);
@@ -91,8 +91,10 @@
 				$offset = 0;
 			}
 		}
+		//todo: add count/total display
 		?>
-		<div class="dgh-faculty-pagination" style="text-align: end;">
+		<nav class="faculty-pagination" aria-label="Pagination">
+		<h2 class="screen-reader-text"><?php _e( 'Faculty pagination', 'dgh-wp-theme' ); ?></h2>
 		<?php
 		// view all button
 		$view_all_url = get_permalink();
@@ -101,8 +103,7 @@
 		if ( isset( $_GET['faculty_page'] ) && 'all' == strtolower( $_GET['faculty_page'] ) ) { 
 			$btn_style = 'primary'; 
 		}
-		echo do_shortcode( '[uw_button style="'.$btn_style.'" size="small" target="'.esc_url($view_all_url).'"]View all[/uw_button]' );
-		echo ( '&nbsp;|&nbsp;' );
+		echo do_shortcode( '[uw_button id="btn-faculty-view-all" style="'.$btn_style.'" size="small" target="'.esc_url($view_all_url).'"]'.__('View all','dgh-wp-theme').'[/uw_button]' );
 		// page nummber buttons
 		for($i = 0; $i < $total_number_of_pages; $i++) {
 			$btn_style = 'primary';
@@ -115,10 +116,10 @@
 			$faculty_page_url = get_permalink();
 			$faculty_page_url = add_query_arg( 'faculty_page', $i, $faculty_page_url);
 			$display_number = $i + 1;
-			echo do_shortcode( '[uw_button style="'.$btn_style.'" size="small" target="'.esc_url($faculty_page_url).'"]'.$display_number.'[/uw_button]' );
+			echo do_shortcode( '[uw_button id="btn-faculty-page-'.$i.'" style="'.$btn_style.'" size="small" target="'.esc_url($faculty_page_url).'"]'.$display_number.'[/uw_button]' );
 		}
 		?>
-		</div>
+		</nav>
 		<?php
 
 		// construct the su_post shortcode that calls the loop template
@@ -137,15 +138,15 @@
 		// 	)
 		// );
 		?>
-		<nav class="navigation post-navigation dgh-faculty-navigation" aria-label="Faculty">
-			<h2 class="screen-reader-text">Faculty page navigation</h2>
+		<nav class="navigation post-navigation faculty-navigation" aria-label="Pagination">
+			<h2 class="screen-reader-text"><?php _e( 'Faculty page navigation', 'dgh-wp-theme' ); ?></h2>
 			<div class="nav-links">
 				<?php if ( $previous_faculty_page_number >= 0) : ?>
 				<div class="nav-previous">
 					<a href="<?php echo esc_url($previous_faculty_page_url); ?>" rel="prev">
 						<div class="prev-post-text-link">
-							<div class="post-navigation-sub"><span class="prev-arrow"></span><span><strong>Previous</strong></span></div>
-							<span class="post-navigation-title">Previous faculty page</span>
+							<div class="post-navigation-sub"><span class="prev-arrow"></span><span><strong><?php _e( 'Page '.$previous_faculty_page_number + 1, 'dgh-wp-theme' ); ?></strong></span></div>
+							<span class="post-navigation-title"><?php _e( 'Previous faculty page', 'dgh-wp-theme' ); ?></span>
 						</div>
 					</a>
 				</div>
@@ -154,8 +155,8 @@
 				<div class="nav-next">
 					<a href="<?php echo esc_url($next_faculty_page_url); ?>" rel="next">
 						<div class="next-post-text-link">
-							<div class="post-navigation-sub"><span><strong>Next</strong></span><span class="next-arrow"></span></div>
-							<span class="post-navigation-title">Next faculty page</span>
+							<div class="post-navigation-sub"><span><strong><?php _e( 'Page '.$next_faculty_page_number + 1, 'dgh-wp-theme' ); ?></strong></span><span class="next-arrow"></span></div>
+							<span class="post-navigation-title"><?php _e( 'Next faculty page', 'dgh-wp-theme' ); ?></span>
 						</div>
 					</a>
 				</div>
