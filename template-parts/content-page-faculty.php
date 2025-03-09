@@ -43,46 +43,85 @@
 			'post_status' => 'publish',
 			'numberposts' => -1
 		]);
+		// total number of faculty
 		( is_array( $fac ) ) ? $fac_total = count($fac) : $fac_total = 0; 
 		
-		// do_action('qm/debug',  $fac );
-		// do_action('qm/debug',  $fac_total );
-
-
+		// defaults
 		$current_faculty_page_number = 0;
 		$previous_faculty_page_number = -1;
 		$next_faculty_page_number = 1;
-		$posts_per_page = 3;
 		$offset = 0;
+		$posts_per_page = 3;
 		
-		// do_action('qm/debug',  round($fac_total / $posts_per_page) );
-		// do_action('qm/debug',  round($fac_total % $posts_per_page) );
-		
-		$total_number_of_pages = round($fac_total / $posts_per_page);
+		// total number of pages
+		$total_number_of_pages = (int)ceil($fac_total / $posts_per_page);
 
+		// current url
 		$current_faculty_page_url = home_url($_SERVER['REQUEST_URI']);
+		// previous url
 		$previous_faculty_page_url = get_permalink();
 		$previous_faculty_page_url = add_query_arg( 'faculty_page', $previous_faculty_page_number, $previous_faculty_page_url);
+		// next url
 		$next_faculty_page_url = get_permalink();
 		$next_faculty_page_url = add_query_arg( 'faculty_page', $next_faculty_page_number, $next_faculty_page_url);
 
+		// do we have a querystring?
 		if ( isset( $_GET['faculty_page'] ) ) {
-			$current_faculty_page_number = $_GET['faculty_page'];
-			// do_action('qm/debug', is_int( (int)$_GET['faculty_page'] ) );
-			if ( !is_int( (int)$_GET['faculty_page'] ) ) {
-				$current_faculty_page_number = 1;
+			if ( 'all' != strtolower( $_GET['faculty_page'] ) ) {
+				// grab the value
+				$current_faculty_page_number = $_GET['faculty_page'];
+				// if not an int, reset to default
+				if ( !is_int( (int)$_GET['faculty_page'] ) ) {
+					$current_faculty_page_number = 0;
+				}
+				// previous page number
+				$previous_faculty_page_number = $current_faculty_page_number - 1;
+				// next page number
+				$next_faculty_page_number = $current_faculty_page_number + 1;
+				// dynamic offset
+				$offset = $current_faculty_page_number * $posts_per_page;
+				// next page url
+				$next_faculty_page_url = get_permalink();
+				$next_faculty_page_url = add_query_arg( 'faculty_page', $next_faculty_page_number, $next_faculty_page_url);
+				// previous page link
+				$previous_faculty_page_url = get_permalink();
+				$previous_faculty_page_url = add_query_arg( 'faculty_page', $previous_faculty_page_number, $previous_faculty_page_url);
+			} else {
+				$posts_per_page = -1;
+				$offset = 0;
 			}
-			
-			$previous_faculty_page_number = $current_faculty_page_number - 1;
-			$next_faculty_page_number = $current_faculty_page_number + 1;
-			$offset = $current_faculty_page_number * $posts_per_page;
-
-			$next_faculty_page_url = get_permalink();
-			$next_faculty_page_url = add_query_arg( 'faculty_page', $next_faculty_page_number, $next_faculty_page_url);
-			$previous_faculty_page_url = get_permalink();
-			$previous_faculty_page_url = add_query_arg( 'faculty_page', $previous_faculty_page_number, $previous_faculty_page_url);
 		}
+		?>
+		<div class="dgh-faculty-pagination" style="text-align: end;">
+		<?php
+		// view all button
+		$view_all_url = get_permalink();
+		$view_all_url = add_query_arg( 'faculty_page', 'all', $view_all_url);
+		$btn_style = 'secondary';
+		if ( isset( $_GET['faculty_page'] ) && 'all' == strtolower( $_GET['faculty_page'] ) ) { 
+			$btn_style = 'primary'; 
+		}
+		echo do_shortcode( '[uw_button style="'.$btn_style.'" size="small" target="'.esc_url($view_all_url).'"]View all[/uw_button]' );
+		echo ( '&nbsp;|&nbsp;' );
+		// page nummber buttons
+		for($i = 0; $i < $total_number_of_pages; $i++) {
+			$btn_style = 'primary';
+			if ( $i != $current_faculty_page_number ) { 
+				$btn_style = 'secondary'; 
+			}
+			if ( isset( $_GET['faculty_page'] ) && 'all' == strtolower( $_GET['faculty_page'] ) ) { 
+				$btn_style = 'secondary'; 
+			}
+			$faculty_page_url = get_permalink();
+			$faculty_page_url = add_query_arg( 'faculty_page', $i, $faculty_page_url);
+			$display_number = $i + 1;
+			echo do_shortcode( '[uw_button style="'.$btn_style.'" size="small" target="'.esc_url($faculty_page_url).'"]'.$display_number.'[/uw_button]' );
+		}
+		?>
+		</div>
+		<?php
 
+		// construct the su_post shortcode that calls the loop template
 		$fac_list = <<<FAC_LIST
 		[su_posts template="su-posts-templates/faculty-card-loop.php" posts_per_page="{$posts_per_page}" offset="{$offset}" post_type="dgh_faculty_profile" orderby="meta_value" meta_key="_dgh_fac_name1" order="asc"]
 		FAC_LIST;
@@ -103,7 +142,7 @@
 			<div class="nav-links">
 				<?php if ( $previous_faculty_page_number >= 0) : ?>
 				<div class="nav-previous">
-					<a href="<?php echo $previous_faculty_page_url; ?>" rel="prev">
+					<a href="<?php echo esc_url($previous_faculty_page_url); ?>" rel="prev">
 						<div class="prev-post-text-link">
 							<div class="post-navigation-sub"><span class="prev-arrow"></span><span><strong>Previous</strong></span></div>
 							<span class="post-navigation-title">Previous faculty page</span>
@@ -111,9 +150,9 @@
 					</a>
 				</div>
 				<?php endif; ?>
-				<?php if ( $next_faculty_page_number < $total_number_of_pages) : ?>
+				<?php if ( ( $next_faculty_page_number < $total_number_of_pages ) && ( $posts_per_page != -1 ) ) : ?>
 				<div class="nav-next">
-					<a href="<?php echo $next_faculty_page_url; ?>" rel="next">
+					<a href="<?php echo esc_url($next_faculty_page_url); ?>" rel="next">
 						<div class="next-post-text-link">
 							<div class="post-navigation-sub"><span><strong>Next</strong></span><span class="next-arrow"></span></div>
 							<span class="post-navigation-title">Next faculty page</span>
