@@ -42,6 +42,11 @@ if ( !class_exists( 'DGH_WP_Theme' ) ) {
 			 */
 			add_action('init', array( __CLASS__, 'dgh_wp_theme_audience_menu' ) );
 			add_action('init', array( __CLASS__, 'dgh_wp_theme_template_faculty' ) );
+			
+			/**
+			 * implement filter hook display_post_states
+			 */
+			add_filter('display_post_states', array( __CLASS__, 'dgh_wp_theme_add_faculty_page_post_state'), 10, 2);
 
 			/**
 			 * implement hook after_switch_theme
@@ -54,6 +59,11 @@ if ( !class_exists( 'DGH_WP_Theme' ) ) {
 			 * Callback functions attached to this hook are only triggered in the theme being deactivated
 			 */
 			add_action('switch_theme', array( __CLASS__, 'dgh_wp_theme_switch_theme' ), 10, 3 );
+
+            /**
+             * implement hook admin_enqueue_scripts
+             */
+            add_action( 'admin_enqueue_scripts', array( __CLASS__, 'dgh_wp_theme_admin_enqueue_scripts' ) );
 
 			/**
 			 * implement hook wp_enqueue_scripts
@@ -87,6 +97,30 @@ if ( !class_exists( 'DGH_WP_Theme' ) ) {
 		static function dgh_wp_theme_switch_theme( $new_name, $new_theme, $old_theme ) {
 			// nothing to do here
 		}
+		
+        /**
+        * callback function for hook admin_enqueue_scripts
+        */
+        static function dgh_wp_theme_admin_enqueue_scripts( $hook ) {
+            global $typenow;
+            global $pagenow;
+            
+            // Only add to this post.php page
+            if ( 'post.php' != $hook ) {
+                return;
+            }
+            
+			wp_enqueue_script( 'dgh_wp_theme_admin', get_stylesheet_directory_uri() . '/js/dgh-wp-theme-admin.js', array('jquery') );
+			// localize script with 'DGH_WP_Theme_Admin' object and 'admin_ajax_url' key => value
+			// the dgh-faculty-sync-admin file uses the value in 
+			// DGH_WP_Theme_Admin.admin_ajax_url to perform the jQuery Post.
+			$DGH_WP_Theme_Admin = array( 
+				'admin_ajax_url' => admin_url('admin-ajax.php'), 
+				'faculty_home_page_id' => get_option( 'dgh_wp_theme_current_fac_page_id' )
+			);
+			wp_localize_script( 'dgh_wp_theme_admin', 'DGH_WP_Theme_Admin', $DGH_WP_Theme_Admin );
+    
+        }
 
 		/**
      * Callback for hook wp_enqueue_scripts
@@ -331,21 +365,97 @@ if ( !class_exists( 'DGH_WP_Theme' ) ) {
 		 */
 		static function dgh_wp_theme_template_faculty() {
 
-			// remove post type support features when this template is selected
+			if ( !is_admin() )
+				return;
+
+			// empty the option if no page is using the Faculty Home template
+			if ( !self::dgh_wp_theme_uses_faculty_home_template() ) {
+				update_option( 'dgh_wp_theme_current_fac_page_id', null );
+				// do_action('qm/debug', 'option "dgh_wp_theme_current_fac_page_id" UPDATED to null' );
+			}
+
+			// get the template
 			$the_post_ID = null;
 			$the_post_template = null;
 			if ( isset($_GET['post']) ) {
 				$the_post_ID = $_GET['post'];
 				$the_post_template = get_post_meta($the_post_ID, '_wp_page_template', true);
 			}
-			// do_action('qm/debug', $the_post_template);
+
 			if ( 'templates/template-faculty.php' == $the_post_template ) {
+
+				// if this page is using the Faculty Home template then store the id in the option
+				update_option( 'dgh_wp_theme_current_fac_page_id', $the_post_ID );
+				// do_action('qm/debug', 'option "dgh_wp_theme_current_fac_page_id" UPDATED to '.get_option( 'dgh_wp_theme_current_fac_page_id' ) );
+
+				// remove features for the current 'Faculty Home' template
 				$features = array( 'editor','excerpt','author','thumbnail','trackbacks','custom-fields','comments','revisions','post-formats');
 				foreach ($features as $feature) {
 					remove_post_type_support('page', $feature);
 				}
+				
 			}
 
+		}
+
+		/**
+		 * helper function 
+		 * determine if there's an existing post using the Faculty home template
+		 * @return boolean
+		 */
+		private static function dgh_wp_theme_uses_faculty_home_template() {
+			global $wpdb;
+			$retval = false;
+			$query_result = $wpdb->get_results(
+				$wpdb->prepare(
+					"SELECT COUNT(post_id) as total FROM $wpdb->postmeta WHERE meta_key = %s AND meta_value = %s",
+					array( '_wp_page_template', 'templates/template-faculty.php' )
+				),
+				ARRAY_A  
+			);
+			// do_action('qm/debug', $query_result);
+			// do_action('qm/debug', $query_result[0]['total'] );
+			if ( $query_result[0]['total'] == 1 ) {
+				$retval = true;
+			}
+			return $retval;
+		}
+
+		/**
+		 * helper function 
+		 * retrieve the post title and slug for the breadcrumb trail
+		 * @returns array or false
+		 */
+		static function dgh_wp_theme_faculty_home_breadcrumb() {
+			global $wpdb;
+			$query_result = $wpdb->get_results(
+				$wpdb->prepare(
+					"SELECT post_title, post_name FROM $wpdb->posts WHERE ID = %d",
+					get_option( 'dgh_wp_theme_current_fac_page_id' )
+				),
+				ARRAY_A  
+			);
+			
+			if ( isset( $query_result[0] ) ) {
+				return $query_result[0];
+			} else {
+				return false;
+			}
+		}
+
+		/**
+		 * callback function for filter hook display_post_states
+		 */
+		static function dgh_wp_theme_add_faculty_page_post_state($post_states, $post) {
+
+			// Check if the post ID matches the desired post
+			if ( $post->ID === (int)get_option( 'dgh_wp_theme_current_fac_page_id' ) ) {
+				// Add a custom post state with the key 'custom-state' and value 'Custom State'
+				$post_states['custom-state'] = __('Faculty Home', 'dgh-wp-theme');
+			}
+		
+			return $post_states;
+			
 		}
 
   }

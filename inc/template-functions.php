@@ -183,8 +183,13 @@ if ( ! function_exists( 'uw_breadcrumbs' ) ) :
 
 					switch ( get_post_type() ) {
 						case 'dgh_faculty_profile':
-							$html    .= '<li><a href="' . home_url( '/faculty' ) . '" title="faculty">faculty</a>';
-							break;
+							$fac_page = DGH_WP_Theme::dgh_wp_theme_faculty_home_breadcrumb();
+							if ( $fac_page ) {
+								$html    .= '<li><a href="' . home_url( '/'.$fac_page['post_name'] ) . '" title="'.$fac_page['post_title'].'">'.$fac_page['post_title'].'</a>';
+								break;
+							} else {
+								// fall through and use default...
+							}
 						default:
 							$posttype = get_post_type_object( get_post_type() );
 							$html    .= '<li><a href="' . home_url( '/' ) . '" title="' . get_bloginfo( 'title' ) . '">' . get_bloginfo( 'title' ) . '</a>';
