@@ -57,13 +57,11 @@
 		$total_number_of_pages = (int)ceil($fac_total / $posts_per_page);
 
 		// current url
-		$current_faculty_page_url = home_url($_SERVER['REQUEST_URI']);
+		$current_faculty_page_url = home_url( $_SERVER['REQUEST_URI'] );
 		// previous url
-		$previous_faculty_page_url = get_permalink();
-		$previous_faculty_page_url = add_query_arg( 'faculty_page', $previous_faculty_page_number, $previous_faculty_page_url);
+		$previous_faculty_page_url = add_query_arg( 'faculty_page', $previous_faculty_page_number, get_permalink() );
 		// next url
-		$next_faculty_page_url = get_permalink();
-		$next_faculty_page_url = add_query_arg( 'faculty_page', $next_faculty_page_number, $next_faculty_page_url);
+		$next_faculty_page_url = add_query_arg( 'faculty_page', $next_faculty_page_number, get_permalink() );
 
 		// do we have a querystring?
 		if ( isset( $_GET['faculty_page'] ) ) {
@@ -81,11 +79,9 @@
 				// dynamic offset
 				$offset = $current_faculty_page_number * $posts_per_page;
 				// next page url
-				$next_faculty_page_url = get_permalink();
-				$next_faculty_page_url = add_query_arg( 'faculty_page', $next_faculty_page_number, $next_faculty_page_url);
+				$next_faculty_page_url = add_query_arg( 'faculty_page', $next_faculty_page_number, get_permalink() );
 				// previous page link
-				$previous_faculty_page_url = get_permalink();
-				$previous_faculty_page_url = add_query_arg( 'faculty_page', $previous_faculty_page_number, $previous_faculty_page_url);
+				$previous_faculty_page_url = add_query_arg( 'faculty_page', $previous_faculty_page_number, get_permalink() );
 			} else {
 				$posts_per_page = -1;
 				$offset = 0;
@@ -97,8 +93,7 @@
 		<h2 class="screen-reader-text"><?php _e( 'Faculty pagination', 'dgh-wp-theme' ); ?></h2>
 		<?php
 		// view all button
-		$view_all_url = get_permalink();
-		$view_all_url = add_query_arg( 'faculty_page', 'all', $view_all_url);
+		$view_all_url = add_query_arg( 'faculty_page', 'all', get_permalink() );
 		$btn_style = 'secondary';
 		if ( isset( $_GET['faculty_page'] ) && 'all' == strtolower( $_GET['faculty_page'] ) ) { 
 			$btn_style = 'primary'; 
@@ -113,8 +108,7 @@
 			if ( isset( $_GET['faculty_page'] ) && 'all' == strtolower( $_GET['faculty_page'] ) ) { 
 				$btn_style = 'secondary'; 
 			}
-			$faculty_page_url = get_permalink();
-			$faculty_page_url = add_query_arg( 'faculty_page', $i, $faculty_page_url);
+			$faculty_page_url = add_query_arg( 'faculty_page', $i, get_permalink() );
 			$display_number = $i + 1;
 			echo do_shortcode( '[uw_button id="btn-faculty-page-'.$i.'" style="'.$btn_style.'" size="small" target="'.esc_url($faculty_page_url).'"]'.$display_number.'[/uw_button]' );
 		}
