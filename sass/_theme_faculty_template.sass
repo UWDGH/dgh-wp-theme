@@ -1,10 +1,15 @@
-/* faculty template
+/* faculty home template
 .entry-content
     &.entry-content-faculty
         .faculty-pagination
             text-align: end
             white-space: nowrap
             overflow-x: auto
+            #faculty-pagination-status
+                font-family: Encode Sans Compressed, sans-serif
+                font-weight: 400
+                font-size: 14px
+                color: $granitegray
         #btn-faculty-view-all
             &::after
                 display: inline-block
@@ -15,3 +20,58 @@
                 border-right: 1px solid $uwHuskyPurple
                 transform: rotate(15deg)
                 text-decoration: none
+        #faculty-list
+            padding: 0 20px
+            margin: 0 -20px
+            border: 1px solid $antiflashwhite
+            background-color: $seasalt
+
+/* faculty profile template
+.dgh_faculty_profile-template
+    .entry-content
+        &.entry-content-faculty-profile
+            .card.large
+                .image-large
+                @media (max-width: 299px)
+                    grid-template-columns: 1fr
+                    grid-template-rows: 1fr 1.25fr
+                @media (min-width: 300px)
+                    grid-template-columns: 1fr
+                    grid-template-rows: 1fr 1fr
+                @media (min-width: 400px)
+                    grid-template-columns: 1fr
+                    grid-template-rows: 1fr 1fr
+                @media (min-width: 460px)
+                    grid-template-columns: 1fr
+                    grid-template-rows: 1.25fr 1fr
+                @media (min-width: 640px)
+                    grid-template-columns: 1.75fr 2fr
+                    grid-template-rows: 1fr
+                @media (min-width: 768px)
+                    grid-template-columns: 1fr 2.5fr
+                    grid-template-rows: 1fr
+                @media (min-width: 992px)
+                    grid-template-columns: 1fr
+                    grid-template-rows: 1.5fr 1fr
+                @media (min-width: 1076px)
+                    grid-template-columns: 1fr
+                    grid-template-rows: 1.5fr 1fr
+                @media (min-width: 1200px)
+                    grid-template-columns: 1fr
+                    grid-template-rows: 1.75fr 1fr
+                @media (min-width: 1400px)
+                    grid-template-columns: 1fr 1fr
+                    grid-template-rows: 1fr
+                @media (min-width: 1460px)
+                    grid-template-columns: 1.5fr 2fr
+                    grid-template-rows: 1fr
+                @media (min-width: 1540px)
+                    grid-template-columns: 1.5fr 2fr
+                    grid-template-rows: 1fr
+                @media (min-width: 1600px)
+                    grid-template-columns: 1.75fr 1.25fr
+                    grid-template-rows: 1fr
+            .fac-appts
+                font-family: Encode Sans Compressed, sans-serif
+                font-weight: 600
+                margin-bottom: 1rem
