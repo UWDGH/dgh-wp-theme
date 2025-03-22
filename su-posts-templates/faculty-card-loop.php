@@ -33,6 +33,33 @@
 			$the_ID = get_the_ID();
 
 			$fac_title = get_the_title( $the_ID );
+			do_action('qm/debug', $fac_title );
+
+			// appointments
+			$fac_appt_block = '<div class="faculty-appts" style="font-family: Encode Sans Compressed, sans-serif; font-weight: 500;">';
+			$fac_appt = '[Placeholder Title, Department Name]';
+			$fac_appt_ttl_dept = get_post_meta( $post->ID, '_dgh_fac_appt_ttl_dept', true );
+			do_action('qm/debug', $fac_appt_ttl_dept );
+			if ( !empty($fac_appt_ttl_dept) ) {
+				$fac_appt = '<div>'.$fac_appt_ttl_dept.'</div>';
+			}
+			$fac_appts = get_post_meta( $post->ID, '_dgh_fac_appts' );
+			do_action('qm/debug', empty($fac_appts[0]) );
+			$fac_job_title = get_post_meta( $post->ID, '_dgh_fac_job_title' );
+			do_action('qm/debug', empty($fac_job_title[0]) );
+			if ( !empty($fac_appts[0]) ) {
+				$fac_appt = '<div>'.$fac_appts[0][0].'</div>';
+				// if ( !empty( $fac_appts[0][1] ) ) {
+				// 	$fac_appt .= '<div>'.$fac_appts[0][1].'</div>';
+				// }
+			} elseif ( !empty($fac_job_title[0]) ) {
+				$fac_appt = '<div>'.$fac_job_title[0][0].'</div>';
+				// if ( !empty( $fac_job_title[0][1] ) ) {
+				// 	$fac_appt .= '<div>'.$fac_job_title[0][1].'</div>';
+				// }
+			}
+			$fac_appt_block .= $fac_appt;
+			$fac_appt_block .= '</div>';
 
 			$fac_research_interests = get_post_meta( $post->ID, '_dgh_fac_research_interests', true );
 			// do_action('qm/debug', empty($fac_research_interests) );
@@ -46,10 +73,13 @@
 				FAC_EXPERTISE;
 			}
 
-			$uw_card_image = get_stylesheet_directory_uri() . '/assets/img/profile-placeholder.png';
+			$image_url = get_stylesheet_directory_uri() . '/assets/img/profile-placeholder.png';
+			$alt_text = '';
 			$modal_thumbnail = '';
 			if ( has_post_thumbnail( $the_ID ) ) {
-				$uw_card_image = get_the_post_thumbnail_url( $the_ID );
+				$image_url = get_the_post_thumbnail_url( $the_ID );
+				$att_id = attachment_url_to_postid( $image_url );
+				$alt_text = wp_get_attachment_caption( $att_id );
 				$modal_thumbnail = get_the_post_thumbnail( $post, 'thumbnail', array( 'class' => 'alignleft' ) );
 			}
 
@@ -59,8 +89,9 @@
 			if ( !empty( $fac_research_interests ) ){
 				$fac_bio .= '<h3>Areas of expertise</h3>'.$fac_research_interests;
 			}
+			$fac_bio .= '<div style="text-align: end;">[uw_button style="arrow" size="small" color="white" target="'.$fac_permalink.'"]Go to profile page[/uw_button]</div>';
 			$bio_modal = <<<FAC_BIO
-			[uw_modal id="uw-modal-{$the_ID}" title="{$fac_title}" width="default" color="gold" button="bio" position="center" size="small"]
+			[uw_modal id="uw-modal-{$the_ID}" title="{$fac_title}" width="default" color="gold" button="view more" position="center" size="small"]
 			{$modal_thumbnail}{$fac_bio}
 			[/uw_modal] 
 			FAC_BIO;
@@ -75,13 +106,12 @@
 			align="right" 
 			color="white" 
 			titletag="h3" 
-			image="{$uw_card_image}" 
-			alt="Profile photo of {$fac_title}" title="{$fac_title}" 
+			image="{$image_url}" 
+			alt="{$alt_text}" 
+			title="{$fac_title}" 
 			button="Go to profile page" 
-			link="{$fac_permalink}"
-			stretched_link="true"]
-			<strong>Professional Title, Global Health</strong><br>
-			<strong>Second Professional Title, Other Department or School</strong>
+			link="{$fac_permalink}"]
+			{$fac_appt_block}
 			{$bio_modal}
 			[/uw_card]
 			[/col]
