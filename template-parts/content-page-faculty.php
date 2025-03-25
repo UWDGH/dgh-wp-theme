@@ -120,8 +120,19 @@
 		// page nummber buttons
 		content_page_faculty_page_buttons( $total_number_of_pages, $current_faculty_page_number );
 		?>
-		<div id="faculty-pagination-status">
-			<div>Displaying<?php echo ( -1 == $posts_per_page ) ? ' all faculty.' : ' ' . $posts_per_page . ' of ' . $fac_total . ' faculty, starting at ' . ($posts_per_page * $current_faculty_page_number + 1) ; ?></div>
+		<div id="faculty-pagination-status" role="status" aria-atomic="true">
+			<span>Displaying 
+				<?php if ( -1 == $posts_per_page ) : ?>
+					all faculty.
+				<?php else: ?>
+					<?php if ( $total_number_of_pages == $current_faculty_page_number + 1 ) : ?>
+						<?php echo ( $fac_total % $posts_per_page ) . ' of ' . $fac_total ;?>
+					<?php else: ?>
+						<?php echo $posts_per_page . ' of ' . $fac_total ;?>
+					<?php endif; ?>
+					<?php echo ' faculty, starting at ' . ($posts_per_page * $current_faculty_page_number + 1) ;?>
+				<?php endif; ?>
+			</span>
 		</div>
 		</nav>
 		<div id="faculty-list">
