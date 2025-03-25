@@ -5,6 +5,9 @@
  * @link: https://make.wordpress.org/core/2016/11/03/post-type-templates-in-4-7/
  */
 
+// add js script file for the faculty page
+add_action( 'wp_enqueue_scripts', array( 'DGH_WP_Theme', 'dgh_wp_theme_enqueue_page_faculty_scripts' ) );
+
 get_header();
 $sidebar = get_post_meta($post->ID, "sidebar");   ?>
 
