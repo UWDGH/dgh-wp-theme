@@ -125,7 +125,7 @@
 				<?php if ( -1 == $posts_per_page ) : ?>
 					all faculty.
 				<?php else: ?>
-					<?php if ( $total_number_of_pages == $current_faculty_page_number + 1 ) : ?>
+					<?php if ( ( $total_number_of_pages == $current_faculty_page_number + 1 ) && ( 0 !== $fac_total % $posts_per_page ) ) : ?>
 						<?php echo ( $fac_total % $posts_per_page ) . ' of ' . $fac_total ;?>
 					<?php else: ?>
 						<?php echo $posts_per_page . ' of ' . $fac_total ;?>
