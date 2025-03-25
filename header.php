@@ -88,8 +88,8 @@
 		<header id="masthead" class="site-header">
 			<div class="navbar navbar-expand-lg">
 				<div class="navbar-brand site-branding">
-					<a href="https://www.washington.edu/" title="University of Washington Home" class="uw-patch" tabindex="0">University of Washington</a>
-					<a href="<?php echo home_url('/'); ?>" title="<?php echo get_bloginfo('name'); ?> Home" class="uw-wordmark" tabindex="-1" aria-hidden="true"><?php echo get_bloginfo('name'); ?> - <?php echo get_bloginfo('description'); ?></a>
+					<a href="https://www.washington.edu/" title="University of Washington Home" class="uw-patch" tabindex="-1" aria-hidden="true">University of Washington</a>
+					<a href="<?php echo home_url('/'); ?>" title="<?php echo get_bloginfo('name'); ?> Home" class="uw-wordmark" tabindex="0" aria-hidden="false"><?php echo get_bloginfo('name'); ?> - <?php echo get_bloginfo('description'); ?></a>
 				</div><!-- .site-branding -->
 
 				<div id="site-navigation" class="main-navigation" aria-label="<?php esc_attr_e( 'related links', 'uw_wp_theme' ); ?>" role="navigation">
