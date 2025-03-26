@@ -7,7 +7,7 @@
  */
 
 get_header();
-$sidebar = get_post_meta($post->ID, "sidebar");   ?>
+// $sidebar = get_post_meta($post->ID, "sidebar");   ?>
 
 <div class="container-fluid ">
 <?php echo uw_breadcrumbs(); ?>
@@ -16,7 +16,7 @@ $sidebar = get_post_meta($post->ID, "sidebar");   ?>
 <div class="container-fluid uw-body">
 	<div class="row">
 
-		<main id="primary" class="site-main uw-body-copy col-md-<?php echo ( ( ! isset( $sidebar[0] ) || 'on' !== $sidebar[0] ) ? '8' : '12' ); ?>">
+		<main id="primary" class="site-main uw-body-copy col-sm-12<?php //echo ( ( ! isset( $sidebar[0] ) || 'on' !== $sidebar[0] ) ? '8' : '12' ); ?>">
 		
 		<?php
 		while ( have_posts() ) : the_post();
@@ -29,9 +29,9 @@ $sidebar = get_post_meta($post->ID, "sidebar");   ?>
 		</main><!-- #primary -->
 
 		<?php
-		if ( ! isset( $sidebar[0] ) || 'on' !== $sidebar[0] ) {
-			get_sidebar();
-		}
+		// if ( ! isset( $sidebar[0] ) || 'on' !== $sidebar[0] ) {
+		// 	get_sidebar();
+		// }
 		?>
 
 	</div><!-- .row -->
