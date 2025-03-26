@@ -10,8 +10,6 @@
 	// and the DOM is ready.
 	$(document).ready(function( $ ) {
 
-		//a11y: add tabindex attr to pagination button links
-		$( 'a[id^=btn-faculty-page-], #btn-faculty-view-all' ).attr( 'tabindex', "0" );
 		//a11y: add list role to the cards grid
 		$( '#faculty-cards' )
 			.attr( 'role', 'list' )
