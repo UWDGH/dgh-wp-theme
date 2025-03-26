@@ -154,8 +154,26 @@ if ( !class_exists( 'DGH_WP_Theme' ) ) {
 			$UW_WP_Child_Theme = array( 'admin_ajax_url' => admin_url('admin-ajax.php') );
 			wp_localize_script( 'dgh-wp-theme', 'UW_WP_Child_Theme', $UW_WP_Child_Theme );
 
-		}
+			// register script for faculty page
+			// enqueue hook invoked from template
+			wp_register_script('dgh-wp-theme-page-faculty', get_stylesheet_directory_uri() . '/js/dgh-wp-theme-page-faculty.js', array('jquery'));
 
+		}
+	
+	/**
+	 * callback function for hook wp_enqueue_scripts
+	 */
+	static function dgh_wp_theme_enqueue_page_faculty_scripts() {
+
+		wp_enqueue_script('dgh-wp-theme-page-faculty');
+		// localize script with 'DGH_Faculty' object and 'admin_ajax_url' key => value
+		$DGH_Faculty = array( 
+				'admin_ajax_url' => admin_url('admin-ajax.php'),
+				'nonce' => wp_create_nonce('page-faculty-nonce'),
+			 );
+		wp_localize_script( 'dgh-wp-theme-page-faculty', 'DGH_Faculty', $DGH_Faculty );
+
+	}
     /**
     * Callback function for hook init
     * Builds the default audience menu for DGH.
