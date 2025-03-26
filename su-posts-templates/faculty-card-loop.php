@@ -34,45 +34,27 @@
 			$the_ID = get_the_ID();
 
 			$fac_title = get_the_title( $the_ID );
-			do_action('qm/debug', $fac_title );
+			// do_action('qm/debug', $fac_title );
 
 			// appointments
 			$fac_appt_block = '<div class="faculty-appts" style="font-family: Encode Sans Compressed, sans-serif; font-weight: 500;">';
 			$fac_appt = '[Placeholder Title, Department Name]';
 			$fac_appt_ttl_dept = get_post_meta( $post->ID, '_dgh_fac_appt_ttl_dept', true );
-			do_action('qm/debug', $fac_appt_ttl_dept );
+			// do_action('qm/debug', $fac_appt_ttl_dept );
 			if ( !empty($fac_appt_ttl_dept) ) {
 				$fac_appt = '<div>'.$fac_appt_ttl_dept.'</div>';
 			}
 			$fac_appts = get_post_meta( $post->ID, '_dgh_fac_appts' );
-			do_action('qm/debug', empty($fac_appts[0]) );
+			// do_action('qm/debug', empty($fac_appts[0]) );
 			$fac_job_title = get_post_meta( $post->ID, '_dgh_fac_job_title' );
-			do_action('qm/debug', empty($fac_job_title[0]) );
+			// do_action('qm/debug', empty($fac_job_title[0]) );
 			if ( !empty($fac_appts[0]) ) {
-				$fac_appt = '<div>'.$fac_appts[0][0].'</div>';
-				// if ( !empty( $fac_appts[0][1] ) ) {
-				// 	$fac_appt .= '<div>'.$fac_appts[0][1].'</div>';
-				// }
+				$fac_appt = '<div>'.$fac_appts[0][0].'</div>';	// only get the first appt
 			} elseif ( !empty($fac_job_title[0]) ) {
-				$fac_appt = '<div>'.$fac_job_title[0][0].'</div>';
-				// if ( !empty( $fac_job_title[0][1] ) ) {
-				// 	$fac_appt .= '<div>'.$fac_job_title[0][1].'</div>';
-				// }
+				$fac_appt = '<div>'.$fac_job_title[0][0].'</div>';	// only get the first job_title
 			}
 			$fac_appt_block .= $fac_appt;
 			$fac_appt_block .= '</div>';
-
-			$fac_research_interests = get_post_meta( $post->ID, '_dgh_fac_research_interests', true );
-			// do_action('qm/debug', empty($fac_research_interests) );
-			$fac_expertise = '';
-			if ( !empty($fac_research_interests) ){
-				// $fac_research_interests = wp_trim_words( $fac_research_interests, 15, '&hellip;' );
-				$fac_expertise = <<<FAC_EXPERTISE
-				<p class="fac-expertise">
-				<strong>Expertise: </strong>{$fac_research_interests}
-				</p>
-				FAC_EXPERTISE;
-			}
 
 			$image_url = get_stylesheet_directory_uri() . '/assets/img/profile-placeholder.png';
 			$alt_text = '';
@@ -87,6 +69,7 @@
 			$fac_permalink = get_the_permalink( $the_ID );
 
 			$fac_bio = apply_filters( 'the_content', get_the_content( $post ) );
+			$fac_research_interests = get_post_meta( $post->ID, '_dgh_fac_research_interests', true );
 			if ( !empty( $fac_research_interests ) ){
 				$fac_bio .= '<h3>Areas of expertise</h3>'.$fac_research_interests;
 			}
