@@ -88,75 +88,59 @@
 			}
 		}
 		
-		/**
-		 * print the page number buttons
-		 */
-		function content_page_faculty_page_buttons( $total_number_of_pages, $current_faculty_page_number) {
-			for($i = 0; $i < $total_number_of_pages; $i++) {
-				$btn_style = 'primary';
-				if ( $i != $current_faculty_page_number ) { 
-					$btn_style = 'secondary'; 
-				}
-				if ( isset( $_GET['faculty_page'] ) && 'all' == strtolower( $_GET['faculty_page'] ) ) { 
-					$btn_style = 'secondary'; 
-				}
-				$faculty_page_url = add_query_arg( 'faculty_page', $i, get_permalink() );
-				$display_number = $i + 1;
-				echo do_shortcode( '[uw_button id="btn-faculty-page-'.$i.'" style="'.$btn_style.'" size="small" target="'.esc_url($faculty_page_url).'"]'.$display_number.'[/uw_button]' );
+		?>
+		<nav class="faculty-pagination" aria-labelledby="faculty-pagination">
+			<h2 id="faculty-pagination" class="screen-reader-text"><?php _e( 'Faculty pagination', 'dgh-wp-theme' ); ?></h2>
+			<?php
+			// view all button
+			$view_all_url = add_query_arg( 'faculty_page', 'all', get_permalink() );
+			$btn_style = 'secondary';
+			if ( isset( $_GET['faculty_page'] ) && 'all' == strtolower( $_GET['faculty_page'] ) ) { 
+				$btn_style = 'primary'; 
 			}
-		}
-
-		?>
-		<nav class="faculty-pagination" aria-label="Pagination">
-		<h2 class="screen-reader-text"><?php _e( 'Faculty pagination', 'dgh-wp-theme' ); ?></h2>
-		<?php
-		// view all button
-		$view_all_url = add_query_arg( 'faculty_page', 'all', get_permalink() );
-		$btn_style = 'secondary';
-		if ( isset( $_GET['faculty_page'] ) && 'all' == strtolower( $_GET['faculty_page'] ) ) { 
-			$btn_style = 'primary'; 
-		}
-		echo do_shortcode( '[uw_button id="btn-faculty-view-all" style="'.$btn_style.'" size="small" target="'.esc_url($view_all_url).'"]'.__('View all','dgh-wp-theme').'[/uw_button]' );
-		// page nummber buttons
-		content_page_faculty_page_buttons( $total_number_of_pages, $current_faculty_page_number );
-		?>
-		<div id="faculty-pagination-status" role="status" aria-atomic="true">
-			<span>Displaying 
-				<?php if ( -1 == $posts_per_page ) : ?>
-					all faculty.
-				<?php else: ?>
-					<?php if ( ( $total_number_of_pages == $current_faculty_page_number + 1 ) && ( 0 !== $fac_total % $posts_per_page ) ) : ?>
-						<?php echo ( $fac_total % $posts_per_page ) . ' of ' . $fac_total ;?>
+			echo do_shortcode( '[uw_button id="btn-faculty-view-all" style="'.$btn_style.'" size="small" target="'.esc_url($view_all_url).'"]'.__('View all','dgh-wp-theme').'[/uw_button]' );
+			// page nummber buttons
+			content_page_faculty_page_buttons( $total_number_of_pages, $current_faculty_page_number );
+			?>
+			<div role="status" aria-atomic="true" aria-labelledby="faculty-list-status" class="faculty-list-status">
+			<h3 id="faculty-list-status" class="screen-reader-text"><?php _e( 'Faculty list status', 'dgh-wp-theme' ); ?></h3>
+				<span>Displaying 
+					<?php if ( -1 == $posts_per_page ) : ?>
+						all faculty.
 					<?php else: ?>
-						<?php echo $posts_per_page . ' of ' . $fac_total ;?>
+						<?php if ( ( $total_number_of_pages == $current_faculty_page_number + 1 ) && ( 0 !== $fac_total % $posts_per_page ) ) : ?>
+							<?php echo ( $fac_total % $posts_per_page ) . ' of ' . $fac_total ;?>
+						<?php else: ?>
+							<?php echo $posts_per_page . ' of ' . $fac_total ;?>
+						<?php endif; ?>
+						<?php echo ' faculty, starting at ' . ($posts_per_page * $current_faculty_page_number + 1) ;?>
 					<?php endif; ?>
-					<?php echo ' faculty, starting at ' . ($posts_per_page * $current_faculty_page_number + 1) ;?>
-				<?php endif; ?>
-			</span>
-		</div>
+				</span>
+			</div>
 		</nav>
-		<div id="faculty-list">
-		<?php
+		<section aria-labelledby="faculty-listing">
+			<h2 id="faculty-listing" class="screen-reader-text"><?php _e( 'Faculty list', 'dgh-wp-theme' ); ?></h2>
+			<?php
 
-		// construct the su_post shortcode that calls the loop template
-		$fac_list = <<<FAC_LIST
-		[su_posts template="su-posts-templates/faculty-card-loop.php" posts_per_page="{$posts_per_page}" offset="{$offset}" post_type="dgh_faculty_profile" orderby="meta_value" meta_key="_dgh_fac_name1" order="asc"]
-		FAC_LIST;
+			// construct the su_post shortcode that calls the loop template
+			$fac_list = <<<FAC_LIST
+			[su_posts template="su-posts-templates/faculty-card-loop.php" posts_per_page="{$posts_per_page}" offset="{$offset}" post_type="dgh_faculty_profile" orderby="meta_value" meta_key="_dgh_fac_name1" order="asc"]
+			FAC_LIST;
 
-		echo do_shortcode( $fac_list );
+			echo do_shortcode( $fac_list );
 
-		// the_content();
+			// the_content();
 
-		// wp_link_pages(
-		// 	array(
-		// 		'before' => '<div class="page-links">' . esc_html__( 'Pages:', 'uw_wp_theme' ),
-		// 		'after'  => '</div>',
-		// 	)
-		// );
-		?>
-		</div>
-		<nav class="navigation post-navigation faculty-navigation" aria-label="Pagination">
-			<h2 class="screen-reader-text"><?php _e( 'Faculty page navigation', 'dgh-wp-theme' ); ?></h2>
+			// wp_link_pages(
+			// 	array(
+			// 		'before' => '<div class="page-links">' . esc_html__( 'Pages:', 'uw_wp_theme' ),
+			// 		'after'  => '</div>',
+			// 	)
+			// );
+			?>
+		</section>
+		<nav class="navigation post-navigation faculty-navigation" aria-labelledby="faculty-navigation">
+			<h2 id="faculty-navigation" class="screen-reader-text"><?php _e( 'Faculty page navigation', 'dgh-wp-theme' ); ?></h2>
 			<div class="nav-links">
 				<?php if ( $previous_faculty_page_number >= 0) : ?>
 				<div class="nav-previous">
@@ -180,12 +164,12 @@
 				<?php endif; ?>
 			</div>
 		</nav>
-		<nav class="faculty-pagination faculty-pagination--centered" aria-label="Pagination">
-		<h2 class="screen-reader-text"><?php _e( 'Faculty pagination', 'dgh-wp-theme' ); ?></h2>
-		<?php
-		// page nummber buttons
-		content_page_faculty_page_buttons( $total_number_of_pages, $current_faculty_page_number );
-		?>
+		<nav class="faculty-pagination faculty-pagination--centered" aria-label="Faculty pagination">
+			<h2 class="screen-reader-text"><?php _e( 'Faculty pagination', 'dgh-wp-theme' ); ?></h2>
+			<?php
+			// page nummber buttons
+			content_page_faculty_page_buttons( $total_number_of_pages, $current_faculty_page_number );
+			?>
 		</nav>
 	</div><!-- .entry-content -->
 
@@ -197,3 +181,24 @@
 		</footer><!-- .entry-footer -->
 	<?php endif; ?>
 </article><!-- #post-<?php the_ID(); ?> -->
+
+<?php
+
+/**
+ * helper function
+ * print the page number buttons
+ */
+function content_page_faculty_page_buttons( $total_number_of_pages, $current_faculty_page_number) {
+	for($i = 0; $i < $total_number_of_pages; $i++) {
+		$btn_style = 'primary';
+		if ( $i != $current_faculty_page_number ) { 
+			$btn_style = 'secondary'; 
+		}
+		if ( isset( $_GET['faculty_page'] ) && 'all' == strtolower( $_GET['faculty_page'] ) ) { 
+			$btn_style = 'secondary'; 
+		}
+		$faculty_page_url = add_query_arg( 'faculty_page', $i, get_permalink() );
+		$display_number = $i + 1;
+		echo do_shortcode( '[uw_button id="btn-faculty-page-'.$i.'" style="'.$btn_style.'" size="small" target="'.esc_url($faculty_page_url).'"]<span class="screen-reader-text">'.__( 'Navigate to page ', 'dgh-wp-theme' ).'</span>'.$display_number.'[/uw_button]' );
+	}
+}
