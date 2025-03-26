@@ -79,6 +79,12 @@ if ( !class_exists( 'DGH_WP_Theme' ) ) {
 			 * implement hook wp_dashboard_setup
 			 */
 			add_action( 'wp_dashboard_setup', array( __CLASS__, 'dgh_wp_theme_dashboard_setup' ) );
+			
+			/**
+			 * implement hook wp_ajax_{action} and wp_ajax_nopriv_{action}
+			 */
+			// add_action( 'wp_ajax_dgh_wp_theme_fac_ajax_callback', array( __CLASS__, 'dgh_wp_theme_fac_ajax_callback' ) );
+			// add_action( 'wp_ajax_nopriv_dgh_wp_theme_fac_ajax_callback', array( __CLASS__, 'dgh_wp_theme_fac_ajax_callback' ) );
 
 		}
 		
@@ -457,6 +463,45 @@ if ( !class_exists( 'DGH_WP_Theme' ) ) {
 			return $post_states;
 			
 		}
+
+		/**
+		 * callback function for hook wp_ajax_nopriv_{action}
+		 */
+		// static function dgh_wp_theme_fac_ajax_callback() {
+		// 	error_log( print_r( $_GET['faculty_page'], true ) );
+
+		// 	// defaults
+		// 	// $current_faculty_page_number = 0;
+		// 	// $previous_faculty_page_number = -1;
+		// 	// $next_faculty_page_number = 1;
+		// 	$offset = 0;
+		// 	$posts_per_page = 4;
+
+		// 	if ( isset( $_GET['faculty_page'] ) ) {
+		// 		if ( $_GET['faculty_page'] == 'all' ) {
+		// 			$posts_per_page = -1;
+		// 		} else {
+		// 			$offset = $_GET['faculty_page'];
+		// 		}
+		// 	}
+
+		// 	$fac_list = <<<FAC_LIST
+		// 	[su_posts template="su-posts-templates/faculty-card-loop.php" posts_per_page="{$posts_per_page}" offset="{$offset}" post_type="dgh_faculty_profile" orderby="meta_value" meta_key="_dgh_fac_name1" order="asc"]
+		// 	FAC_LIST;
+		// 	echo do_shortcode( $fac_list );
+
+		// 	// $retval = 'foobar';
+		// 	// if ( isset( $_POST['henkie'] ) ) {
+		// 	// 	$retval = array(
+		// 	// 		'html' => $_POST['henkie'],
+		// 	// 	);
+		// 	// }
+		// 	// echo json_encode($retval, JSON_PRETTY_PRINT);
+
+		// 	// Don't forget to stop execution afterward.
+		// 	wp_die();
+
+		// }
 
   }
 
