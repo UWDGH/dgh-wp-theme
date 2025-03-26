@@ -16,6 +16,7 @@
 			.attr( 'aria-describedby', 'faculty-cards-description');
 		//a11y: add listitem role to each su card container
 		$( '.su-post-faculty-card' )
+			// .attr( 'tabindex', '0' )
 			.attr( 'role', 'listitem' );
 		
 	});
