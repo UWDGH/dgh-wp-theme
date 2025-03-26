@@ -13,6 +13,7 @@
 ?>
 
 <div class="su-posts su-posts-dgh-faculty-card <?php echo esc_attr( $atts['class'] ); ?>">
+	<p id="faculty-cards-description" class="screen-reader-text"><?php _e( 'A listing of faculty, presented visually as cards. Showing a profile image on one side of the card, and their name, appointment title, email address, and a link to their faculty page on the other side of the card.', 'dgh-wp-theme' ); ?></p>
 
 	<?php if ( $posts->have_posts() ) : ?>
 		
@@ -91,11 +92,15 @@
 			}
 			$fac_bio .= '<div style="text-align: end;">[uw_button style="arrow" size="small" color="white" target="'.$fac_permalink.'"]Go to profile page[/uw_button]</div>';
 			$bio_modal = <<<FAC_BIO
-			[uw_modal id="uw-modal-{$the_ID}" title="{$fac_title}" width="default" color="gold" button="view more" position="center" size="small"]
+			[uw_modal id="uw-modal-{$the_ID}" title="{$fac_title}" width="default" color="gold" button="preview" position="center" size="small"]
 			{$modal_thumbnail}{$fac_bio}
 			[/uw_modal] 
 			FAC_BIO;
 
+			$fac_email = get_post_meta( $post->ID, '_dgh_fac_email', true );
+			if ( !empty( $fac_email ) ) {
+				$fac_email  = '<div class="fac-email" data-alt="Email"><a href="'.esc_url( 'mailto:' . $fac_email ).'">'.esc_html( $fac_email ).'</a></div>';
+			}
 
 			// construct uw_card item
 			$uw_card = <<<FACULTY_CARD
@@ -113,6 +118,7 @@
 			link="{$fac_permalink}"]
 			{$fac_appt_block}
 			{$bio_modal}
+			{$fac_email }
 			[/uw_card]
 			[/col]
 			FACULTY_CARD;

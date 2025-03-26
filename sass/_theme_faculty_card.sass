@@ -5,10 +5,10 @@
         .image-large
         @media (max-width: 299px)
             grid-template-columns: 1fr
-            grid-template-rows: 1fr 2fr
+            grid-template-rows: 1.5fr 1fr
         @media (min-width: 300px)
             grid-template-columns: 1fr
-            grid-template-rows: 1.5fr 2fr
+            grid-template-rows: 1.75fr 1fr
         @media (min-width: 400px)
             grid-template-columns: 1fr
             grid-template-rows: 2fr 1fr
@@ -31,8 +31,8 @@
             grid-template-columns: 1fr
             grid-template-rows: 2fr 1fr
         @media (min-width: 1200px)
-            grid-template-columns: 1fr
-            grid-template-rows: 2.25fr 1fr
+            grid-template-columns: 1fr 1fr
+            grid-template-rows: 1fr
         @media (min-width: 1400px)
             grid-template-columns: 1fr 1fr
             grid-template-rows: 1fr
@@ -57,5 +57,21 @@
             margin-left: 0
         .inner-card-body
             max-width: 100%
+            display: flex
+            flex-direction: column
+            height: 100%
             .card-title
                 font-weight: 600
+            p.button
+                margin-top: auto
+                margin-bottom: 1rem
+            .fac-email
+                &::before
+                    content: "✉"
+                    content: "\2709" / attr(data-alt)
+                    display: inline-block
+                    position: relative
+                    width: 30px
+                    top: 2px
+                    font-size: 20px
+                    color: $onyx
