@@ -10,6 +10,9 @@
 	// and the DOM is ready.
 	$(document).ready(function( $ ) {
 
+		//a11y: indicate the current presented list page
+		$( '.faculty-pagination a.btn.primary' )
+			.attr( 'aria-current', true );
 		//a11y: add list role to the cards grid
 		$( '#faculty-cards' )
 			.attr( 'role', 'list' )
