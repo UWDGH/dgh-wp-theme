@@ -69,40 +69,50 @@
 		/**********************************************************/
 		/* catch the response and do we have a valid querystring? */
 		/**********************************************************/
-		$query_args_passed = true;
+		$get_request_passed = false;
+		$query_args_passed = false;
 		$allowed_query_args = array( '_wpnonce', 'page_index' );
-		do_action('qm/debug', $_REQUEST );
-		do_action('qm/debug', $_GET );
-		if ( !empty( $_GET ) ) {
+		// do_action('qm/debug', $_GET );
+		// do_action('qm/debug', count($_GET) );
+
+		// first check if the querystring has 2 args and if those are the allowed args we expect
+		if ( !empty( $_GET ) && ( count($_GET)==2 ) ) {
+			$query_args_passed = true;
 			foreach ($_GET as $arg => $value) {
 				if ( !in_array( $arg, $allowed_query_args, true ) ) {
 					$query_args_passed = false;
 				}
 			}
+			do_action('qm/debug', '$query_args_passed = '.json_encode($query_args_passed) );
+		} else {
+			$query_args_passed = false;
+			do_action('qm/debug', '$query_args_passed = '.json_encode($query_args_passed) );
 		}
-		if ( !empty( $_GET ) && $query_args_passed ) {
-			do_action('qm/debug', '$query_args_passed: '.$query_args_passed );
 
-			if ( !empty($_GET['_wpnonce'] ) ) {
+		// now we can start validating the args values
+		if ( !empty( $_GET ) && $query_args_passed ) {
+
+			if ( !empty( $_GET['_wpnonce'] ) ) {
 
 				$verify_nonce = wp_verify_nonce( $_GET['_wpnonce'], 'dgh-fac-page-nav-action' );
 
 				if  ( $verify_nonce  !== false )  {
-					do_action('qm/debug', '$verify_nonce: '.$verify_nonce );
+					do_action('qm/debug', '$verify_nonce = '.json_encode($verify_nonce) );
+					do_action('qm/debug', '$_GET["page_index"] = '.$_GET['page_index'] );
+					do_action('qm/debug', 'is_numeric = ' . json_encode(is_numeric(  $_GET['page_index'] )) );
 
-					do_action('qm/debug', $_GET['page_index'] );
-					do_action('qm/debug', 'is_numeric ' . is_numeric(  $_GET['page_index'] ) );
-					do_action('qm/debug', 'is_int ' . is_int( $_GET['page_index'] ) );
 					if ( 'all' === strtolower( $_GET['page_index'] ) ) {
 
 						$posts_per_page = -1;
 						$offset = 0;
 
-					} elseif( is_numeric( $_GET['page_index'] ) ) {
+						$get_request_passed = true;
+
+					} elseif ( is_numeric( $_GET['page_index'] ) ) {
 
 						// grab the value
 						$current_faculty_page_index = intval( $_GET['page_index'] );
-						do_action('qm/debug', '$current_faculty_page_index: '.$current_faculty_page_index );
+						do_action('qm/debug', '$current_faculty_page_index = '.$current_faculty_page_index );
 						// if not an int, reset to default
 						// if ( !is_int( (int)$_GET['page_index'] ) ) {
 						// 	$current_faculty_page_index = 0;
@@ -120,16 +130,37 @@
 						$previous_faculty_page_url = add_query_arg( 'page_index', $previous_faculty_page_index, get_permalink() );
 						$previous_faculty_page_url = add_query_arg( '_wpnonce', wp_create_nonce( 'dgh-fac-page-nav-action' ), $previous_faculty_page_url );
 
+						$get_request_passed = true;
+
+					} else {
+
+						// page_index is not 'all' or a number
+						content_page_faculty_page_error_log();
+
 					}
+				
+				} else {
+
+					// nonce verification failed
+					do_action('qm/debug', '$verify_nonce = '.json_encode($verify_nonce) );	//json_encode prints out boolean value as is
+
 				}
+
 			} else {
-				content_page_faculty_page_error_log();
+
+				// empty nonce
+				do_action('qm/debug', '!empty($_GET["_wpnonce"] ) = '. json_encode(!empty($_GET['_wpnonce'])) );
+
 			}
 
 		} elseif ( !empty( $_GET ) ) {
+
+			// in theory, this condition should never be reached
 			content_page_faculty_page_error_log();
+
 		}
 
+		do_action('qm/debug', '$get_request_passed = '.json_encode($get_request_passed) );
 		?>
 		<nav class="faculty-pagination" aria-labelledby="faculty-pagination">
 			<h2 id="faculty-pagination" class="screen-reader-text"><?php _e( 'Faculty pagination', 'dgh-wp-theme' ); ?></h2>
@@ -138,12 +169,12 @@
 			$view_all_url = add_query_arg( 'page_index', 'all', get_permalink() );
 			$view_all_url = add_query_arg( '_wpnonce', wp_create_nonce( 'dgh-fac-page-nav-action' ), $view_all_url );
 			$btn_style = 'secondary';
-			if ( isset( $_GET['page_index'] ) && 'all' === strtolower( $_GET['page_index'] ) ) { 
+			if ( isset( $_GET['page_index'] ) && 'all' === strtolower( $_GET['page_index'] ) && $get_request_passed ) { 
 				$btn_style = 'primary'; 
 			}
 			echo do_shortcode( '[uw_button id="btn-faculty-view-all" style="'.$btn_style.'" size="small" target="'.esc_url($view_all_url).'"]'.__('View all faculty','dgh-wp-theme').'[/uw_button]' );
 			// page nummber buttons
-			content_page_faculty_page_buttons( $total_number_of_pages, $current_faculty_page_index );
+			content_page_faculty_page_buttons( $total_number_of_pages, $current_faculty_page_index, $get_request_passed );
 			?>
 			<div role="status" aria-atomic="true" aria-labelledby="faculty-list-status" class="faculty-list-status">
 			<h2 id="faculty-list-status" class="screen-reader-text"><?php _e( 'Faculty list status', 'dgh-wp-theme' ); ?></h2>
@@ -211,7 +242,7 @@
 			<h2 class="screen-reader-text"><?php _e( 'Faculty pagination', 'dgh-wp-theme' ); ?></h2>
 			<?php
 			// page nummber buttons
-			content_page_faculty_page_buttons( $total_number_of_pages, $current_faculty_page_index );
+			content_page_faculty_page_buttons( $total_number_of_pages, $current_faculty_page_index, $get_request_passed );
 			?>
 		</nav>
 	</div><!-- .entry-content -->
@@ -231,7 +262,7 @@
  * helper function
  * print the page number buttons
  */
-function content_page_faculty_page_buttons( $total_number_of_pages, $current_faculty_page_index) {
+function content_page_faculty_page_buttons( $total_number_of_pages, $current_faculty_page_index, $get_request_passed) {
 	for($i = 0; $i < $total_number_of_pages; $i++) {
 		$btn_style = 'primary';
 		if ( $i != $current_faculty_page_index ) { 
@@ -239,6 +270,9 @@ function content_page_faculty_page_buttons( $total_number_of_pages, $current_fac
 		}
 		if ( isset( $_GET['page_index'] ) && 'all' == strtolower( $_GET['page_index'] ) ) { 
 			$btn_style = 'secondary'; 
+		}
+		if ( !$get_request_passed ) {
+			$btn_style = 'secondary';
 		}
 		$faculty_page_url = add_query_arg( 'page_index', $i, get_permalink() );
 		$faculty_page_url = add_query_arg( '_wpnonce', wp_create_nonce( 'dgh-fac-page-nav-action' ), $faculty_page_url );
