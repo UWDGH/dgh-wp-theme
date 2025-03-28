@@ -47,73 +47,116 @@
 		( is_array( $fac ) ) ? $fac_total = count($fac) : $fac_total = 0; 
 		
 		// defaults
-		$current_faculty_page_number = 0;
-		$previous_faculty_page_number = -1;
-		$next_faculty_page_number = 1;
+		$current_faculty_page_index = 0;
+		$previous_faculty_page_index = -1;
+		$next_faculty_page_index = 1;
 		$offset = 0;
-		$posts_per_page = 4;
+		$posts_per_page = 8;
 		
 		// total number of pages
 		$total_number_of_pages = (int)ceil($fac_total / $posts_per_page);
 
 		// current url
 		$current_faculty_page_url = home_url( $_SERVER['REQUEST_URI'] );
+		do_action('qm/debug', $current_faculty_page_url );
 		// previous url
-		$previous_faculty_page_url = add_query_arg( 'faculty_page', $previous_faculty_page_number, get_permalink() );
+		$previous_faculty_page_url = add_query_arg( 'page_index', $previous_faculty_page_index, get_permalink() );
+		$previous_faculty_page_url = add_query_arg( '_wpnonce', wp_create_nonce( 'dgh-fac-page-nav-action' ), $previous_faculty_page_url  );
 		// next url
-		$next_faculty_page_url = add_query_arg( 'faculty_page', $next_faculty_page_number, get_permalink() );
+		$next_faculty_page_url = add_query_arg( 'page_index', $next_faculty_page_index, get_permalink() );
+		$next_faculty_page_url = add_query_arg( '_wpnonce', wp_create_nonce( 'dgh-fac-page-nav-action' ), $next_faculty_page_url  );
 
-		// do we have a querystring?
-		if ( isset( $_GET['faculty_page'] ) ) {
-			if ( 'all' != strtolower( $_GET['faculty_page'] ) ) {
-				// grab the value
-				$current_faculty_page_number = $_GET['faculty_page'];
-				// if not an int, reset to default
-				if ( !is_int( (int)$_GET['faculty_page'] ) ) {
-					$current_faculty_page_number = 0;
+		/**********************************************************/
+		/* catch the response and do we have a valid querystring? */
+		/**********************************************************/
+		$query_args_passed = true;
+		$allowed_query_args = array( '_wpnonce', 'page_index' );
+		do_action('qm/debug', $_REQUEST );
+		do_action('qm/debug', $_GET );
+		if ( !empty( $_GET ) ) {
+			foreach ($_GET as $arg => $value) {
+				if ( !in_array( $arg, $allowed_query_args, true ) ) {
+					$query_args_passed = false;
 				}
-				// previous page number
-				$previous_faculty_page_number = $current_faculty_page_number - 1;
-				// next page number
-				$next_faculty_page_number = $current_faculty_page_number + 1;
-				// dynamic offset
-				$offset = $current_faculty_page_number * $posts_per_page;
-				// next page url
-				$next_faculty_page_url = add_query_arg( 'faculty_page', $next_faculty_page_number, get_permalink() );
-				// previous page link
-				$previous_faculty_page_url = add_query_arg( 'faculty_page', $previous_faculty_page_number, get_permalink() );
-			} else {
-				$posts_per_page = -1;
-				$offset = 0;
 			}
 		}
-		
+		if ( !empty( $_GET ) && $query_args_passed ) {
+			do_action('qm/debug', '$query_args_passed: '.$query_args_passed );
+
+			if ( !empty($_GET['_wpnonce'] ) ) {
+
+				$verify_nonce = wp_verify_nonce( $_GET['_wpnonce'], 'dgh-fac-page-nav-action' );
+
+				if  ( $verify_nonce  !== false )  {
+					do_action('qm/debug', '$verify_nonce: '.$verify_nonce );
+
+					do_action('qm/debug', $_GET['page_index'] );
+					do_action('qm/debug', 'is_numeric ' . is_numeric(  $_GET['page_index'] ) );
+					do_action('qm/debug', 'is_int ' . is_int( $_GET['page_index'] ) );
+					if ( 'all' === strtolower( $_GET['page_index'] ) ) {
+
+						$posts_per_page = -1;
+						$offset = 0;
+
+					} elseif( is_numeric( $_GET['page_index'] ) ) {
+
+						// grab the value
+						$current_faculty_page_index = intval( $_GET['page_index'] );
+						do_action('qm/debug', '$current_faculty_page_index: '.$current_faculty_page_index );
+						// if not an int, reset to default
+						// if ( !is_int( (int)$_GET['page_index'] ) ) {
+						// 	$current_faculty_page_index = 0;
+						// }
+						// previous page number
+						$previous_faculty_page_index = $current_faculty_page_index - 1;
+						// next page number
+						$next_faculty_page_index = $current_faculty_page_index + 1;
+						// dynamic offset
+						$offset = $current_faculty_page_index * $posts_per_page;
+						// next page url
+						$next_faculty_page_url = add_query_arg( 'page_index', $next_faculty_page_index, get_permalink() );
+						$next_faculty_page_url = add_query_arg( '_wpnonce', wp_create_nonce( 'dgh-fac-page-nav-action' ), $next_faculty_page_url );
+						// previous page link
+						$previous_faculty_page_url = add_query_arg( 'page_index', $previous_faculty_page_index, get_permalink() );
+						$previous_faculty_page_url = add_query_arg( '_wpnonce', wp_create_nonce( 'dgh-fac-page-nav-action' ), $previous_faculty_page_url );
+
+					}
+				}
+			} else {
+				content_page_faculty_page_error_log();
+			}
+
+		} elseif ( !empty( $_GET ) ) {
+			content_page_faculty_page_error_log();
+		}
+
 		?>
 		<nav class="faculty-pagination" aria-labelledby="faculty-pagination">
 			<h2 id="faculty-pagination" class="screen-reader-text"><?php _e( 'Faculty pagination', 'dgh-wp-theme' ); ?></h2>
 			<?php
 			// view all button
-			$view_all_url = add_query_arg( 'faculty_page', 'all', get_permalink() );
+			$view_all_url = add_query_arg( 'page_index', 'all', get_permalink() );
+			$view_all_url = add_query_arg( '_wpnonce', wp_create_nonce( 'dgh-fac-page-nav-action' ), $view_all_url );
 			$btn_style = 'secondary';
-			if ( isset( $_GET['faculty_page'] ) && 'all' == strtolower( $_GET['faculty_page'] ) ) { 
+			if ( isset( $_GET['page_index'] ) && 'all' === strtolower( $_GET['page_index'] ) ) { 
 				$btn_style = 'primary'; 
 			}
-			echo do_shortcode( '[uw_button id="btn-faculty-view-all" style="'.$btn_style.'" size="small" target="'.esc_url($view_all_url).'"]'.__('View all','dgh-wp-theme').'[/uw_button]' );
+			echo do_shortcode( '[uw_button id="btn-faculty-view-all" style="'.$btn_style.'" size="small" target="'.esc_url($view_all_url).'"]'.__('View all faculty','dgh-wp-theme').'[/uw_button]' );
 			// page nummber buttons
-			content_page_faculty_page_buttons( $total_number_of_pages, $current_faculty_page_number );
+			content_page_faculty_page_buttons( $total_number_of_pages, $current_faculty_page_index );
 			?>
 			<div role="status" aria-atomic="true" aria-labelledby="faculty-list-status" class="faculty-list-status">
-			<h3 id="faculty-list-status" class="screen-reader-text"><?php _e( 'Faculty list status', 'dgh-wp-theme' ); ?></h3>
-				<span>Displaying 
+			<h2 id="faculty-list-status" class="screen-reader-text"><?php _e( 'Faculty list status', 'dgh-wp-theme' ); ?></h2>
+				<span>Faculty list, page <?php echo ( -1 == $posts_per_page ) ? ' 1 ' : ($current_faculty_page_index + 1) . ' of ' . $total_number_of_pages ; ?>. Displaying 
 					<?php if ( -1 == $posts_per_page ) : ?>
-						all faculty.
+						all <?php echo $fac_total; ?> faculty.
 					<?php else: ?>
-						<?php if ( ( $total_number_of_pages == $current_faculty_page_number + 1 ) && ( 0 !== $fac_total % $posts_per_page ) ) : ?>
+						<?php if ( ( $total_number_of_pages == ($current_faculty_page_index + 1) ) && ( 0 !== $fac_total % $posts_per_page ) ) : ?>
 							<?php echo ( $fac_total % $posts_per_page ) . ' of ' . $fac_total ;?>
 						<?php else: ?>
 							<?php echo $posts_per_page . ' of ' . $fac_total ;?>
 						<?php endif; ?>
-						<?php echo ' faculty, starting at ' . ($posts_per_page * $current_faculty_page_number + 1) ;?>
+						 faculty.
 					<?php endif; ?>
 				</span>
 			</div>
@@ -142,21 +185,21 @@
 		<nav class="navigation post-navigation faculty-navigation" aria-labelledby="faculty-navigation">
 			<h2 id="faculty-navigation" class="screen-reader-text"><?php _e( 'Faculty page navigation', 'dgh-wp-theme' ); ?></h2>
 			<div class="nav-links">
-				<?php if ( $previous_faculty_page_number >= 0) : ?>
+				<?php if ( $previous_faculty_page_index >= 0) : ?>
 				<div class="nav-previous">
 					<a href="<?php echo esc_url($previous_faculty_page_url); ?>" rel="prev">
 						<div class="prev-post-text-link">
-							<div class="post-navigation-sub"><span class="prev-arrow"></span><span><strong><?php _e( 'Page '.$previous_faculty_page_number + 1, 'dgh-wp-theme' ); ?></strong></span></div>
+							<div class="post-navigation-sub"><span class="prev-arrow"></span><span><strong><?php _e( 'Page '.$previous_faculty_page_index + 1, 'dgh-wp-theme' ); ?></strong></span></div>
 							<span class="post-navigation-title"><?php _e( 'Previous faculty page', 'dgh-wp-theme' ); ?></span>
 						</div>
 					</a>
 				</div>
 				<?php endif; ?>
-				<?php if ( ( $next_faculty_page_number < $total_number_of_pages ) && ( $posts_per_page != -1 ) ) : ?>
+				<?php if ( ( $next_faculty_page_index < $total_number_of_pages ) && ( $posts_per_page != -1 ) ) : ?>
 				<div class="nav-next">
 					<a href="<?php echo esc_url($next_faculty_page_url); ?>" rel="next">
 						<div class="next-post-text-link">
-							<div class="post-navigation-sub"><span><strong><?php _e( 'Page '.$next_faculty_page_number + 1, 'dgh-wp-theme' ); ?></strong></span><span class="next-arrow"></span></div>
+							<div class="post-navigation-sub"><span><strong><?php _e( 'Page '.$next_faculty_page_index + 1, 'dgh-wp-theme' ); ?></strong></span><span class="next-arrow"></span></div>
 							<span class="post-navigation-title"><?php _e( 'Next faculty page', 'dgh-wp-theme' ); ?></span>
 						</div>
 					</a>
@@ -168,7 +211,7 @@
 			<h2 class="screen-reader-text"><?php _e( 'Faculty pagination', 'dgh-wp-theme' ); ?></h2>
 			<?php
 			// page nummber buttons
-			content_page_faculty_page_buttons( $total_number_of_pages, $current_faculty_page_number );
+			content_page_faculty_page_buttons( $total_number_of_pages, $current_faculty_page_index );
 			?>
 		</nav>
 	</div><!-- .entry-content -->
@@ -188,17 +231,38 @@
  * helper function
  * print the page number buttons
  */
-function content_page_faculty_page_buttons( $total_number_of_pages, $current_faculty_page_number) {
+function content_page_faculty_page_buttons( $total_number_of_pages, $current_faculty_page_index) {
 	for($i = 0; $i < $total_number_of_pages; $i++) {
 		$btn_style = 'primary';
-		if ( $i != $current_faculty_page_number ) { 
+		if ( $i != $current_faculty_page_index ) { 
 			$btn_style = 'secondary'; 
 		}
-		if ( isset( $_GET['faculty_page'] ) && 'all' == strtolower( $_GET['faculty_page'] ) ) { 
+		if ( isset( $_GET['page_index'] ) && 'all' == strtolower( $_GET['page_index'] ) ) { 
 			$btn_style = 'secondary'; 
 		}
-		$faculty_page_url = add_query_arg( 'faculty_page', $i, get_permalink() );
+		$faculty_page_url = add_query_arg( 'page_index', $i, get_permalink() );
+		$faculty_page_url = add_query_arg( '_wpnonce', wp_create_nonce( 'dgh-fac-page-nav-action' ), $faculty_page_url );
 		$display_number = $i + 1;
-		echo do_shortcode( '[uw_button id="btn-faculty-page-'.$i.'" style="'.$btn_style.'" size="small" target="'.esc_url($faculty_page_url).'"]<span class="screen-reader-text">'.__( 'Navigate to page ', 'dgh-wp-theme' ).'</span>'.$display_number.'[/uw_button]' );
+		echo do_shortcode( '[uw_button id="btn-faculty-page-'.$i.'" style="'.$btn_style.'" size="small" target="'.esc_url($faculty_page_url).'"]<span class="screen-reader-text">'.__( 'Navigate to faculty page ', 'dgh-wp-theme' ).'</span>'.$display_number.'[/uw_button]' );
 	}
+}
+
+/**
+ * log helper
+ */
+function content_page_faculty_page_error_log() {
+	global $pagename;
+	$log_string = $pagename . " Query String injection" . "\t";
+	foreach ($_REQUEST as $key => $value) {
+		$log_string .= $key.'=>'.$value . "\t";
+	}
+	$log_string .= 'REMOTE_ADDR'.'=>'.$_SERVER['REMOTE_ADDR'] . "\t";
+	// $log_string .= 'SERVER_ADDR'.'=>'.$_SERVER['SERVER_ADDR'] . "\t";
+	// $log_string .= 'HTTP_COOKIE'.'=>'.$_SERVER['HTTP_COOKIE'] . "\t";
+	// foreach ($_SERVER as $key => $value) {
+	// 	$log_string .= $key.'=>'.$value . "\t";
+	// }
+	// $err_string = print_r( $log_string, true );
+	do_action('qm/debug', $log_string );
+	error_log($log_string);
 }
