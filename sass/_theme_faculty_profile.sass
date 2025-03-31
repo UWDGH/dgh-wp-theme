@@ -4,18 +4,27 @@
         &.entry-content-faculty-profile
             .card.large
                 .image-large
-                @media (max-width: 299px)
+                @media (max-width: 259px)
                     grid-template-columns: 1fr
-                    grid-template-rows: 1fr 1.25fr
+                    grid-template-rows: 1fr 2.5fr
+                @media (min-width: 260px)
+                    grid-template-columns: 1fr
+                    grid-template-rows: 1fr 2fr
                 @media (min-width: 300px)
                     grid-template-columns: 1fr
-                    grid-template-rows: 1fr 1fr
+                    grid-template-rows: 1fr 1.75fr
+                @media (min-width: 320px)
+                    grid-template-columns: 1fr
+                    grid-template-rows: 1fr 1.5fr
+                @media (min-width: 360px)
+                    grid-template-columns: 1fr
+                    grid-template-rows: 1fr 1.25fr
                 @media (min-width: 400px)
                     grid-template-columns: 1fr
-                    grid-template-rows: 1.25fr 1fr
+                    grid-template-rows: 1fr 1fr
                 @media (min-width: 460px)
                     grid-template-columns: 1fr
-                    grid-template-rows: 1.5fr 1fr
+                    grid-template-rows: 1.25fr 1fr
                 @media (min-width: 576px)
                     grid-template-columns: 1fr
                     grid-template-rows: 1.5fr 1fr
