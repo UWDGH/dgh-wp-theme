@@ -10,6 +10,21 @@
 	// and the DOM is ready.
 	$(document).ready(function( $ ) {
 
+		/**
+		 * Stopgap measure
+		 * test for arbiratry xss injections in the querystring, remove querystring and redirect
+		 */
+		const dirty = ['<','%3C','<script>','%3Cscript%3E','%3E%3C','><','%3Cimg','<img'];
+		dirty.forEach((dirt) => {
+			if ( location.search.indexOf(dirt) !== -1 )  {
+				el = document.createElement('div');
+				el.setAttribute('style', 'background-color: #f8d7da;');
+				el.innerHTML = 'Lets not do this!';
+				document.body.prepend( el );
+				window.location = window.location.href.replace(location.search, '');
+			}
+		});
+
 		//a11y: indicate the current presented list page
 		$( '.faculty-pagination a.btn.primary' )
 			.attr( 'aria-current', true );
