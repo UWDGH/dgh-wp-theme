@@ -28,21 +28,24 @@ $fac_phone_number = '';		// phone number
 $fac_phone_number_hidden = false;
 $fac_office = '';			// office location
 $fac_office_hidden = false;
+$fac_degrees = array();		// Degrees
+$fac_publications = '';		// Publications
 $fac_image_url = get_stylesheet_directory_uri() . '/assets/img/profile-placeholder.png';
 
 // output(i.e. print) vars are prefixed with 'p'
 $p_fac_bio = '';
 $p_fac_appts = '';
 $p_fac_research_interests = '';
-$p_fac_education = '';
+$p_fac_degrees = '';
 $p_fac_contact = '';
 $p_fac_email = '';
 $p_fac_phone_number = '';
 $p_fac_office = '';
+$p_fac_publications = '';
 
 // content headings vars are prefixed with 'h'
 $h_bio = '<h2>'.__('Bio', 'dgh-wp-theme').'</h2>';
-$h_education = '<h2>'.__('Education', 'dgh-wp-theme').'</h2>';
+$h_degrees = '<h2>'.__('Academic Degrees', 'dgh-wp-theme').'</h2>';
 $h_contact = '<h2>'.__('Contact Information', 'dgh-wp-theme').'</h2>';
 $h_research_interests = '<h2>'.__('Areas of Expertise', 'dgh-wp-theme').'</h2>';
 $h_publications = '<h2>'.__('Publications', 'dgh-wp-theme').'</h2>';
@@ -62,6 +65,9 @@ $fac_phone_number_hidden =  get_post_meta( $id, '_dgh_fac_phone_number_hidden', 
 $fac_office =  get_post_meta( $id, '_dgh_fac_office', true );
 $fac_office_hidden =  get_post_meta( $id, '_dgh_fac_office_hidden', true );
 $fac_appt_ttl_dept = get_post_meta( $id, '_dgh_fac_appt_ttl_dept', true );
+// degrees
+$fac_degrees =  get_post_meta( $id, '_dgh_fac_degrees' );
+if ( !empty( $fac_degrees ) ) { $fac_degrees = $fac_degrees[0]; }
 // appts
 $fac_appts =  get_post_meta( $id, '_dgh_fac_appts' );
 if ( !empty( $fac_appts ) ) { $fac_appts = $fac_appts[0]; }
@@ -74,6 +80,8 @@ if ( has_post_thumbnail( $id ) ) {
 	$att_id = attachment_url_to_postid( $fac_image_url );
 	$fac_image_alt_text = wp_get_attachment_caption( $att_id );
 }
+// publications
+$fac_publications = get_post_meta( $id, '_dgh_fac_publications', true );
 
 /**
  * construct output vars
@@ -136,6 +144,20 @@ $p_fac_bio = ( !empty( $fac_bio ) ) ? $h_bio . $fac_bio : $h_bio . 'N/A';
 // construct areas of expertise
 $p_fac_research_interests = ( !empty( $fac_research_interests ) ) ? $h_research_interests . wpautop( $fac_research_interests ) : $h_research_interests . 'N/A';
 
+// construct degrees
+$p_fac_degrees .= $h_degrees;
+if ( !empty( $fac_degrees) ) {
+	$p_fac_degrees .= '<ul style="list-style-type: none;margin-left: auto;" class="fac-degrees">';
+	foreach ($fac_degrees as $key => $value) {
+		$p_fac_degrees .= '<li role="listitem" aria-label="'.__('Academic Degree','dgh-wp-theme').'">' . $value . '</li>';
+	}
+	$p_fac_degrees .= '</ul>';
+}
+
+// construct publications
+$p_fac_publications = ( !empty( $fac_publications ) ) ? $h_publications . wpautop( $fac_publications ) : $h_publications . 'N/A';
+
+
 ?>
 <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
 
@@ -168,35 +190,36 @@ $p_fac_research_interests = ( !empty( $fac_research_interests ) ) ? $h_research_
 			// the_content();
 
 			// construct the 'About' tabs section
-			$tabs_section_about = '';
+			$tabs_section_about_txt = __('About', 'dgh-wp-theme');
 			$tabs_section_about = <<<TAB_ABOUT
-			[tabs_section title="About {$fac_fname} {$fac_lname}" id="tab-fac-about"]
+			[tabs_section title="{$tabs_section_about_txt} {$fac_fname} {$fac_lname}" id="tab-fac-about"]
 			[row]
-			[col class="col-sm col-sm-12 col-xl-8"]
+			[col class="col-sm col-sm-12 col-xl-8 pl-xl-auto pr-xl-5"]
 			{$p_fac_bio}
 			{$p_fac_research_interests}
 			[/col]
 			[col class="col-sm col-sm-12 col-xl-4 pl-0 pl-xl-auto"]
-			{$h_education}
-			<p>{$p_fac_education}</p>
-			<p>
-				<div>degrees[[deg_ttl]], degrees[[inst_ttl]]</div>
-				<div>degrees[[deg_ttl]], degrees[[inst_ttl]]</div>
-				<div>degrees[[deg_ttl]], degrees[[inst_ttl]]</div>
-			</p>
+			{$p_fac_degrees}
 			{$p_fac_contact}
 			[/col]
 			[/row]
 			[/tabs_section]
 			TAB_ABOUT;
 
+			$tabs_section_publications = <<<TAB_PUB
+			[tabs_section title="Publications" id="tab-fac-publications"]
+			[row]
+			[col class="col-sm col-sm-12"]
+			{$p_fac_publications}
+			[/col]
+			[/row]
+			[/tabs_section]
+			TAB_PUB;
+
 			$fac_tabs = <<<FAC_TABS
 			[uw_tabs id="tabs-fac-{$id}" style="alt-tab"]
 			{$tabs_section_about}
-			[tabs_section title="Publications" id="tab-fac-publications"]
-				<h2>Publications</h2>
-				<p>publications[[fac_web_text]]</p>
-			[/tabs_section]
+			{$tabs_section_publications}
 			[/uw_tabs] 
 			FAC_TABS;
 
