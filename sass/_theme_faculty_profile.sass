@@ -3,8 +3,6 @@
     .entry-content
         &.entry-content-faculty-profile
             .card.large
-                .image-large
-                    background-position: 0 0
                 @media (max-width: 259px)
                     grid-template-columns: 1fr
                     grid-template-rows: 1fr 2.5fr
@@ -31,7 +29,7 @@
                     grid-template-rows: 1.5fr 1fr
                 @media (min-width: 640px)
                     grid-template-columns: 1fr
-                    grid-template-rows: 2fr 1fr
+                    grid-template-rows: 1.75fr 1fr
                 @media (min-width: 768px)
                     grid-template-columns: 1fr 1fr
                     grid-template-rows: 1fr
@@ -74,9 +72,12 @@
                 @media (min-width: 3000px)
                     grid-template-columns: 4.25fr 1fr
                     grid-template-rows: 1fr
-
+                .image-large
+                    background-position: 0 0
+                    @media (min-width: 768px)
+                        background-position: 10px 0
                 .card-body
-                    min-height: 360px
+                    min-height: 384px
                     .inner-card-body
                         display: flex
                         flex-direction: column
