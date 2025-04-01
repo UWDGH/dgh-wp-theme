@@ -66,20 +66,35 @@
 				$modal_thumbnail = get_the_post_thumbnail( $post, 'thumbnail', array( 'class' => 'alignleft' ) );
 			}
 
+			//permalink
 			$fac_permalink = get_the_permalink( $the_ID );
-
+			//bio
 			$fac_bio = apply_filters( 'the_content', get_the_content( $post ) );
+			//research interest
 			$fac_research_interests = get_post_meta( $post->ID, '_dgh_fac_research_interests', true );
-			if ( !empty( $fac_research_interests ) ){
-				$fac_bio .= '<h3>Areas of expertise</h3>'.$fac_research_interests;
-			}
-			$fac_bio .= '<div style="text-align: end;">[uw_button style="arrow" size="small" color="white" target="'.$fac_permalink.'"]Go to profile page[/uw_button]</div>';
-			$bio_modal = <<<FAC_BIO
-			[uw_modal id="uw-modal-{$the_ID}" title="{$fac_title}" width="default" color="gold" button="preview" position="center" size="small"]
-			{$modal_thumbnail}{$fac_bio}
-			[/uw_modal] 
-			FAC_BIO;
 
+			// start create modal content
+			$modal_content = $fac_bio;
+			if ( !empty( $fac_research_interests ) ){
+				$modal_content .= '<h3>Areas of expertise</h3>'.$fac_research_interests;
+			}
+			//TODO: include 'health topics/research areas' vocabulary terms to modal
+			$modal_content .= "<h3>health topics/research area terms (controlled vocabulary)</h3>
+				<ul>
+				<li>hello world</li>
+				<li>lorem</li>
+				<li>ipsum</li>
+				</ul>";
+			$modal_content .= '<div style="text-align: end;">[uw_button style="arrow" size="small" color="white" target="'.$fac_permalink.'"]View more on the profile page[/uw_button]</div>';
+			// end modal content
+			// create modal shortcode
+			$preview_modal = <<<UW_MODAL
+			[uw_modal id="uw-modal-{$the_ID}" title="{$fac_title}" width="default" color="gold" button="preview" position="center" size="small"]
+			{$modal_thumbnail}{$modal_content}
+			[/uw_modal] 
+			UW_MODAL;
+
+			//email
 			$fac_email = get_post_meta( $post->ID, '_dgh_fac_email', true );
 			if ( !empty( $fac_email ) ) {
 				$fac_email  = '<div class="fac-email" data-alt="Email"><a href="'.esc_url( 'mailto:' . $fac_email ).'">'.esc_html( $fac_email ).'</a></div>';
@@ -100,7 +115,7 @@
 			button="Go to profile page" 
 			link="{$fac_permalink}"]
 			{$fac_appt_block}
-			{$bio_modal}
+			{$preview_modal}
 			{$fac_email }
 			[/uw_card]
 			[/col]

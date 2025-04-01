@@ -68,7 +68,9 @@
 		$next_faculty_page_url = add_query_arg( '_wpnonce', wp_create_nonce( 'dgh-fac-page-index-'.strval($next_faculty_page_index) ), $next_faculty_page_url  );
 
 		
-		/* catch the GET postback and do we have a valid querystring? */
+		/**
+		 * catch the GET postback and validate the querystring
+		 */
 		
 		$get_request_passed = null;
 		$query_args_passed = false;
@@ -76,12 +78,13 @@
 		// do_action('qm/debug', $_GET );
 		// do_action('qm/debug', count($_GET) );
 
-		// first check if the querystring has 2 args and if those are the allowed args we expect
+		// first check if the querystring has 2 args and if those are the args we expect
 		if ( !empty( $_GET ) && ( count($_GET)==2 ) ) {
 			$query_args_passed = true;
 			foreach ($_GET as $arg => $value) {
 				if ( !in_array( $arg, $allowed_query_args, true ) ) {
 					$query_args_passed = false;
+					break;
 				}
 			}
 			do_action('qm/debug', '$query_args_passed = '.json_encode($query_args_passed) );
@@ -97,7 +100,7 @@
 
 			if ( 'all' === strtolower( $_GET['page_index'] ) ) {
 
-				$verify_nonce = wp_verify_nonce( $_GET['_wpnonce'], 'dgh-fac-page-index-all' );
+				$verify_nonce = wp_verify_nonce( $_GET['_wpnonce'], 'dgh-fac-page-index-all' );	// return can be 1, 2 or false
 
 				if  ( $verify_nonce  !== false )  {
 
@@ -124,13 +127,9 @@
 
 				if  ( $verify_nonce  !== false )  {
 
-					// if not an int, reset to default
-					// if ( !is_int( (int)$_GET['page_index'] ) ) {
-					// 	$current_faculty_page_index = 0;
-					// }
-					// previous page number
+					// previous page
 					$previous_faculty_page_index = $current_faculty_page_index - 1;
-					// next page number
+					// next page
 					$next_faculty_page_index = $current_faculty_page_index + 1;
 					// dynamic offset
 					$offset = $current_faculty_page_index * $posts_per_page;
