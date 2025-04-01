@@ -4,6 +4,7 @@
         &.entry-content-faculty-profile
             .card.large
                 .image-large
+                    background-position: 0 0
                 @media (max-width: 259px)
                     grid-template-columns: 1fr
                     grid-template-rows: 1fr 2.5fr
@@ -75,6 +76,7 @@
                     grid-template-rows: 1fr
 
                 .card-body
+                    min-height: 360px
                     .inner-card-body
                         display: flex
                         flex-direction: column
@@ -88,13 +90,49 @@
                             margin-top: auto
                             a
                                 color: inherit
-                                &::before
-                                    //background-image: url(../uw_wp_theme/assets/svg/widgets-sprite.svg)
-                                    //height: 25px
-                                    content: "✉"
-                                    display: inline-block
-                                    position: relative
-                                    width: 30px
-                                    top: 2px
-                                    font-size: 20px
-                                    color: $onyx
+
+.dgh_faculty_profile-template
+    .entry-content
+        &.entry-content-faculty-profile
+            span.dashicons
+                font-size: 20px
+                width: 30px
+                text-align: left
+                display: inline-block
+                height: 30px
+                margin-top: 2px
+            .fac-email
+                display: flex
+                // &::before
+                //     //background-image: url(../uw_wp_theme/assets/svg/widgets-sprite.svg)
+                //     //height: 25px
+                //     content: "✉"
+                //     content: "\2709" / attr(data-alt)
+                //     display: inline-block
+                //     position: relative
+                //     width: 30px
+                //     top: 2px
+                //     font-size: 20px
+                //     color: $onyx
+            .fac-phone
+                display: flex
+                // &::before
+                //     content: "\260F" / attr(data-alt)
+                //     display: inline-block
+                //     position: relative
+                //     width: 30px
+                //     top: 2px
+                //     font-size: 20px
+                //     color: $onyx
+            .fac-office
+                display: flex
+                // &::before
+                //     content: "\1F3E2" / attr(data-alt)
+                //     // content: "\2690" / attr(data-alt)
+                //     display: inline-block
+                //     position: relative
+                //     width: 30px
+                //     top: 2px
+                //     font-size: 20px
+                //     color: $onyx
+                    
