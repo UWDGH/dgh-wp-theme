@@ -194,11 +194,11 @@ $p_fac_publications = ( !empty( $fac_publications ) ) ? $h_publications . wpauto
 			$tabs_section_about = <<<TAB_ABOUT
 			[tabs_section title="{$tabs_section_about_txt} {$fac_fname} {$fac_lname}" id="tab-fac-about"]
 			[row]
-			[col class="col-sm col-sm-12 col-xl-8 pl-xl-auto pr-xl-5"]
+			[col class="col-sm col-sm-12 col-xl-9 pl-xl-auto pr-xl-5"]
 			{$p_fac_bio}
 			{$p_fac_research_interests}
 			[/col]
-			[col class="col-sm col-sm-12 col-xl-4 pl-0 pl-xl-auto"]
+			[col class="col-sm col-sm-12 col-xl-3 pl-0 pl-xl-auto"]
 			{$p_fac_degrees}
 			{$p_fac_contact}
 			[/col]
