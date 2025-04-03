@@ -57,6 +57,7 @@
 			$fac_appt_block .= '</div>';
 
 			$image_url = get_stylesheet_directory_uri() . '/assets/img/profile-placeholder.png';
+			$photo_url = get_post_meta( $post->ID, '_dgh_fac_photo_url', true );
 			$alt_text = '';
 			$modal_thumbnail = '';
 			if ( has_post_thumbnail( $the_ID ) ) {
@@ -64,6 +65,9 @@
 				$att_id = attachment_url_to_postid( $image_url );
 				$alt_text = wp_get_attachment_caption( $att_id );
 				$modal_thumbnail = get_the_post_thumbnail( $post, 'thumbnail', array( 'class' => 'alignleft' ) );
+			} elseif ( $photo_url ) {
+				// fallback: deeplink the SPH photo URL
+				$image_url = $photo_url;
 			}
 
 			//permalink
