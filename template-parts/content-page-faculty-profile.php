@@ -13,9 +13,12 @@
 /**
  * variable declarations
  */
+$fac_is_synced = true;		// sync status
 // post and meta variables
 $id = '';					// Post id
 $title = '';				// Post title
+$fac_url_id = '';			// SPH URL ID
+$fac_ignore_sync = '';		// ignore sync
 $fac_bio = '';				// Post content (i.e. Faculty Bio)
 $fac_image_url = '';		// feaured image
 $fac_photo_url = '';		// the SPH photo URL. Only us as fallback
@@ -90,6 +93,15 @@ if ( has_post_thumbnail( $id ) ) {
 $fac_publications = get_post_meta( $id, '_dgh_fac_publications', true );
 
 /**
+ * set sync status
+ */
+$fac_url_id = get_post_meta( $id, '_dgh_fac_url_id', true );
+$fac_ignore_sync = get_post_meta( $id, '_dgh_fac_ignore_sync', true );
+if ( empty( $fac_url_id ) || !empty( $fac_ignore_sync ) ) {
+	$fac_is_synced = false;
+}
+
+/**
  * construct output vars
  */
 // construct appointments
@@ -153,7 +165,7 @@ $p_fac_research_interests = ( !empty( $fac_research_interests ) ) ? $h_research_
 // construct degrees
 $p_fac_degrees .= $h_degrees;
 if ( !empty( $fac_degrees) ) {
-	$p_fac_degrees .= '<ul style="list-style-type: none;margin-left: auto;" class="fac-degrees">';
+	$p_fac_degrees .= '<ul class="fac-degrees">';
 	foreach ($fac_degrees as $key => $value) {
 		$p_fac_degrees .= '<li role="listitem" aria-label="'.__('Academic Degree','dgh-wp-theme').'">' . $value . '</li>';
 	}
