@@ -483,42 +483,6 @@ if ( !class_exists( 'DGH_WP_Theme' ) ) {
 		}
 
 		/**
-		 * helper function
-		 * test the _dgh_fac_photo_url
-		 */
-		public static function is_dgh_fac_photo_url_ok( $photo_url ) {
-
-			if ( empty( $photo_url ) ) {
-				return false;
-			}
-
-			// instantiate return value
-			$retval = true;
-			// instantiate cURL
-			$handle = curl_init($photo_url);
-
-			// instruct to get download headers only, not the response body
-			curl_setopt($handle, CURLOPT_NOBODY, true);
-			
-			// get the response
-			$response = curl_exec($handle);
-			
-			// get the http status code
-			$http_code = curl_getinfo($handle, CURLINFO_HTTP_CODE);
-			do_action('qm/debug', $http_code);
-			
-			// return false if client errors (4xx) or server errore (5xx)
-			if( $http_code >= 400 ) {
-				$retval = false;
-			}
-			
-			curl_close($handle);
-
-			return $retval;
-
-		}
-
-		/**
 		 * callback function for hook wp_ajax_nopriv_{action}
 		 */
 		// static function dgh_wp_theme_fac_ajax_callback() {

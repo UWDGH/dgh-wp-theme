@@ -67,7 +67,7 @@
 				$modal_thumbnail = get_the_post_thumbnail( $post, 'thumbnail', array( 'class' => 'alignleft' ) );
 			} elseif ( $photo_url ) {
 				// fallback: deeplink the SPH photo URL
-				if ( DGH_WP_Theme::is_dgh_fac_photo_url_ok( $photo_url ) ) {
+				if ( DGH_Template::is_dgh_fac_photo_url_ok( $photo_url ) ) {
 					$image_url = $photo_url;
 				}
 			}
