@@ -32,26 +32,33 @@
 			$card_classes = 'su-post-faculty-card';
 			
 			$the_ID = get_the_ID();
+			
+			/**
+			 * set sync status
+			 */
+			$fac_is_synced = true;
+			$fac_url_id = get_post_meta( $the_ID, '_dgh_fac_url_id', true );
+			$fac_ignore_sync = get_post_meta( $the_ID, '_dgh_fac_ignore_sync', true );
+			if ( empty( $fac_url_id ) || !empty( $fac_ignore_sync ) ) {
+				$fac_is_synced = false;
+			}
 
 			$fac_title = get_the_title( $the_ID );
 			// do_action('qm/debug', $fac_title );
 
 			// appointments
 			$fac_appt_block = '<div class="faculty-appts" style="font-family: Encode Sans Compressed, sans-serif; font-weight: 500;">';
-			$fac_appt = '[Placeholder Title, Department Name]';
+			$fac_appt = '';
 			$fac_appt_ttl_dept = get_post_meta( $post->ID, '_dgh_fac_appt_ttl_dept', true );
-			// do_action('qm/debug', $fac_appt_ttl_dept );
-			if ( !empty($fac_appt_ttl_dept) ) {
-				$fac_appt = '<div>'.$fac_appt_ttl_dept.'</div>';
-			}
 			$fac_appts = get_post_meta( $post->ID, '_dgh_fac_appts' );
-			// do_action('qm/debug', empty($fac_appts[0]) );
 			$fac_job_title = get_post_meta( $post->ID, '_dgh_fac_job_title' );
-			// do_action('qm/debug', empty($fac_job_title[0]) );
-			if ( !empty($fac_appts[0]) ) {
+			if ( !empty($fac_appts[0]) && $fac_is_synced ) {
 				$fac_appt = '<div>'.$fac_appts[0][0].'</div>';	// only get the first appt
 			} elseif ( !empty($fac_job_title[0]) ) {
 				$fac_appt = '<div>'.$fac_job_title[0][0].'</div>';	// only get the first job_title
+			} elseif ( !empty($fac_appt_ttl_dept) ) {
+				// fallback from _dgh_fac_appt_ttl_dept
+				$fac_appt = '<div>'.$fac_appt_ttl_dept.'</div>';
 			}
 			$fac_appt_block .= $fac_appt;
 			$fac_appt_block .= '</div>';
