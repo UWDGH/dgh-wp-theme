@@ -75,7 +75,7 @@
                 .image-large
                     background-position: 0 0
                     @media (min-width: 768px)
-                        background-position: 10px -10px
+                        background-position: 10px 0
                 .card-body
                     min-height: 384px
                     .inner-card-body
@@ -95,17 +95,19 @@
 .dgh_faculty_profile-template
     .entry-content
         &.entry-content-faculty-profile
-            ul.fac-degrees
-                font-family: Encode Sans Compressed, sans-serif
-                list-style-type: none
-                margin-left: auto
+            ul
+                &.fac-degrees
+                    font-family: Encode Sans Compressed, sans-serif
+                    list-style-type: none
+                    margin-left: auto
             span.dashicons
-                font-size: 20px
-                width: 30px
-                text-align: left
-                display: inline-block
-                height: 30px
-                margin-top: 2px
+                &.dashicons--fac
+                    font-size: 20px
+                    width: 30px
+                    text-align: left
+                    display: inline-block
+                    height: 30px
+                    margin-top: 2px
             .fac-email
                 display: flex
                 // &::before
