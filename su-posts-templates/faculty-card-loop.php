@@ -76,6 +76,9 @@
 				// fallback: deeplink the SPH photo URL
 				if ( DGH_Template::is_dgh_fac_photo_url_ok( $photo_url ) ) {
 					$image_url = $photo_url;
+					$modal_thumbnail = <<<THUMBNAIL
+					<img loading="lazy" width="150" height="150" src="{$image_url}" class="alignright wp-post-image" alt="Profile photo of {$fac_title}" decoding="async" sizes="auto, 100vw">
+					THUMBNAIL;
 				}
 			}
 
