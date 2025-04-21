@@ -111,15 +111,16 @@ if ( !empty( $fac_appts) || !empty( $fac_job_title)  ) {
 	$p_fac_appts .= '<div class="fac-appts">';
 	if ( !empty( $fac_appts) && $fac_is_synced ) {
 		foreach ($fac_appts as $key => $value) {
-			$p_fac_appts .= '<div role="note" aria-label="'.__('University of Washington Appointment','dgh-wp-theme').'">' . $value . '</div>';
+			$p_fac_appts .= '<div role="note" aria-label="'.__('University of Washington appointment title','dgh-wp-theme').'">' . $value . '</div>';
 		}
 	}
 	if ( !empty( $fac_job_title) ) {
+		$p_fac_appts .= ( !empty( $fac_appts)) ? '<hr>' : '' ;
 		foreach ($fac_job_title as $key => $value) {
-			$p_fac_appts .= '<div role="note" aria-label="'.__('Job Title','dgh-wp-theme').'">' . $value . '</div>';
+			$p_fac_appts .= '<div role="note" aria-label="'.__('Other title','dgh-wp-theme').'">' . $value . '</div>';
 		}
 	} elseif ( empty( $fac_job_title) && !empty($fac_appt_ttl_dept) && !$fac_is_synced ) {
-		$p_fac_appts .= '<div role="note" aria-label="'.__('Department Appointment Title','dgh-wp-theme').'">' . $fac_appt_ttl_dept . '</div>';
+		$p_fac_appts .= '<div role="note" aria-label="'.__('Department appointment title','dgh-wp-theme').'">' . $fac_appt_ttl_dept . '</div>';
 	}
 	$p_fac_appts .= '</div>';
 } 
