@@ -166,7 +166,7 @@ $p_fac_degrees .= $h_degrees;
 if ( !empty( $fac_degrees) ) {
 	$p_fac_degrees .= '<ul class="fac-degrees">';
 	foreach ($fac_degrees as $key => $value) {
-		$p_fac_degrees .= '<li role="listitem" aria-label="'.__('Academic Degree','dgh-wp-theme').'">' . $value . '</li>';
+		$p_fac_degrees .= '<li role="listitem" aria-label="'.__('Academic Degree','dgh-wp-theme').'"><span class="dashicons dashicons--fac dashicons-welcome-learn-more"><span class="screen-reader-text">'.__('Academic Degree: ','dgh-wp-theme').'</span></span>' . $value . '</li>';
 	}
 	$p_fac_degrees .= '</ul>';
 }
