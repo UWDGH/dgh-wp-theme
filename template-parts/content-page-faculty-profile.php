@@ -176,6 +176,9 @@ $p_fac_publications = ( !empty( $fac_publications ) ) ? $h_publications . wpauto
 
 
 ?>
+<?php if ( $post->post_status != 'publish' ): ?>
+	<div class="dgh-notice dgh-notice--uw-warning" data-nosnippet role="status" aria-live="polite"><?php _e( 'This Faculty Profile is not published.', 'dgh-wp-theme' ); ?></div>
+<?php endif; ?>
 <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
 
 	<div class="entry-content entry-content-faculty-profile">
