@@ -118,7 +118,7 @@ if ( !empty( $fac_appts) || !empty( $fac_job_title)  ) {
 		}
 	}
 	if ( !empty( $fac_job_title) ) {
-		$p_fac_appts .= ( !empty( $fac_appts)) ? '<hr>' : '' ;
+		// $p_fac_appts .= ( !empty( $fac_appts)) ? '<hr>' : '' ;
 		foreach ($fac_job_title as $key => $value) {
 			$p_fac_appts .= '<div role="note" aria-label="'.__('Other title','dgh-wp-theme').'">' . $value . '</div>';
 		}
