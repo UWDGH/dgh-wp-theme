@@ -28,6 +28,8 @@ $fac_job_title = array();	// Additional job title(s)
 $fac_fname = '';			// first name
 $fac_lname = '';			// last name
 $fac_appt_ttl_dept = '';	// that one strange appointment title field. we can use it as a fallback
+$fac_email = '';			// email
+$fac_email_hidden = false;
 $fac_phone_number = '';		// phone number
 $fac_phone_number_hidden = false;
 $fac_office = '';			// office location
@@ -64,6 +66,7 @@ $fac_research_interests = get_post_meta( $id, '_dgh_fac_research_interests', tru
 $fac_fname = get_post_meta( $id, '_dgh_fac_fname', true );
 $fac_lname = get_post_meta( $id, '_dgh_fac_lname', true );
 $fac_email =  get_post_meta( $id, '_dgh_fac_email', true );
+$fac_email_hidden =  get_post_meta( $id, '_dgh_fac_email_hidden', true );
 $fac_phone_number =  get_post_meta( $id, '_dgh_fac_phone_number', true );
 $fac_phone_number_hidden =  get_post_meta( $id, '_dgh_fac_phone_number_hidden', true );
 $fac_office =  get_post_meta( $id, '_dgh_fac_office', true );
@@ -129,7 +132,7 @@ if ( !empty( $fac_appts) || !empty( $fac_job_title)  ) {
 if ( $fac_email ) {
 	$p_fac_email = '<div class="fac-email" data-alt="Email">';
 	$p_fac_email .= '<span class="dashicons dashicons--fac dashicons-email"><span class="screen-reader-text">'.__('Email','dgh-wp-theme').'</span></span>';
-	$p_fac_email .= '<a href="'.esc_url( 'mailto:' . $fac_email ).'">'.esc_html( $fac_email ).'</a>';
+	$p_fac_email .= ($fac_email_hidden) ? __('N/A','dgh-wp-theme') : '<a href="'.esc_url( 'mailto:' . $fac_email ).'">'.esc_html( $fac_email ).'</a>';
 	$p_fac_email .= '</div>';
 }
 

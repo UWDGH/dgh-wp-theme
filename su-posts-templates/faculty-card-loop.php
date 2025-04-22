@@ -111,9 +111,14 @@
 			UW_MODAL;
 
 			//email
+			$fac_email_hidden = false;
+			$fac_email_hidden =  get_post_meta( $post->ID, '_dgh_fac_email_hidden', true );
 			$fac_email = get_post_meta( $post->ID, '_dgh_fac_email', true );
+			$p_fac_email = '';
 			if ( !empty( $fac_email ) ) {
-				$fac_email  = '<div class="fac-email" data-alt="Email"><a href="'.esc_url( 'mailto:' . $fac_email ).'">'.esc_html( $fac_email ).'</a></div>';
+				$p_fac_email .= '<div class="fac-email" data-alt="Email">';
+				$p_fac_email .= ($fac_email_hidden) ? __('N/A','dgh-wp-theme') : '<a href="'.esc_url( 'mailto:' . $fac_email ).'">'.esc_html( $fac_email ).'</a>';
+				$p_fac_email .= '</div>';
 			}
 
 			// construct uw_card item
@@ -132,7 +137,7 @@
 			link="{$fac_permalink}"]
 			{$fac_appt_block}
 			{$preview_modal}
-			{$fac_email }
+			{$p_fac_email}
 			[/uw_card]
 			[/col]
 			FACULTY_CARD;
