@@ -73,7 +73,7 @@
                     grid-template-columns: 4.25fr 1fr
                     grid-template-rows: 1fr
                 .image-large
-                    background-position: 0 0
+                    // background-position: 0 0
                     @media (min-width: 768px)
                         background-position: 10px 0
                 .card-body
@@ -87,6 +87,12 @@
                             font-weight: 500
                             font-size: 18px
                             margin-bottom: 1rem
+                            > div[role=note]
+                                margin-bottom: 8px
+                                line-height: 1.25
+                            hr
+                                margin: 12px 0
+                                width: 25%
                         .fac-email
                             margin-top: auto
                             a
