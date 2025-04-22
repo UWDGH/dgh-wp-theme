@@ -26,7 +26,7 @@
 
 			<?php
 			global $post;
-			setup_postdata($post);
+			// setup_postdata($post);
 
 			$class_single = esc_attr( $atts['class_single'] );
 			$card_classes = 'su-post-faculty-card';
@@ -77,7 +77,7 @@
 				if ( DGH_Template::is_dgh_fac_photo_url_ok( $photo_url ) ) {
 					$image_url = $photo_url;
 					$modal_thumbnail = <<<THUMBNAIL
-					<img loading="lazy" width="150" height="150" src="{$image_url}" class="alignright wp-post-image" alt="Profile photo of {$fac_title}" decoding="async" sizes="auto, 100vw">
+					<img loading="lazy" width="150" height="150" src="{$image_url}" class="alignright wp-post-image" alt="Profile photo of {$fac_title}" decoding="async">
 					THUMBNAIL;
 				}
 			}
@@ -86,29 +86,50 @@
 			$fac_permalink = get_the_permalink( $the_ID );
 			//bio
 			$fac_bio = apply_filters( 'the_content', get_the_content( $post ) );
-			//research interest
-			$fac_research_interests = get_post_meta( $post->ID, '_dgh_fac_research_interests', true );
 
-			// start create modal content
-			$modal_content = $fac_bio;
-			if ( !empty( $fac_research_interests ) ){
-				$modal_content .= '<h3>Areas of expertise</h3>'.$fac_research_interests;
+			// create preview modal if there's bio content
+			$preview_modal = '';
+			if ( $fac_bio ) {
+				// get an excerpt of the content for the preview modal.
+				// note! the post_excerpt itself should always be empty since it's not supported in the dgh_faculty_profile post type
+				// and WP should automatically fall back on generating an excerpt from the post_content
+				add_filter( 'excerpt_length', function($number) {
+					global $post;
+					// get the excerpt length based on number of words of the first paragraph
+					$fac_bio = apply_filters( 'the_content', get_the_content( $post->post_content ) );
+					$bio_dom = new \DOMDocument();
+					$bio_dom->loadHTML($fac_bio);
+					$excerpt_len = str_word_count( rtrim( strtok( $bio_dom->textContent, "\n" ) ), 0, '[0...9()]' );
+					$the_post_template = get_post_meta( $post->ID, '_wp_page_template', true );
+					if ( 'templates/template-faculty-profile.php' == $the_post_template ) {
+						$number = $excerpt_len;
+					}
+					return $number;
+				}, 999 );
+				add_filter( 'excerpt_more', function($more_string) {
+					return ' [&hellip;]';
+				});
+				$fac_bio_excerpt = apply_filters( 'the_excerpt', get_the_excerpt( $post ) );
+
+				//research interest
+				$fac_research_interests = get_post_meta( $post->ID, '_dgh_fac_research_interests', true );
+
+				// start create modal content
+				// todo: decide if to use and what content to add
+				$modal_content = $fac_bio_excerpt;
+				if ( !empty( $fac_research_interests ) ){
+					// $modal_content .= '<hr><h3>Areas of expertise</h3>'.$fac_research_interests;
+				}
+				//TODO maybe: include 'health topics/research areas' vocabulary terms to modal
+				
+				// create modal shortcode
+				$preview_modal_btn = __('preview','dgh-wp-theme');
+				$preview_modal = <<<UW_MODAL
+				[uw_modal id="uw-modal-{$the_ID}" title="{$fac_title}" width="default" color="gold" button="{$preview_modal_btn}" position="center" size="small"]
+				{$modal_thumbnail}{$modal_content}
+				[/uw_modal] 
+				UW_MODAL;
 			}
-			//TODO: include 'health topics/research areas' vocabulary terms to modal
-			$modal_content .= "<h3>health topics/research area terms (controlled vocabulary)</h3>
-				<ul>
-				<li>hello world</li>
-				<li>lorem</li>
-				<li>ipsum</li>
-				</ul>";
-			$modal_content .= '<div style="text-align: end;">[uw_button style="arrow" size="small" color="white" target="'.$fac_permalink.'"]View more on the profile page[/uw_button]</div>';
-			// end modal content
-			// create modal shortcode
-			$preview_modal = <<<UW_MODAL
-			[uw_modal id="uw-modal-{$the_ID}" title="{$fac_title}" width="default" color="gold" button="preview" position="center" size="small"]
-			{$modal_thumbnail}{$modal_content}
-			[/uw_modal] 
-			UW_MODAL;
 
 			//email
 			$fac_email_hidden = false;
@@ -122,19 +143,10 @@
 			}
 
 			// construct uw_card item
+			$uw_card_btn = __('Go to profile page','dgh-wp-theme');
 			$uw_card = <<<FACULTY_CARD
 			[col id="su-post-{$the_ID}" class="col-12 col-lg-6 py-3 px-3 su-post {$card_classes} {$class_single}"]
-			[uw_card 
-			id="su-post-faculty-card-{$the_ID}" 
-			style="half-block-large" 
-			align="right" 
-			color="white" 
-			titletag="h3" 
-			image="{$image_url}" 
-			alt="{$alt_text}" 
-			title="{$fac_title}" 
-			button="Go to profile page" 
-			link="{$fac_permalink}"]
+			[uw_card id="su-post-faculty-card-{$the_ID}" style="half-block-large" align="right" color="white" titletag="h3" image="{$image_url}" alt="{$alt_text}" title="{$fac_title}" button="{$uw_card_btn}" link="{$fac_permalink}"]
 			{$fac_appt_block}
 			{$preview_modal}
 			{$p_fac_email}
