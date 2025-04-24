@@ -37,6 +37,7 @@ $fac_office_hidden = false;
 $fac_degrees = array();		// Degrees
 $fac_publications = '';		// Publications
 $fac_image_url = get_stylesheet_directory_uri() . '/assets/img/profile-placeholder.png';
+$fac_links = array();		// Links
 
 // output(i.e. print) vars are prefixed with 'p'
 $p_fac_bio = '';
@@ -48,6 +49,7 @@ $p_fac_email = '';
 $p_fac_phone_number = '';
 $p_fac_office = '';
 $p_fac_publications = '';
+$p_fac_links = '';
 
 // content headings vars are prefixed with 'h'
 $h_bio = '<h2>'.__('Bio', 'dgh-wp-theme').'</h2>';
@@ -55,6 +57,7 @@ $h_degrees = '<h2>'.__('Academic Degrees', 'dgh-wp-theme').'</h2>';
 $h_contact = '<h2>'.__('Contact Information', 'dgh-wp-theme').'</h2>';
 $h_research_interests = '<h2>'.__('Areas of Expertise', 'dgh-wp-theme').'</h2>';
 $h_publications = '<h2>'.__('Publications', 'dgh-wp-theme').'</h2>';
+$h_links = '<h2>'.__('Related Links', 'dgh-wp-theme').'</h2>';
 
 /**
  * retrieve post data
@@ -96,6 +99,9 @@ if ( has_post_thumbnail( $id ) ) {
 }
 // publications
 $fac_publications = get_post_meta( $id, '_dgh_fac_publications', true );
+// links
+$fac_links =  get_post_meta( $id, '_dgh_fac_links' );
+if ( !empty( $fac_links ) ) { $fac_links = $fac_links[0]; }
 
 /**
  * set sync status
@@ -111,28 +117,28 @@ if ( empty( $fac_url_id ) || !empty( $fac_ignore_sync ) ) {
  */
 // construct appointments
 if ( !empty( $fac_appts) || !empty( $fac_job_title)  ) {
-	$p_fac_appts .= '<div class="fac-appts">';
+	$p_fac_appts .= '<ul class="fac-appts" aria-label="'.__('Appointments','dgh-wp-theme').'">';
 	if ( !empty( $fac_appts) && $fac_is_synced ) {
 		foreach ($fac_appts as $key => $value) {
-			$p_fac_appts .= '<div role="note" aria-label="'.__('University of Washington appointment title','dgh-wp-theme').'">' . $value . '</div>';
+			$p_fac_appts .= '<li>' . esc_html($value) . '</li>';
 		}
 	}
 	if ( !empty( $fac_job_title) ) {
 		// $p_fac_appts .= ( !empty( $fac_appts)) ? '<hr>' : '' ;
 		foreach ($fac_job_title as $key => $value) {
-			$p_fac_appts .= '<div role="note" aria-label="'.__('Other title','dgh-wp-theme').'">' . $value . '</div>';
+			$p_fac_appts .= '<li>' . esc_html($value) . '</li>';
 		}
 	} elseif ( empty( $fac_job_title) && !empty($fac_appt_ttl_dept) && !$fac_is_synced ) {
-		$p_fac_appts .= '<div role="note" aria-label="'.__('Department appointment title','dgh-wp-theme').'">' . $fac_appt_ttl_dept . '</div>';
+		$p_fac_appts .= '<li>' . esc_html($fac_appt_ttl_dept) . '</li>';
 	}
-	$p_fac_appts .= '</div>';
+	$p_fac_appts .= '</ul>';
 } 
 
 // construct email
 if ( $fac_email ) {
 	$p_fac_email = '<div class="fac-email" data-alt="Email">';
 	$p_fac_email .= '<span class="dashicons dashicons--fac dashicons-email"><span class="screen-reader-text">'.__('Email','dgh-wp-theme').'</span></span>';
-	$p_fac_email .= ($fac_email_hidden) ? __('N/A','dgh-wp-theme') : '<a href="'.esc_url( 'mailto:' . $fac_email ).'">'.esc_html( $fac_email ).'</a>';
+	$p_fac_email .= ($fac_email_hidden) ? __('N/A','dgh-wp-theme') : '<p><a href="'.esc_url( 'mailto:' . $fac_email ).'">'.esc_html( $fac_email ).'</a></p>';
 	$p_fac_email .= '</div>';
 }
 
@@ -140,7 +146,7 @@ if ( $fac_email ) {
 if ( $fac_phone_number ) {
 	$p_fac_phone_number = '<div class="fac-phone" data-alt="Phone number">';
 	$p_fac_phone_number .= '<span class="dashicons dashicons--fac dashicons-phone"><span class="screen-reader-text">'.__('Phone number','dgh-wp-theme').'</span></span>';
-	$p_fac_phone_number .= ($fac_phone_number_hidden) ? __('N/A','dgh-wp-theme') : $fac_phone_number;
+	$p_fac_phone_number .= ($fac_phone_number_hidden) ? __('N/A','dgh-wp-theme') :  '<p><a href="'.esc_url( 'tel:' . $fac_phone_number ).'">'.esc_html( $fac_phone_number ).'</a></p>';
 	$p_fac_phone_number .= '</div>';
 }
 
@@ -168,9 +174,9 @@ $p_fac_research_interests = ( !empty( $fac_research_interests ) ) ? $h_research_
 // construct degrees
 $p_fac_degrees .= $h_degrees;
 if ( !empty( $fac_degrees) ) {
-	$p_fac_degrees .= '<ul class="fac-degrees">';
+	$p_fac_degrees .= '<ul class="fac-degrees" aria-label="'.__('Academic Degrees','dgh-wp-theme').'">';
 	foreach ($fac_degrees as $key => $value) {
-		$p_fac_degrees .= '<li role="listitem" aria-label="'.__('Academic Degree','dgh-wp-theme').'"><span class="dashicons dashicons--fac dashicons-welcome-learn-more"><span class="screen-reader-text">'.__('Academic Degree: ','dgh-wp-theme').'</span></span>' . $value . '</li>';
+		$p_fac_degrees .= '<li><span class="dashicons dashicons--fac dashicons-welcome-learn-more"></span>' . esc_html($value) . '</li>';
 	}
 	$p_fac_degrees .= '</ul>';
 }
@@ -178,6 +184,17 @@ if ( !empty( $fac_degrees) ) {
 // construct publications
 $p_fac_publications = ( !empty( $fac_publications ) ) ? $h_publications . wpautop( $fac_publications ) : $h_publications . 'N/A';
 
+// construct email
+if ( $fac_links ) {
+	$p_fac_links .= $h_links;
+	$p_fac_links .= '<ul class="fac-links">';
+	foreach ($fac_links as $link) {
+		$link_url = $link['url'];
+		$link_text = ( !empty($link['text']) ) ? $link['text'] : $link['url'];
+		$p_fac_links .= '<li><a href="'.$link_url.'">'.$link_text .'</a><span class="dashicons dashicons--fac dashicons-external"><span class="screen-reader-text">'.__('External link','dgh-wp-theme').'</span></span></li>';
+	}
+	$p_fac_links .= '</ul>';
+}
 
 ?>
 <?php if ( $post->post_status != 'publish' ): ?>
@@ -225,6 +242,7 @@ $p_fac_publications = ( !empty( $fac_publications ) ) ? $h_publications . wpauto
 			[col class="col-sm col-sm-12 col-xl-3 pl-0 pl-xl-auto"]
 			{$p_fac_degrees}
 			{$p_fac_contact}
+			{$p_fac_links}
 			[/col]
 			[/row]
 			[/tabs_section]
