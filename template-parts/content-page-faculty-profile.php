@@ -56,7 +56,7 @@ $h_bio = '<h2>'.__('Bio', 'dgh-wp-theme').'</h2>';
 $h_degrees = '<h2>'.__('Academic Degrees', 'dgh-wp-theme').'</h2>';
 $h_contact = '<h2>'.__('Contact Information', 'dgh-wp-theme').'</h2>';
 $h_research_interests = '<h2>'.__('Areas of Expertise', 'dgh-wp-theme').'</h2>';
-$h_publications = '<h2>'.__('Publications', 'dgh-wp-theme').'</h2>';
+$h_publications = '<h2>'.__('Select Publications', 'dgh-wp-theme').'</h2>';
 $h_links = '<h2>'.__('Related Links', 'dgh-wp-theme').'</h2>';
 
 /**
@@ -159,9 +159,7 @@ if ( $fac_office ) {
 }
 
 // construct contact
-if ( empty($fac_office) && empty($fac_email) && empty($fac_phone_number) ) {
-	$p_fac_contact = $h_contact . 'N/A';
-} else {
+if ( !empty($fac_office) || !empty($fac_email) || !empty($fac_phone_number) ) {
 	$p_fac_contact = $h_contact . $p_fac_office . $p_fac_phone_number . $p_fac_email;
 }
 
@@ -169,11 +167,11 @@ if ( empty($fac_office) && empty($fac_email) && empty($fac_phone_number) ) {
 $p_fac_bio = ( !empty( $fac_bio ) ) ? $h_bio . $fac_bio : $h_bio . 'N/A';
 
 // construct areas of expertise
-$p_fac_research_interests = ( !empty( $fac_research_interests ) ) ? $h_research_interests . wpautop( $fac_research_interests ) : $h_research_interests . 'N/A';
+$p_fac_research_interests = ( !empty( $fac_research_interests ) ) ? $h_research_interests . wpautop( $fac_research_interests ) : '';
 
 // construct degrees
-$p_fac_degrees .= $h_degrees;
 if ( !empty( $fac_degrees) ) {
+	$p_fac_degrees .= $h_degrees;
 	$p_fac_degrees .= '<ul class="fac-degrees" aria-label="'.__('Academic Degrees','dgh-wp-theme').'">';
 	foreach ($fac_degrees as $key => $value) {
 		$p_fac_degrees .= '<li><span class="dashicons dashicons--fac dashicons-welcome-learn-more"></span>' . esc_html($value) . '</li>';
@@ -182,7 +180,7 @@ if ( !empty( $fac_degrees) ) {
 }
 
 // construct publications
-$p_fac_publications = ( !empty( $fac_publications ) ) ? $h_publications . wpautop( $fac_publications ) : $h_publications . 'N/A';
+$p_fac_publications = ( !empty( $fac_publications ) ) ? $h_publications . wpautop( $fac_publications ) : '';
 
 // construct email
 if ( $fac_links ) {
@@ -248,15 +246,18 @@ if ( $fac_links ) {
 			[/tabs_section]
 			TAB_ABOUT;
 
-			$tabs_section_publications = <<<TAB_PUB
-			[tabs_section title="Publications" id="tab-fac-publications"]
-			[row]
-			[col class="col-sm col-sm-12"]
-			{$p_fac_publications}
-			[/col]
-			[/row]
-			[/tabs_section]
-			TAB_PUB;
+			$tabs_section_publications = '';
+			if ( !empty( $fac_publications ) ) {
+				$tabs_section_publications = <<<TAB_PUB
+				[tabs_section title="Select Publications" id="tab-fac-publications"]
+				[row]
+				[col class="col-sm col-sm-12"]
+				{$p_fac_publications}
+				[/col]
+				[/row]
+				[/tabs_section]
+				TAB_PUB;
+			}
 
 			$fac_tabs = <<<FAC_TABS
 			[uw_tabs id="tabs-fac-{$id}" style="alt-tab"]
