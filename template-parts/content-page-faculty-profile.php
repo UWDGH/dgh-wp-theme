@@ -36,7 +36,7 @@ $fac_office = '';			// office location
 $fac_office_hidden = false;
 $fac_degrees = array();		// Degrees
 $fac_publications = '';		// Publications
-$fac_image_url = get_stylesheet_directory_uri() . '/assets/img/profile-placeholder.png';
+$fac_image_url = get_stylesheet_directory_uri() . '/assets/img/dubs.jpg';
 $fac_links = array();		// Links
 
 // output(i.e. print) vars are prefixed with 'p'
@@ -213,7 +213,7 @@ if ( $fac_links ) {
 				<?php
 				// construct the card shortcode with appointments and email as the body
 				$uw_card = <<<UW_CARD
-				[uw_card style="large" align="left" color="gold" title="{$title}" titletag="h1" image="{$fac_image_url}" alt="{$fac_image_alt_text}"]
+				[uw_card style="half-block-large" align="left" color="gold" title="{$title}" titletag="h1" image="{$fac_image_url}" alt="{$fac_image_alt_text}"]
 				<div class="udub-slant-divider"><span></span></div>
 				{$p_fac_appts}
 				{$p_fac_email}

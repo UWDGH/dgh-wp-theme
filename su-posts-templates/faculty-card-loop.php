@@ -63,7 +63,7 @@
 			$fac_appt_block .= $fac_appt;
 			$fac_appt_block .= '</div>';
 
-			$image_url = get_stylesheet_directory_uri() . '/assets/img/profile-placeholder.png';
+			$image_url = get_stylesheet_directory_uri() . '/assets/img/dubs.jpg';
 			$photo_url = get_post_meta( $post->ID, '_dgh_fac_photo_url', true );
 			$alt_text = '';
 			$modal_thumbnail = '';
