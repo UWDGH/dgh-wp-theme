@@ -144,9 +144,10 @@ if ( $fac_email ) {
 
 // construct phone number
 if ( $fac_phone_number ) {
+	$fac_phone_number_href = '+1' . preg_replace('/\D+/', '', $fac_phone_number);	// remove all non-digit characters from phone nr, prefix with '+1'
 	$p_fac_phone_number = '<div class="fac-phone" data-alt="Phone number">';
 	$p_fac_phone_number .= '<span class="dashicons dashicons--fac dashicons-phone"><span class="screen-reader-text">'.__('Phone number','dgh-wp-theme').'</span></span>';
-	$p_fac_phone_number .= ($fac_phone_number_hidden) ? __('N/A','dgh-wp-theme') :  '<p><a href="'.esc_url( 'tel:' . $fac_phone_number ).'">'.esc_html( $fac_phone_number ).'</a></p>';
+	$p_fac_phone_number .= ($fac_phone_number_hidden) ? __('N/A','dgh-wp-theme') :  '<p><a href="'.esc_url( 'tel:' . $fac_phone_number_href ).'">'.esc_html( $fac_phone_number ).'</a></p>';
 	$p_fac_phone_number .= '</div>';
 }
 
