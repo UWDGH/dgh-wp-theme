@@ -36,6 +36,8 @@ $fac_office = '';			// office location
 $fac_office_hidden = false;
 $fac_degrees = array();		// Degrees
 $fac_publications = '';		// Publications
+$fac_pubref_use = false;    // Use pubref
+$fac_pubref = '';		    // pubref
 $fac_image_url = get_stylesheet_directory_uri() . '/assets/img/dubs.jpg';
 $fac_links = array();		// Links
 
@@ -99,6 +101,9 @@ if ( has_post_thumbnail( $id ) ) {
 }
 // publications
 $fac_publications = get_post_meta( $id, '_dgh_fac_publications', true );
+// pubref
+$fac_pubref_use =  get_post_meta( $id, '_dgh_fac_pubref_use', true );
+$fac_pubref = get_post_meta( $id, '_dgh_fac_pubref', true );
 // links
 $fac_links =  get_post_meta( $id, '_dgh_fac_links' );
 if ( !empty( $fac_links ) ) { $fac_links = $fac_links[0]; }
@@ -155,7 +160,7 @@ if ( $fac_phone_number ) {
 if ( $fac_office ) {
 	$p_fac_office = '<div class="fac-office" data-alt="Office location">';
 	$p_fac_office .= '<span class="dashicons dashicons--fac dashicons-location"><span class="screen-reader-text">'.__('Office location','dgh-wp-theme').'</span></span>';
-	$p_fac_office .= ($fac_office_hidden) ? __('N/A','dgh-wp-theme') : wpautop( $fac_office );
+	$p_fac_office .= ($fac_office_hidden) ? __('N/A','dgh-wp-theme') : wpautop( html_entity_decode( $fac_office ) );
 	$p_fac_office .= '</div>';
 }
 
@@ -168,7 +173,7 @@ if ( !empty($fac_office) || !empty($fac_email) || !empty($fac_phone_number) ) {
 $p_fac_bio = ( !empty( $fac_bio ) ) ? $h_bio . $fac_bio : $h_bio . 'N/A';
 
 // construct areas of expertise
-$p_fac_research_interests = ( !empty( $fac_research_interests ) ) ? $h_research_interests . wpautop( $fac_research_interests ) : '';
+$p_fac_research_interests = ( !empty( $fac_research_interests ) ) ? $h_research_interests . wpautop( html_entity_decode( $fac_research_interests ) ) : '';
 
 // construct degrees
 if ( !empty( $fac_degrees) ) {
@@ -181,7 +186,10 @@ if ( !empty( $fac_degrees) ) {
 }
 
 // construct publications
-$p_fac_publications = ( !empty( $fac_publications ) ) ? $h_publications . wpautop( $fac_publications ) : '';
+$p_fac_publications = ( !empty( $fac_publications ) ) ? $h_publications . wpautop( html_entity_decode( $fac_publications ) ) : '';
+if ( $fac_pubref && $fac_pubref_use ) {
+	$p_fac_publications = $h_publications . do_shortcode( html_entity_decode( $fac_pubref) );
+}
 
 // construct email
 if ( $fac_links ) {
