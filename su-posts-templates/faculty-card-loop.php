@@ -143,7 +143,19 @@
 			}
 
 			// construct uw_card item
+			$fac_fname = get_post_meta( $post->ID, '_dgh_fac_fname', true );
 			$uw_card_btn = __('Go to profile page','dgh-wp-theme');
+			if ( $fac_fname ) {
+				// extract actual first name from $fac_fname
+				$fname = explode(" ", $fac_fname);
+				$p_fname = $fname[0];
+				if ( (count($fname) > 1) && (strlen( $fname[0] ) == 1 ) ) {
+					$p_fname = $fname[0] . ' ' . $fname[1];
+				} elseif ( (count($fname) > 1) && (strlen( $fname[0] ) == 2 ) && (strpos($fname[0], ".") == 1) ) {
+					$p_fname = $fname[0] . ' ' . $fname[1];
+				}
+				$uw_card_btn = __('Go to '.$p_fname.'\'s profile page','dgh-wp-theme');
+			}
 			$uw_card = <<<FACULTY_CARD
 			[col id="su-post-{$the_ID}" class="col-12 col-lg-6 py-3 px-3 su-post {$card_classes} {$class_single}"]
 			[uw_card id="su-post-faculty-card-{$the_ID}" style="half-block-large" align="right" color="white" titletag="h3" image="{$image_url}" alt="{$alt_text}" title="{$fac_title}" button="{$uw_card_btn}" link="{$fac_permalink}"]
