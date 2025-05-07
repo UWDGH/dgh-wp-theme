@@ -107,7 +107,12 @@
 					return $number;
 				}, 999 );
 				add_filter( 'excerpt_more', function($more_string) {
-					return ' [&hellip;]';
+					global $post;
+					$the_post_template = get_post_meta( $post->ID, '_wp_page_template', true );
+					if ( 'templates/template-faculty-profile.php' == $the_post_template ) {
+						return ' [&hellip;]';
+					}
+					return $more_string;
 				});
 				$fac_bio_excerpt = apply_filters( 'the_excerpt', get_the_excerpt( $post ) );
 
