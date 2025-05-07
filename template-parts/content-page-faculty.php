@@ -52,7 +52,7 @@
 		$next_faculty_page_index = 1;
 		$offset = 0;
 
-		$posts_per_page = 8;
+		$posts_per_page = 10;
 		
 		// total number of pages
 		$total_number_of_pages = (int)ceil($fac_total / $posts_per_page);
