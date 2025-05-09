@@ -78,6 +78,8 @@
                         // background-position: 10px 0
                 .card-body
                     min-height: 384px
+                    @media (min-width: 768px)
+                        margin-left: 2rem
                     .inner-card-body
                         display: flex
                         flex-direction: column
@@ -103,14 +105,21 @@
 .dgh_faculty_profile-template
     .entry-content
         &.entry-content-faculty-profile
-            ul
-                &.fac-degrees
+            ul[id^='tabs-fac-']
+                @media (min-width: 577px)
+                    clear: both
+                    padding-top: 1em
+                li.nav-item
+                    &:first-of-type
+                        margin-left: -1rem
+            div[id^='tab-content-tabs-fac-']
+                .fac-degrees
                     // font-family: Encode Sans Compressed, sans-serif
                     list-style-type: none
                     margin-left: 30px
                     li
                         margin-bottom: 0.5rem
-                &.fac-links
+                .fac-links
                     list-style-type: none
                     margin-left: 0
             span.dashicons
