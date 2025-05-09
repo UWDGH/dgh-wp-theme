@@ -228,14 +228,14 @@ if ( !class_exists( 'DGH_WP_Theme' ) ) {
 
 				// construct the logout link as a heredoc string
 				$_output = <<<LOGOUT_LINK
-				<a href="{$_logout_url}" title="{$_logout_text}">{$_logout_greeting}&nbsp;<em>{$_current_user_login}</em>&nbsp;({$_logout_text})</a>
+				<a href="{$_logout_url}">{$_logout_greeting}&nbsp;<em>{$_current_user_login}</em>&nbsp;({$_logout_text})</a>
 				LOGOUT_LINK;
 
       } else {
 
 				// construct the login link as a heredoc string
 				$_output = <<<LOGIN_LINK
-				<a href="{$_login_url}" title="{$_login_text}">{$_login_text}</em></a>
+				<a href="{$_login_url}">{$_login_text}</em></a>
 				LOGIN_LINK;
 
       }
