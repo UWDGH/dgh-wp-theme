@@ -86,6 +86,11 @@ if ( !class_exists( 'DGH_WP_Theme' ) ) {
 			// add_action( 'wp_ajax_dgh_wp_theme_fac_ajax_callback', array( __CLASS__, 'dgh_wp_theme_fac_ajax_callback' ) );
 			// add_action( 'wp_ajax_nopriv_dgh_wp_theme_fac_ajax_callback', array( __CLASS__, 'dgh_wp_theme_fac_ajax_callback' ) );
 
+			/**
+			 * implement hook wp_head
+			 */
+			add_action('wp_head',  array( __CLASS__, 'dgh_wp_theme_faculty_profile_template_headers' ) );
+			
 		}
 		
 		/**
@@ -481,6 +486,25 @@ if ( !class_exists( 'DGH_WP_Theme' ) ) {
 			return $post_states;
 			
 		}
+		
+		/**
+		 * callback function for hook wp_head
+         * requires following template files in theme:
+         * - templates/template-faculty.php
+         * - templates/template-faculty-profile.php
+		 */
+		static function dgh_wp_theme_faculty_profile_template_headers() {
+
+			if ( !is_page_template( 'templates/template-faculty.php' ) && !is_page_template( 'templates/template-faculty-profile.php' ) ) {
+				return;
+			}
+
+			echo '<!--//unused by Google, but can be used by other search engines//-->';
+			echo '<meta name="robots" content="noarchive,nocache" />';
+			echo '<!--//END: unused by Google//-->';
+
+		}
+
 
 		/**
 		 * callback function for hook wp_ajax_nopriv_{action}
