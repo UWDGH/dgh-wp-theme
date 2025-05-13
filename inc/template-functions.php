@@ -112,6 +112,7 @@ endif;
 
 /**
  * override uw_meta_tags
+ * @link https://ogp.me/
  */
 if ( !function_exists( 'uw_meta_tags' ) ) :
 	function uw_meta_tags() {
@@ -119,34 +120,59 @@ if ( !function_exists( 'uw_meta_tags' ) ) :
 		global $post;
 		setup_postdata( $post->ID );
 		// do_action('qm/debug', $post );
-
-		$og_site_name = get_bloginfo( 'name' );
-		$og_title = get_the_title( $post->ID );
-		$og_image = "https://s3-us-west-2.amazonaws.com/uw-s3-cdn/wp-content/uploads/sites/10/2019/06/21094817/Univ-of-Washington_Memorial-Way.jpg";
+		
+		$og = array();
+		//og:locale
+		$og['og:locale'] = 'en_US';
+		//og:site_name
+		$og['og:site_name']  = get_bloginfo( 'name' );
+		//og:type (required)
+		$og['og:type'] = 'website';
+		if ( $post->post_type == 'post' ) {
+			$og['og:type'] = 'article';
+			$og['article:published_time'] = $post->post_date;
+			$og['article:modified_time'] = $post->post_modified;
+		}
+		if ( $post->post_type == 'dgh_faculty_profile' ) {
+			$og['og:type'] = 'profile';
+			$og['profile:first_name'] = get_post_meta( $post->ID, '_dgh_fac_fname', true );
+			$og['profile:last_name '] = get_post_meta( $post->ID, '_dgh_fac_lname', true );
+		}
+		//og:title (required)
+		$og['og:title'] = html_entity_decode( get_the_title( $post->ID ) );
+		// og:image (required)
+		$og['og:image'] = "https://s3-us-west-2.amazonaws.com/uw-s3-cdn/wp-content/uploads/sites/10/2019/06/21094817/Univ-of-Washington_Memorial-Way.jpg";
+		$og['og:image:width"'] = 1200;
+		$og['og:image:height'] = 630;
 		$has_post_thumbnail = isset( $post->ID ) ? has_post_thumbnail( $post->ID ) : false;
 		if ( $has_post_thumbnail ) {
 			$thumbnail_src = wp_get_attachment_image_src( get_post_thumbnail_id( $post->ID ), 'large' );
-			$og_image = $thumbnail_src[0];
+			$og['og:image'] = esc_attr( $thumbnail_src[0] );
+		} elseif ( !$has_post_thumbnail && $post->post_type == 'dgh_faculty_profile' ) {
+			$photo_url = get_post_meta( $post->ID, '_dgh_fac_photo_url', true );
+			if ( DGH_Template::is_dgh_fac_photo_url_ok( $photo_url ) ) {
+				$og['og:image'] = esc_attr( $photo_url );
+			} else {
+				$og['og:image'] = get_stylesheet_directory_uri() . '/assets/img/dubs.jpg';
+			}
 		}
+		// og:description
 		$og_description = get_the_excerpt( $post->ID ); // if there's is no excerpt, this function will fallback on the post content
 		if ( $og_description ) {
 			$og_description = trim( str_replace( '&nbsp;', ' ', $og_description ) ); //convert non-breakable spaces to normal spaces to really trim it
 			$og_description = trim( wp_strip_all_tags( strip_shortcodes( stripslashes( $og_description ), true ) ) );
 			$og_description = uw_social_truncate( $og_description, 200 );
+			$og['og:description'] = html_entity_decode( $og_description );
 		}
-		if ( empty($og_description) ) {	$og_description = get_bloginfo( 'description' ); } //fallback		
-		if ( empty($og_description) ) { $og_description = __('Achieve sustainable, quality health globally.', 'dgh-wp-theme'); } //fallback		
-		$og_url = ( isset( $_SERVER['HTTPS'] ) && $_SERVER['HTTPS'] === 'on' ? "https" : "http" ) . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
-		$og_type = $post->post_type;
+		if ( empty($og_description) ) {	$og['og:description'] = get_bloginfo( 'description' ); } //fallback		
+		if ( empty($og_description) ) { $og['og:description'] = __('Achieve sustainable, quality health globally.', 'dgh-wp-theme'); } //fallback		
+		//og:url (required)
+		$og['og:url'] = ( isset( $_SERVER['HTTPS'] ) && $_SERVER['HTTPS'] === 'on' ? "https" : "http" ) . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
 
-		echo '<meta property="og:site_name" content="' . $og_site_name . '" />' . PHP_EOL;
-		echo '<meta property="og:url" content="' . $og_url . '" />' . PHP_EOL;
-		echo '<meta property="og:title" content="' . html_entity_decode( $og_title ) . '" />' . PHP_EOL;
-		echo '<meta property="og:description" content="' . html_entity_decode( $og_description ) . '" />' . PHP_EOL;
-		echo '<meta property="og:image" content="' . esc_attr( $og_image ) . '" />' . PHP_EOL;
-		echo '<meta property="og:image:width" content="1200" />'. PHP_EOL;
-		echo '<meta property="og:image:height" content="630" />'. PHP_EOL;
-		echo '<meta property="og:type" content="' . $og_type . '" />' . PHP_EOL;
+		// do_action('qm/debug', $og );
+		foreach ($og as $key => $value) {
+			echo '<meta property="'.$key.'" content="'.$value.'" />' . PHP_EOL;
+		}
 
 	}
 	add_action( 'wp_head', 'uw_meta_tags', 5 );
