@@ -160,7 +160,7 @@ if ( !class_exists( 'DGH_WP_Theme' ) ) {
 			wp_localize_script( 'dgh-wp-theme', 'UW_WP_Child_Theme', $UW_WP_Child_Theme );
 
 			// register script for faculty page
-			// enqueue hook invoked from template
+			// enqueue hook invoked from template-faculty.php
 			wp_register_script('dgh-wp-theme-page-faculty', get_stylesheet_directory_uri() . '/js/dgh-wp-theme-page-faculty.js', array('jquery'));
 
 		}
@@ -175,6 +175,8 @@ if ( !class_exists( 'DGH_WP_Theme' ) ) {
 		$DGH_Faculty = array( 
 				'admin_ajax_url' => admin_url('admin-ajax.php'),
 				'nonce' => wp_create_nonce('page-faculty-nonce'),
+				'fac_btnGotoPrefix' => __( 'Go to profile page for ', 'dgh-wp-theme' ),
+				'fac_btnPreviewPrefix' => __( 'Preview modal for ', 'dgh-wp-theme' ),
 			 );
 		wp_localize_script( 'dgh-wp-theme-page-faculty', 'DGH_Faculty', $DGH_Faculty );
 

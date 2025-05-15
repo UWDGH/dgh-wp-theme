@@ -36,6 +36,18 @@
 		$( '.su-post-faculty-card' )
 			// .attr( 'tabindex', '0' )
 			.attr( 'role', 'listitem' );
+		//a11y: add aria-label to btn links
+        $( '.su-post-faculty-card' ).each(function () {
+			// console.log( DGH_Faculty.fac_btnPrefix );
+			let title = $( this ).find( '.card-title' ).text();
+			let gobtn = $( this ).find( 'a.btn.btn-lg' );
+			$( gobtn )
+				.attr( 'aria-label', DGH_Faculty.fac_btnGotoPrefix + title);
+			
+			let previewbtn = $( this ).find( 'button.btn.btn-modal' );
+			$( previewbtn )
+				.attr( 'aria-label', DGH_Faculty.fac_btnPreviewPrefix + title);
+        });
 		
 	});
 
