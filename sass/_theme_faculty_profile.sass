@@ -105,23 +105,29 @@
 .dgh_faculty_profile-template
     .entry-content
         &.entry-content-faculty-profile
-            ul[id^='tabs-fac-']
-                @media (min-width: 577px)
-                    clear: both
-                    padding-top: 1em
-                li.nav-item
-                    &:first-of-type
-                        margin-left: -1rem
-            div[id^='tab-content-tabs-fac-']
-                .fac-degrees
-                    // font-family: Encode Sans Compressed, sans-serif
-                    list-style-type: none
-                    margin-left: 30px
-                    li
-                        margin-bottom: 0.5rem
-                .fac-links
-                    list-style-type: none
+            section[id^=section-fac-header]
+                margin-bottom: 2rem
+            section[id^=section-fac-content]
+                .grid.row
                     margin-left: 0
+                    margin-right: 0
+            // ul[id^='tabs-fac-']
+            //     @media (min-width: 577px)
+            //         clear: both
+            //         padding-top: 1em
+            //     li.nav-item
+            //         &:first-of-type
+            //             margin-left: -1rem
+                // div[id^='tab-content-tabs-fac-']
+            .fac-degrees
+                // font-family: Encode Sans Compressed, sans-serif
+                list-style-type: none
+                margin-left: 30px
+                li
+                    margin-bottom: 0.5rem
+            .fac-links
+                list-style-type: none
+                margin-left: 0
             span.dashicons
                 &.dashicons--fac
                     font-size: 20px

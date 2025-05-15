@@ -186,9 +186,11 @@ if ( !empty( $fac_degrees) ) {
 }
 
 // construct publications
-$p_fac_publications = ( !empty( $fac_publications ) ) ? $h_publications . wpautop( html_entity_decode( $fac_publications ) ) : '';
+// $p_fac_publications = ( !empty( $fac_publications ) ) ? $h_publications . wpautop( html_entity_decode( $fac_publications ) ) : '';
+$p_fac_publications = ( !empty( $fac_publications ) ) ? wpautop( html_entity_decode( $fac_publications ) ) : '';
 if ( $fac_pubref && $fac_pubref_use ) {
-	$p_fac_publications = $h_publications . do_shortcode( html_entity_decode( $fac_pubref) );
+	// $p_fac_publications = $h_publications . do_shortcode( html_entity_decode( $fac_pubref) );
+	$p_fac_publications = do_shortcode( html_entity_decode( $fac_pubref) );
 }
 
 // construct email
@@ -215,7 +217,7 @@ if ( $fac_links ) {
 
 		<div class="entry-content-wrapper">
 
-			<section aria-label="<?php _e( 'Faculty profile header', 'dgh-wp-theme' ); ?>" aria-describedby="faculty-profile-header-description">
+			<section id="section-fac-header-<?php echo $id; ?>" aria-label="<?php _e( 'Faculty profile header', 'dgh-wp-theme' ); ?>" aria-describedby="faculty-profile-header-description">
 				
 				<p id="faculty-profile-header-description" class="screen-reader-text"><?php _e( 'Above the fold content, presented visually as a card. Showing a faculty profile image on one side of the card, and their name, appointment titles, and email address on the other side of the card.', 'dgh-wp-theme' ); ?></p>
 			
@@ -234,17 +236,72 @@ if ( $fac_links ) {
 
 				?>
 			</section>
+
+			<section id="section-fac-content-<?php echo $id; ?>" aria-label="<?php _e( 'Faculty profile content', 'dgh-wp-theme' ); ?>">
+			
 			<?php
 			// the_content();
 
-			// construct the 'About' tabs section
-			$tabs_section_about_txt = __('About', 'dgh-wp-theme');
-			$tabs_section_about = <<<TAB_ABOUT
-			[tabs_section title="{$tabs_section_about_txt} {$fac_fname} {$fac_lname}" id="tab-fac-about"]
+			// // construct the 'About' tabs section
+			// $tabs_section_about_txt = __('About', 'dgh-wp-theme');
+			// $tabs_section_about = <<<TAB_ABOUT
+			// [tabs_section title="{$tabs_section_about_txt} {$fac_fname} {$fac_lname}" id="tab-fac-about"]
+			// [row]
+			// [col class="col-sm col-sm-12 col-xl-9 pl-xl-auto pr-xl-5"]
+			// {$p_fac_bio}
+			// {$p_fac_research_interests}
+			// [/col]
+			// [col class="col-sm col-sm-12 col-xl-3 pl-0 pl-xl-auto"]
+			// {$p_fac_degrees}
+			// {$p_fac_contact}
+			// {$p_fac_links}
+			// [/col]
+			// [/row]
+			// [/tabs_section]
+			// TAB_ABOUT;
+
+			// $tabs_section_publications = '';
+			// if ( !empty( $fac_publications ) ) {
+			// 	$tabs_section_publications = <<<TAB_PUB
+			// 	[tabs_section title="Select Publications" id="tab-fac-publications"]
+			// 	[row]
+			// 	[col class="col-sm col-sm-12"]
+			// 	{$p_fac_publications}
+			// 	[/col]
+			// 	[/row]
+			// 	[/tabs_section]
+			// 	TAB_PUB;
+			// }
+
+			// $fac_tabs = <<<FAC_TABS
+			// [uw_tabs id="tabs-fac-{$id}" style="alt-tab"]
+			// {$tabs_section_about}
+			// {$tabs_section_publications}
+			// [/uw_tabs] 
+			// FAC_TABS;
+
+			// // display the tabs
+			// echo do_shortcode( $fac_tabs );
+
+			$publications_accordion = '';
+			$h_publications = '<h2>'.__('Publications', 'dgh-wp-theme').'</h2>';
+			$acc_pub_title = __( 'Publications', 'dgh-wp-theme' );
+			$acc_pub_sec1_title = __( 'Select Publications', 'dgh-wp-theme' );
+			if ( !empty( $fac_publications ) ) {
+				$publications_accordion = <<<ACCORDION_PUB
+				{$h_publications}
+				[accordion id="accordion-fac-{$id}" name="{$acc_pub_title}" style="non-bold" titletag="h2"]
+				[section title="{$acc_pub_sec1_title}"]{$p_fac_publications}[/section]
+				[/accordion] 
+				ACCORDION_PUB;
+			}
+
+			$fac_content = <<<FAC_CONTENT
 			[row]
 			[col class="col-sm col-sm-12 col-xl-9 pl-xl-auto pr-xl-5"]
 			{$p_fac_bio}
 			{$p_fac_research_interests}
+			{$publications_accordion}
 			[/col]
 			[col class="col-sm col-sm-12 col-xl-3 pl-0 pl-xl-auto"]
 			{$p_fac_degrees}
@@ -252,32 +309,15 @@ if ( $fac_links ) {
 			{$p_fac_links}
 			[/col]
 			[/row]
-			[/tabs_section]
-			TAB_ABOUT;
-
-			$tabs_section_publications = '';
-			if ( !empty( $fac_publications ) ) {
-				$tabs_section_publications = <<<TAB_PUB
-				[tabs_section title="Select Publications" id="tab-fac-publications"]
-				[row]
-				[col class="col-sm col-sm-12"]
-				{$p_fac_publications}
-				[/col]
-				[/row]
-				[/tabs_section]
-				TAB_PUB;
-			}
-
-			$fac_tabs = <<<FAC_TABS
-			[uw_tabs id="tabs-fac-{$id}" style="alt-tab"]
-			{$tabs_section_about}
-			{$tabs_section_publications}
-			[/uw_tabs] 
-			FAC_TABS;
-
-			// display the tabs
-			echo do_shortcode( $fac_tabs );
+			FAC_CONTENT;
 			
+			echo do_shortcode( $fac_content );
+
+			?>
+			
+			</section>
+
+			<?php
 			wp_link_pages(
 				array(
 					'before' => '<div class="page-links">' . esc_html__( 'Pages:', 'uw_wp_theme' ),
