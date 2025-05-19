@@ -150,7 +150,7 @@ if ( !function_exists( 'uw_meta_tags' ) ) :
 			$og['og:image'] = esc_attr( $thumbnail_src[0] );
 		} elseif ( !$has_post_thumbnail && $post->post_type == 'dgh_faculty_profile' ) {
 			$photo_url = get_post_meta( $post->ID, '_dgh_fac_photo_url', true );
-			if ( DGH_Template::is_dgh_fac_photo_url_ok( $photo_url ) ) {
+			if ( \DGH_Post_Types\DGH_Template::is_dgh_fac_photo_url_ok( $photo_url ) ) {
 				$og['og:image'] = esc_attr( $photo_url );
 			} else {
 				$og['og:image'] = get_stylesheet_directory_uri() . '/assets/img/dubs.jpg';
