@@ -153,7 +153,7 @@ if ( !function_exists( 'uw_meta_tags' ) ) :
 			if ( \DGH_Post_Types\DGH_Template::is_dgh_fac_photo_url_ok( $photo_url ) ) {
 				$og['og:image'] = esc_attr( $photo_url );
 			} else {
-				$og['og:image'] = get_stylesheet_directory_uri() . '/assets/img/dubs.jpg';
+				$og['og:image'] = get_stylesheet_directory_uri() . '/assets/img/W_placeholder.jpg';
 			}
 		}
 		// og:description

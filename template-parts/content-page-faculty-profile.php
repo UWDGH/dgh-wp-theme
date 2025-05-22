@@ -38,7 +38,7 @@ $fac_degrees = array();		// Degrees
 $fac_publications = '';		// Publications
 $fac_pubref_use = false;    // Use pubref
 $fac_pubref = '';		    // pubref
-$fac_image_url = get_stylesheet_directory_uri() . '/assets/img/dubs.jpg';
+$fac_image_url = get_stylesheet_directory_uri() . '/assets/img/W_placeholder.jpg';
 $fac_links = array();		// Links
 
 // output(i.e. print) vars are prefixed with 'p'
