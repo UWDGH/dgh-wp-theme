@@ -289,7 +289,7 @@ function content_page_faculty_page_buttons( $total_number_of_pages, $current_fac
 		$faculty_page_url = add_query_arg( 'page_index', $i, get_permalink() );
 		$faculty_page_url = add_query_arg( '_wpnonce', wp_create_nonce( 'dgh-fac-page-index-'.strval($i) ), $faculty_page_url );
 		$display_number = $i + 1;
-		echo do_shortcode( '[uw_button id="btn-faculty-page-'.$i.'" style="'.$btn_style.'" size="small" target="'.esc_url($faculty_page_url).'"]<span class="screen-reader-text">'.__( 'Navigate to faculty page ', 'dgh-wp-theme' ).'</span>'.$display_number.'[/uw_button]' );
+		echo do_shortcode( '[uw_button id="btn-faculty-page-'.$i.'-'.bin2hex(random_bytes(1)).'" style="'.$btn_style.'" size="small" target="'.esc_url($faculty_page_url).'"]<span class="screen-reader-text">'.__( 'Navigate to faculty page ', 'dgh-wp-theme' ).'</span>'.$display_number.'[/uw_button]' );
 	}
 }
 
