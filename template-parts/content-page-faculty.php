@@ -203,6 +203,7 @@
 					<?php endif; ?>
 				</span>
 			</div>
+			<?php echo do_shortcode('[wpdreams_ajaxsearchlite]'); ?>
 		</nav>
 		<section aria-labelledby="faculty-listing">
 			<h2 id="faculty-listing" class="screen-reader-text"><?php _e( 'Faculty list', 'dgh-wp-theme' ); ?></h2>
