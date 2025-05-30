@@ -97,13 +97,19 @@
 					global $post;
 					// get the excerpt length based on number of words of the first paragraph
 					$fac_bio = apply_filters( 'the_content', get_the_content( $post->post_content ) );
+					libxml_use_internal_errors(true);
 					$bio_dom = new \DOMDocument();
 					$bio_dom->loadHTML($fac_bio);
+					foreach (libxml_get_errors() as $error) {
+						// handle DOMDocument errors here
+						error_log( \DGH_Post_Types\DGH_Template::DOMDocumentError( $error ) );
+					}
 					$excerpt_len = str_word_count( rtrim( strtok( $bio_dom->textContent, "\n" ) ), 0, '[0...9()]' );
 					$the_post_template = get_post_meta( $post->ID, '_wp_page_template', true );
 					if ( 'templates/template-faculty-profile.php' == $the_post_template ) {
 						$number = $excerpt_len;
 					}
+					libxml_clear_errors();
 					return $number;
 				}, 999 );
 				add_filter( 'excerpt_more', function($more_string) {
