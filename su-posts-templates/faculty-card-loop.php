@@ -149,7 +149,7 @@
 			$p_fac_email = '';
 			if ( !empty( $fac_email ) ) {
 				$p_fac_email .= '<div class="fac-email" data-alt="Email">';
-				$p_fac_email .= ($fac_email_hidden) ? __('N/A','dgh-wp-theme') : '<a href="'.esc_url( 'mailto:' . $fac_email ).'">'.esc_html( $fac_email ).'</a>';
+				$p_fac_email .= ($fac_email_hidden) ? '<i>' . __('undisclosed','dgh-wp-theme') . '</i>' : '<a href="'.esc_url( 'mailto:' . $fac_email ).'">'.esc_html( $fac_email ).'</a>';
 				$p_fac_email .= '</div>';
 			}
 

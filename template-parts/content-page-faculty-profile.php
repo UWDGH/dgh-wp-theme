@@ -143,7 +143,7 @@ if ( !empty( $fac_appts) || !empty( $fac_job_title)  ) {
 if ( $fac_email ) {
 	$p_fac_email = '<div class="fac-email" data-alt="Email">';
 	$p_fac_email .= '<span class="dashicons dashicons--fac dashicons-email"><span class="screen-reader-text">'.__('Email','dgh-wp-theme').'</span></span>';
-	$p_fac_email .= ($fac_email_hidden) ? __('N/A','dgh-wp-theme') : '<p><a href="'.esc_url( 'mailto:' . $fac_email ).'">'.esc_html( $fac_email ).'</a></p>';
+	$p_fac_email .= ($fac_email_hidden) ? '<i>' . __('undisclosed','dgh-wp-theme') . '</i>' : '<p><a href="'.esc_url( 'mailto:' . $fac_email ).'">'.esc_html( $fac_email ).'</a></p>';
 	$p_fac_email .= '</div>';
 }
 
@@ -152,7 +152,7 @@ if ( $fac_phone_number ) {
 	$fac_phone_number_href = '+1' . preg_replace('/\D+/', '', $fac_phone_number);	// remove all non-digit characters from phone nr, prefix with '+1'
 	$p_fac_phone_number = '<div class="fac-phone" data-alt="Phone number">';
 	$p_fac_phone_number .= '<span class="dashicons dashicons--fac dashicons-phone"><span class="screen-reader-text">'.__('Phone number','dgh-wp-theme').'</span></span>';
-	$p_fac_phone_number .= ($fac_phone_number_hidden) ? __('N/A','dgh-wp-theme') :  '<p><a href="'.esc_url( 'tel:' . $fac_phone_number_href ).'">'.esc_html( $fac_phone_number ).'</a></p>';
+	$p_fac_phone_number .= ($fac_phone_number_hidden) ? '<i>' . __('undisclosed','dgh-wp-theme') . '</i>' :  '<p><a href="'.esc_url( 'tel:' . $fac_phone_number_href ).'">'.esc_html( $fac_phone_number ).'</a></p>';
 	$p_fac_phone_number .= '</div>';
 }
 
@@ -160,7 +160,7 @@ if ( $fac_phone_number ) {
 if ( $fac_office ) {
 	$p_fac_office = '<div class="fac-office" data-alt="Office location">';
 	$p_fac_office .= '<span class="dashicons dashicons--fac dashicons-location"><span class="screen-reader-text">'.__('Office location','dgh-wp-theme').'</span></span>';
-	$p_fac_office .= ($fac_office_hidden) ? __('N/A','dgh-wp-theme') : wpautop( html_entity_decode( $fac_office ) );
+	$p_fac_office .= ($fac_office_hidden) ? '<i>' . __('undisclosed','dgh-wp-theme') . '</i>' : wpautop( html_entity_decode( $fac_office ) );
 	$p_fac_office .= '</div>';
 }
 
