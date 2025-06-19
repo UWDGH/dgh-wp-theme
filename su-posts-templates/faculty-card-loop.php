@@ -63,22 +63,26 @@
 			$fac_appt_block .= $fac_appt;
 			$fac_appt_block .= '</div>';
 
+			$fac_photo_hidden = false;
+			$fac_photo_hidden = get_post_meta( $post->ID, '_dgh_fac_photo_hidden', true );
 			$image_url = get_stylesheet_directory_uri() . '/assets/img/W_placeholder.jpg';
 			$photo_url = get_post_meta( $post->ID, '_dgh_fac_photo_url', true );
 			$alt_text = '';
 			$modal_thumbnail = '';
-			if ( has_post_thumbnail( $the_ID ) ) {
-				$image_url = get_the_post_thumbnail_url( $the_ID );
-				$att_id = attachment_url_to_postid( $image_url );
-				$alt_text = wp_get_attachment_caption( $att_id );
-				$modal_thumbnail = get_the_post_thumbnail( $post, 'thumbnail', array( 'class' => 'alignright' ) );
-			} elseif ( $photo_url ) {
-				// fallback: deeplink the SPH photo URL
-				if ( \DGH_Post_Types\DGH_Template::is_dgh_fac_photo_url_ok( $photo_url ) ) {
-					$image_url = $photo_url;
-					$modal_thumbnail = <<<THUMBNAIL
-					<img loading="lazy" width="150" height="150" src="{$image_url}" class="alignright wp-post-image" alt="Profile photo of {$fac_title}" decoding="async">
-					THUMBNAIL;
+			if ( ! $fac_photo_hidden ) {
+				if ( has_post_thumbnail( $the_ID ) ) {
+					$image_url = get_the_post_thumbnail_url( $the_ID );
+					$att_id = attachment_url_to_postid( $image_url );
+					$alt_text = wp_get_attachment_caption( $att_id );
+					$modal_thumbnail = get_the_post_thumbnail( $post, 'thumbnail', array( 'class' => 'alignright' ) );
+				} elseif ( $photo_url ) {
+					// fallback: deeplink the SPH photo URL
+					if ( \DGH_Post_Types\DGH_Template::is_dgh_fac_photo_url_ok( $photo_url ) ) {
+						$image_url = $photo_url;
+						$modal_thumbnail = <<<THUMBNAIL
+						<img loading="lazy" width="150" height="150" src="{$image_url}" class="alignright wp-post-image" alt="Profile photo of {$fac_title}" decoding="async">
+						THUMBNAIL;
+					}
 				}
 			}
 

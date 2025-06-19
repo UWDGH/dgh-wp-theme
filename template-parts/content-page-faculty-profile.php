@@ -21,6 +21,7 @@ $fac_url_id = '';			// SPH URL ID
 $fac_ignore_sync = '';		// ignore sync
 $fac_bio = '';				// Post content (i.e. Faculty Bio)
 $fac_image_url = '';		// feaured image
+$fac_photo_hidden = false;
 $fac_photo_url = '';		// the SPH photo URL. Only us as fallback
 $fac_image_alt_text = '';	// alt text (appears unused in UW's 'large' card)
 $fac_appts = array();		// UW appointments
@@ -87,16 +88,19 @@ if ( !empty( $fac_appts ) ) { $fac_appts = $fac_appts[0]; }
 $fac_job_title =  get_post_meta( $id, '_dgh_fac_job_title' );
 if ( !empty( $fac_job_title ) ) { $fac_job_title = $fac_job_title[0]; }
 // featured image
+$fac_photo_hidden = get_post_meta( $post->ID, '_dgh_fac_photo_hidden', true );
 // SPH photo url
 $fac_photo_url = get_post_meta( $post->ID, '_dgh_fac_photo_url', true );
-if ( has_post_thumbnail( $id ) ) {
-	$fac_image_url = get_the_post_thumbnail_url( $id );
-	$att_id = attachment_url_to_postid( $fac_image_url );
-	$fac_image_alt_text = wp_get_attachment_caption( $att_id );
-} elseif ( $fac_photo_url ) {
-	// fallback: deeplink the SPH photo URL
-	if ( \DGH_Post_Types\DGH_Template::is_dgh_fac_photo_url_ok( $fac_photo_url ) ) {
-		$fac_image_url = $fac_photo_url;
+if ( ! $fac_photo_hidden ) {
+	if ( has_post_thumbnail( $id ) ) {
+		$fac_image_url = get_the_post_thumbnail_url( $id );
+		$att_id = attachment_url_to_postid( $fac_image_url );
+		$fac_image_alt_text = wp_get_attachment_caption( $att_id );
+	} elseif ( $fac_photo_url ) {
+		// fallback: deeplink the SPH photo URL
+		if ( \DGH_Post_Types\DGH_Template::is_dgh_fac_photo_url_ok( $fac_photo_url ) ) {
+			$fac_image_url = $fac_photo_url;
+		}
 	}
 }
 // publications
