@@ -117,6 +117,9 @@ endif;
 if ( !function_exists( 'uw_meta_tags' ) ) :
 	function uw_meta_tags() {
 		
+		if ( is_404() )
+			return;
+		
 		global $post;
 		setup_postdata( $post->ID );
 		// do_action('qm/debug', $post );
