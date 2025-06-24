@@ -189,6 +189,9 @@
 		}
 
 		// do_action('qm/debug', '$get_request_passed = '.json_encode($get_request_passed) );
+		
+		the_content();
+
 		?>
 		<nav class="faculty-pagination" aria-labelledby="faculty-pagination">
 			<h2 id="faculty-pagination" class="screen-reader-text"><?php _e( 'Faculty pagination', 'dgh-wp-theme' ); ?></h2>

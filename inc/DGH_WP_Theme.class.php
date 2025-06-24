@@ -420,7 +420,7 @@ if ( !class_exists( 'DGH_WP_Theme' ) ) {
 				// do_action('qm/debug', 'option "dgh_wp_theme_current_fac_page_id" UPDATED to '.get_option( 'dgh_wp_theme_current_fac_page_id' ) );
 
 				// remove features for the current 'Faculty Home' template
-				$features = array( 'editor','excerpt','author','thumbnail','trackbacks','custom-fields','comments','revisions','post-formats');
+				$features = array( 'excerpt','author','thumbnail','trackbacks','custom-fields','comments','revisions','post-formats');
 				foreach ($features as $feature) {
 					remove_post_type_support('page', $feature);
 				}
