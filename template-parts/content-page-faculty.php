@@ -38,13 +38,29 @@
 
 		$fac = null;
 		$fac_total = null;
-		$fac = get_posts([
+		// $fac = get_posts([
+		// 	'post_type' => 'dgh_faculty_profile',
+		// 	'post_status' => 'publish',
+		// 	'numberposts' => -1
+		// ]);
+		$term = get_term_by( 'name', 'Core Faculty', 'dgh_faculty_rank', 'ARRAY_A' );
+		$args = array(
 			'post_type' => 'dgh_faculty_profile',
 			'post_status' => 'publish',
-			'numberposts' => -1
-		]);
+			'posts_per_page' => -1,
+			'tax_query' => array(
+    			array(
+					'taxonomy' => 'dgh_faculty_rank',
+					'field' => 'term_id',
+					'terms' => $term['term_id'],
+					)
+				)
+			);
+		$Fac = new WP_Query( $args );
+		// do_action('qm/debug', count($Fac->get_posts()) );
+		$fac = $Fac->get_posts();
 		// total number of faculty
-		( is_array( $fac ) ) ? $fac_total = count($fac) : $fac_total = 0; 
+		( is_array( $fac ) ) ? $fac_total = count($fac) : $fac_total = 0;
 		
 		// defaults
 		$current_faculty_page_index = 0;
@@ -211,7 +227,7 @@
 
 			// construct the su_post shortcode that calls the loop template
 			$fac_list = <<<FAC_LIST
-			[su_posts template="su-posts-templates/faculty-card-loop.php" posts_per_page="{$posts_per_page}" offset="{$offset}" post_type="dgh_faculty_profile" orderby="meta_value" meta_key="_dgh_fac_name1" order="asc"]
+			[su_posts template="su-posts-templates/faculty-card-loop.php" posts_per_page="{$posts_per_page}" offset="{$offset}" post_type="dgh_faculty_profile" orderby="meta_value" meta_key="_dgh_fac_name1" order="asc" taxonomy="dgh_faculty_rank" tax_term="core-faculty"]
 			FAC_LIST;
 
 			echo do_shortcode( $fac_list );
