@@ -113,14 +113,5 @@
     "branch": "master",
     "optional": true,
     "token": null
-  },
-  {
-    "name": "'UW DGH | Google Analytics Tracker'",
-    "host": "bitbucket",
-    "slug": "uwdgh-ga-tracker/uwdgh-ga-tracker.php",
-    "uri": "uwdgh_elearn/uwdgh-ga-tracker",
-    "branch": "master",
-    "optional": true,
-    "token": null
   }
 ]
