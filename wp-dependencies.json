@@ -81,13 +81,6 @@
     "optional": true
   },
   {
-    "name": "'WP-Optimize'",
-    "host": "wordpress",
-    "slug": "wp-optimize/wp-optimize.php",
-    "uri": "https://wordpress.org/plugins/wp-optimize/",
-    "optional": true
-  },
-  {
     "name": "'Git Updater'",
     "host": "github",
     "slug": "git-updater/git-updater.php",
