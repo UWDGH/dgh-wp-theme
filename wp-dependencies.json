@@ -31,6 +31,13 @@
     "required": true,
     "token": null
 	},
+	{
+    "name": "'Shortcodes Ultimate'",
+    "host": "wordpress",
+		"slug": "shortcodes-ultimate/shortcodes-ultimate.php",
+		"uri": "https://wordpress.org/plugins/shortcodes-ultimate/",
+    "required": true
+	},
   {
     "name": "'Enable Media Replace'",
     "host": "wordpress",
