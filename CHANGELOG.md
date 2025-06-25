@@ -1,6 +1,13 @@
 # Changelog
 
 
+## 3.5.0.19 / 2025‑06‑25
+
+- Tested with WordPress 6.8
+- Tested with UW WordPress Theme 3.5
+- Added faculty templates
+
+
 ## 3.3.1.18 / 2024‑07‑22
 
 - Tested with WordPress 6.7
