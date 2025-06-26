@@ -1,6 +1,12 @@
 # Changelog
 
 
+## 3.5.0.20 / 2025‑06‑26
+
+- Theme header update reflecting theme URI changes.
+- Dependency updates.
+
+
 ## 3.5.0.19 / 2025‑06‑25
 
 - Tested with WordPress 6.8
