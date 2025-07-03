@@ -7,14 +7,31 @@
             text-align: end
             white-space: nowrap
             overflow-x: auto
+            .faculty-pagination-buttons
+                display: grid
+                grid-template-columns: 1fr
+                grid-template-rows: 1fr 1fr
+                @media (min-width: 1200px)
+                    grid-template-columns: 1fr 1fr
+                    grid-template-rows: 1fr
+                .faculty-pagination-rank
+                    text-align: initial
+                .faculty-pagination-index
+                    text-align: initial
+                    @media (min-width: 1200px)
+                        text-align: end
+                a[id^="btn-faculty-"]
+                    margin: 0 
             .faculty-list-status
                 font-family: Encode Sans Compressed, sans-serif
                 font-weight: 400
                 font-size: 14px
                 color: $granitegray
-                padding-bottom: 2px
+                padding: 3px 0
             &.faculty-pagination--centered
                 text-align: center
+            .asl_w_container
+                margin-left: 0
         #btn-faculty-view-all
             &::after
                 display: inline-block
