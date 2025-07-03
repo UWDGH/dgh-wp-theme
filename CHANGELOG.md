@@ -1,6 +1,12 @@
 # Changelog
 
 
+## 3.5.0.21 / 2025‑07‑03
+
+- Integrated faculty rank filter on Faculty Home template.
+- Added faculty teaser loop template for non core-faculty.
+
+
 ## 3.5.0.20 / 2025‑06‑26
 
 - Theme header update reflecting theme URI changes.
