@@ -246,59 +246,59 @@
 		<nav class="faculty-pagination" aria-labelledby="faculty-pagination">
 			<h2 id="faculty-pagination" class="screen-reader-text"><?php _e( 'Faculty pagination', 'dgh-wp-theme' ); ?></h2>
 			<div class="faculty-pagination-buttons">
-			<div class="faculty-pagination-rank">
-				<?php
-				// rank buttons
-				$btn_style = 'primary';
-				$rank_button_index = ( $get_request_passed && $_GET['page_index'] == 'all' ) ? 'all' : 0 ;
-				foreach ($fac_ranks as $rank ) {
-					if ( !$get_request_passed ) {
-						$btn_style = 'secondary';
-					}
-					if ( $get_request_passed || is_null($get_request_passed) ) {
-						$btn_style = 'secondary';
-					}
-					if ( $rank->slug == $current_rank ) {
-						$btn_style = 'primary'; 
-					}
-					$faculty_rank_url = add_query_arg( 'rank', $rank->slug, get_permalink() );
-					$faculty_rank_url = add_query_arg( 'page_index', $rank_button_index, $faculty_rank_url );
-					$faculty_rank_url = add_query_arg( '_wpnonce', wp_create_nonce( 'dgh-fac-page-index-'.strval($rank_button_index) ), $faculty_rank_url );
+				<div class="faculty-pagination-rank">
+					<?php
+					// rank buttons
+					$btn_style = 'primary';
+					$rank_button_index = ( $get_request_passed && $_GET['page_index'] == 'all' ) ? 'all' : 0 ;
+					foreach ($fac_ranks as $rank ) {
+						if ( !$get_request_passed ) {
+							$btn_style = 'secondary';
+						}
+						if ( $get_request_passed || is_null($get_request_passed) ) {
+							$btn_style = 'secondary';
+						}
+						if ( $rank->slug == $current_rank ) {
+							$btn_style = 'primary'; 
+						}
+						$faculty_rank_url = add_query_arg( 'rank', $rank->slug, get_permalink() );
+						$faculty_rank_url = add_query_arg( 'page_index', $rank_button_index, $faculty_rank_url );
+						$faculty_rank_url = add_query_arg( '_wpnonce', wp_create_nonce( 'dgh-fac-page-index-'.strval($rank_button_index) ), $faculty_rank_url );
 
-					echo do_shortcode( '[uw_button id="btn-faculty-page-'.$rank->slug.'" style="'.$btn_style.'" size="small" target="'.esc_url($faculty_rank_url).'"]<span class="screen-reader-text">'.__( 'Navigate to faculty page ', 'dgh-wp-theme' ).'</span>'.$rank->name.'[/uw_button]' );
+						echo do_shortcode( '[uw_button id="btn-faculty-page-'.$rank->slug.'" style="'.$btn_style.'" size="small" target="'.esc_url($faculty_rank_url).'"]<span class="screen-reader-text">'.__( 'Navigate to faculty page ', 'dgh-wp-theme' ).'</span>'.$rank->name.'[/uw_button]' );
+					}
+					?>
+				</div>
+				<div class="faculty-pagination-index">
+				<?php
+				// view all button
+				$view_all_url = add_query_arg( 'rank', $current_rank, get_permalink() );
+				$view_all_url = add_query_arg( 'page_index', 'all', $view_all_url );
+				$view_all_url = add_query_arg( '_wpnonce', wp_create_nonce( 'dgh-fac-page-index-all' ), $view_all_url );
+				$btn_style = 'secondary';
+				if ( isset( $_GET['page_index'] ) && 'all' === strtolower( $_GET['page_index'] ) && $get_request_passed ) { 
+					$btn_style = 'primary'; 
 				}
+				echo do_shortcode( '[uw_button id="btn-faculty-view-all" style="'.$btn_style.'" size="small" target="'.esc_url($view_all_url).'"]'.__('View all faculty','dgh-wp-theme').'[/uw_button]' );
+				// page nummber buttons
+				content_page_faculty_page_buttons( $total_number_of_pages, $current_rank, $current_faculty_page_index, $get_request_passed );
 				?>
-			</div>
-			<div class="faculty-pagination-index">
-			<?php
-			// view all button
-			$view_all_url = add_query_arg( 'rank', $current_rank, get_permalink() );
-			$view_all_url = add_query_arg( 'page_index', 'all', $view_all_url );
-			$view_all_url = add_query_arg( '_wpnonce', wp_create_nonce( 'dgh-fac-page-index-all' ), $view_all_url );
-			$btn_style = 'secondary';
-			if ( isset( $_GET['page_index'] ) && 'all' === strtolower( $_GET['page_index'] ) && $get_request_passed ) { 
-				$btn_style = 'primary'; 
-			}
-			echo do_shortcode( '[uw_button id="btn-faculty-view-all" style="'.$btn_style.'" size="small" target="'.esc_url($view_all_url).'"]'.__('View all faculty','dgh-wp-theme').'[/uw_button]' );
-			// page nummber buttons
-			content_page_faculty_page_buttons( $total_number_of_pages, $current_rank, $current_faculty_page_index, $get_request_passed );
-			?>
-			<div role="status" aria-atomic="true" aria-labelledby="faculty-list-status" class="faculty-list-status">
-			<h2 id="faculty-list-status" class="screen-reader-text"><?php _e( 'Faculty list status', 'dgh-wp-theme' ); ?></h2>
-				<span>Faculty list, page <?php echo ( -1 == $posts_per_page ) ? ' 1 ' : ($current_faculty_page_index + 1) . ' of ' . $total_number_of_pages ; ?>. Displaying 
-					<?php if ( -1 == $posts_per_page ) : ?>
-						all <?php echo $fac_total; ?> faculty.
-					<?php else: ?>
-						<?php if ( ( $total_number_of_pages == ($current_faculty_page_index + 1) ) && ( 0 !== $fac_total % $posts_per_page ) ) : ?>
-							<?php echo ( $fac_total % $posts_per_page ) . ' of ' . $fac_total ;?>
-						<?php else: ?>
-							<?php echo $posts_per_page . ' of ' . $fac_total ;?>
-						<?php endif; ?>
-						 faculty.
-					<?php endif; ?>
-				</span>
-			</div>
-			</div>
+					<div role="status" aria-atomic="true" aria-labelledby="faculty-list-status" class="faculty-list-status">
+						<h2 id="faculty-list-status" class="screen-reader-text"><?php _e( 'Faculty list status', 'dgh-wp-theme' ); ?></h2>
+						<span>Faculty list, page <?php echo ( -1 == $posts_per_page ) ? ' 1 ' : ($current_faculty_page_index + 1) . ' of ' . $total_number_of_pages ; ?>. Displaying 
+							<?php if ( -1 == $posts_per_page ) : ?>
+								all <?php echo $fac_total; ?> faculty.
+							<?php else: ?>
+								<?php if ( ( $total_number_of_pages == ($current_faculty_page_index + 1) ) && ( 0 !== $fac_total % $posts_per_page ) ) : ?>
+									<?php echo ( $fac_total % $posts_per_page ) . ' of ' . $fac_total ;?>
+								<?php else: ?>
+									<?php echo $posts_per_page . ' of ' . $fac_total ;?>
+								<?php endif; ?>
+								faculty.
+							<?php endif; ?>
+						</span>
+					</div>
+				</div>
 			</div>
 			<?php if ( $current_rank === 'core-faculty' ) : ?>
 			<?php echo do_shortcode('[wpdreams_ajaxsearchlite]'); ?>
