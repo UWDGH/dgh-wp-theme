@@ -23,7 +23,21 @@ $sidebar = get_post_meta($post->ID, "sidebar");   ?>
 		<?php
 		while ( have_posts() ) : the_post();
 
-			get_template_part( 'template-parts/content', 'page-faculty' );
+			if ( ! is_plugin_active( 'dgh-post-types/dgh-post-types.php' ) ) {
+				get_template_part( 'template-parts/content', 'page-faculty-error', array(
+					'reason' => __('Plugin "Global Health Website Custom Post Types" is not active.', 'dgh-wp-theme'),
+				));
+			} elseif ( ! post_type_exists( 'dgh_faculty_profile' ) ) {
+				get_template_part( 'template-parts/content', 'page-faculty-error', array(
+					'reason' => __('Post type "dgh_faculty_profile" does not exist.', 'dgh-wp-theme'),
+				));
+			} elseif( ! taxonomy_exists( 'dgh_faculty_rank' )  ) {
+				get_template_part( 'template-parts/content', 'page-faculty-error', array(
+					'reason' => __('Taxonomy "dgh_faculty_rank" does not exist.', 'dgh-wp-theme'),
+				));
+			} else { 
+				get_template_part( 'template-parts/content', 'page-faculty' );
+			}
 
 		endwhile; // End of the loop.
 		?>
