@@ -12,9 +12,10 @@
  */
 ?>
 
-<div class="su-posts su-posts-teaser-loop <?php echo esc_attr( $atts['class'] ); ?>">
+<div class="su-posts su-posts-teaser-loop su-posts-teaser-loop--dgh-faculty <?php echo esc_attr( $atts['class'] ); ?>">
 
 	<?php if ( $posts->have_posts() ) : ?>
+		<div class="grid row equal">
 		<?php while ( $posts->have_posts() ) : ?>
 			<?php global $post; ?>
 			<?php $posts->the_post(); ?>
@@ -71,7 +72,7 @@
 				}
 			}
 			// appointments
-			$fac_appt_block = '<div class="faculty-appts" style="font-family: Encode Sans Compressed, sans-serif; font-weight: 500;">';
+			$fac_appt_block = '<div class="faculty-appts">';
 			$fac_appt = '';
 			$fac_appt_ttl_dept = get_post_meta( $post->ID, '_dgh_fac_appt_ttl_dept', true );
 			$fac_appts = get_post_meta( $post->ID, '_dgh_fac_appts' );
@@ -97,16 +98,17 @@
 				$p_fac_email .= '</p>';
 			}
 			?>
-			<div id="su-post-<?php the_ID(); ?>" class="su-post <?php echo esc_attr( $atts['class_single'] ); ?>">
+			<div id="su-post-<?php the_ID(); ?>" class="su-post <?php echo esc_attr( $atts['class_single'] ); ?> col-12 col-xl-6 py-3 px-3">
 				<?php //if ( has_post_thumbnail() ) : ?>
 					<?php echo $thumbnail; ?>
 				<?php //endif; ?>
-				<h4 class=""><?php the_title(); ?></h4>
+				<h3 class=""><!--a href="<?php //the_permalink(); ?>"--><?php the_title(); ?><!--/a--></h3>
 				<?php echo $fac_appt_block; ?>
 				<?php echo ( $is_emeritus ) ? null : $p_fac_email ;	// don't show email for emeritus faculty ?>
 			</div>
 
 		<?php endwhile; ?>
+		</div>
 	<?php else : ?>
 
 		<p class="su-posts-not-found"><?php esc_html_e( 'Posts not found', 'shortcodes-ultimate' ); ?></p>
