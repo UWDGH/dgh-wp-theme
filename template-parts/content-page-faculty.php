@@ -245,8 +245,8 @@
 		?>
 		<nav class="faculty-pagination" aria-labelledby="faculty-pagination">
 			<h2 id="faculty-pagination" class="screen-reader-text"><?php _e( 'Faculty pagination', 'dgh-wp-theme' ); ?></h2>
-			<div style="display: grid;grid-template-columns: 1fr 1fr;grid-template-rows: 1fr;">
-			<div style="text-align: initial;">
+			<div class="faculty-pagination-buttons">
+			<div class="faculty-pagination-rank">
 				<?php
 				// rank buttons
 				$btn_style = 'primary';
@@ -269,7 +269,7 @@
 				}
 				?>
 			</div>
-			<div style="text-align: end;">
+			<div class="faculty-pagination-index">
 			<?php
 			// view all button
 			$view_all_url = add_query_arg( 'rank', $current_rank, get_permalink() );
