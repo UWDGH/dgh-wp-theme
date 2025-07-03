@@ -106,7 +106,7 @@
 					$bio_dom->loadHTML($fac_bio);
 					foreach (libxml_get_errors() as $error) {
 						// handle DOMDocument errors here
-						error_log( \DGH_Post_Types\DGH_Template::DOMDocumentError( $error ) );
+						error_log( \DGH_Post_Types\DGH_Template::DOMDocumentError( $error ) . "\t" . 'post_ID: ' . $post->ID . ', post_title: ' . $post->post_title );
 					}
 					$excerpt_len = str_word_count( rtrim( strtok( $bio_dom->textContent, "\n" ) ), 0, '[0...9()]' );
 					$the_post_template = get_post_meta( $post->ID, '_wp_page_template', true );
