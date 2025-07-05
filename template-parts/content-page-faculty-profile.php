@@ -41,6 +41,7 @@ $fac_pubref_use = false;    // Use pubref
 $fac_pubref = '';		    // pubref
 $fac_image_url = get_stylesheet_directory_uri() . '/assets/img/W_placeholder.jpg';
 $fac_links = array();		// Links
+$fac_ranks = null;			// Faculty rank terms
 
 // output(i.e. print) vars are prefixed with 'p'
 $p_fac_bio = '';
@@ -53,6 +54,7 @@ $p_fac_phone_number = '';
 $p_fac_office = '';
 $p_fac_publications = '';
 $p_fac_links = '';
+$p_fac_ranks = '';
 
 // content headings vars are prefixed with 'h'
 $h_bio = '<h2>'.__('Bio', 'dgh-wp-theme').'</h2>';
@@ -119,6 +121,11 @@ $fac_url_id = get_post_meta( $id, '_dgh_fac_url_id', true );
 $fac_ignore_sync = get_post_meta( $id, '_dgh_fac_ignore_sync', true );
 if ( empty( $fac_url_id ) || !empty( $fac_ignore_sync ) ) {
 	$fac_is_synced = false;
+}
+
+// get the faculty ranks
+if ( taxonomy_exists( 'dgh_faculty_rank' ) ) {
+	$fac_ranks = get_the_terms( $id, 'dgh_faculty_rank' );
 }
 
 /**
@@ -207,6 +214,22 @@ if ( $fac_links ) {
 		$p_fac_links .= '<li><a href="'.$link_url.'">'.$link_text .'</a><span class="dashicons dashicons--fac dashicons-external"><span class="screen-reader-text">'.__('External link','dgh-wp-theme').'</span></span></li>';
 	}
 	$p_fac_links .= '</ul>';
+}
+
+// construct faculty ranks linkbacks
+if ( ! is_null($fac_ranks) ) {
+	$fac_page = DGH_WP_Theme::dgh_wp_theme_faculty_home_breadcrumb();
+	$fac_page_url = home_url( '/'.$fac_page['post_name'] );
+	$p_fac_ranks = '<h2>Faculty Rank</h2>';
+	$p_fac_ranks .= '<ul style="list-style-type: none; margin-left: 0px;">';
+	foreach ($fac_ranks as $rank) {
+		$faculty_rank_linkback_url = add_query_arg( 'rank', $rank->slug, $fac_page_url );
+		$faculty_rank_linkback_url = add_query_arg( 'page_index', 0, $faculty_rank_linkback_url );
+		$faculty_rank_linkback_url = add_query_arg( '_wpnonce', wp_create_nonce( 'dgh-fac-page-index-0' ), $faculty_rank_linkback_url );
+		$faculty_rank_linkback = '<a href="'. esc_url($faculty_rank_linkback_url).'">'. esc_html($rank->name) .'</a>';
+		$p_fac_ranks .= '<li><span class="dashicons dashicons--fac dashicons-category"></span>'.$faculty_rank_linkback.'</li>';
+	}
+	$p_fac_ranks .= '</ul>';
 }
 
 ?>
@@ -311,6 +334,7 @@ if ( $fac_links ) {
 			{$p_fac_degrees}
 			{$p_fac_contact}
 			{$p_fac_links}
+			{$p_fac_ranks}
 			[/col]
 			[/row]
 			FAC_CONTENT;
