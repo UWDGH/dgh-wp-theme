@@ -4,30 +4,41 @@
         .faculty-navigation
             margin-bottom: 0
         .faculty-pagination
-            text-align: end
-            white-space: nowrap
-            overflow-x: auto
-            .faculty-pagination-buttons
-                display: grid
-                grid-template-columns: 1fr
-                grid-template-rows: 1fr 1fr
+            .faculty-pagination-container
+                display: block
                 @media (min-width: 1200px)
+                    display: grid
+                    grid-template-columns: 1fr
+                    grid-template-rows: 1fr 1fr
                     grid-template-columns: 1fr 1fr
                     grid-template-rows: 2fr
                 .faculty-pagination-rank
                     text-align: initial
+                    .faculty-pagination-rank-links
+                        display: none
+                        @media (min-width: 1200px)
+                            display: block
+                            white-space: nowrap
+                            overflow-x: auto
+                        noscript
+                            display: block
+                    .faculty-pagination-rank-select
+                        display: block
+                        @media (min-width: 1200px)
+                            display: none
                 .faculty-pagination-index
                     text-align: initial
+                    white-space: normal
                     @media (min-width: 1200px)
                         text-align: end
+                    .faculty-list-status
+                        font-family: Encode Sans Compressed, sans-serif
+                        font-weight: 400
+                        font-size: 14px
+                        color: $granitegray
+                        padding: 3px 0
                 a[id^="btn-faculty-"]
-                    margin: 0 
-            .faculty-list-status
-                font-family: Encode Sans Compressed, sans-serif
-                font-weight: 400
-                font-size: 14px
-                color: $granitegray
-                padding: 3px 0
+                    margin: 0
             &.faculty-pagination--centered
                 text-align: center
         #btn-faculty-view-all
@@ -45,3 +56,32 @@
             margin: 0 -20px
             border: 1px solid $antiflashwhite
             background-color: $seasalt
+
+/* uw spinner
+.uw-spinner
+    background-size: 0
+    display: initial
+    visibility: hidden
+    float: none
+    opacity: .9
+    margin: 0
+    position: fixed
+    top: 33.334%
+    right: 50%
+    margin-right: -20px
+    z-index: 999
+    &.disk
+        background: url(assets/img/spinner/uw_spirit-disk-spinner-transparent.gif) no-repeat
+    &.wedge
+        background: url(assets/img/spinner/uw-wedge-spinner-transparent.gif) no-repeat
+    &.ellipsis
+        background: url(assets/img/spinner/uw-ellipsis-spinner-transparent.gif) no-repeat
+    &.ripple
+        background: url(assets/img/spinner/uw-ripple-spinner-transparent.gif) no-repeat
+    &.is-active
+        visibility: visible
+        display: inline-block
+        background-size: 40px 40px
+        width: 40px
+        height: 40px
+        // margin: 0px 32px -8px

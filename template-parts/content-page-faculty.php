@@ -9,6 +9,7 @@
 
 ?>
 
+<span class="uw-spinner wedge"></span>
 <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
 	<header class="entry-header">
 		<?php the_title( '<h1 class="entry-title">', '</h1>' ); ?>
@@ -39,6 +40,7 @@
 		// rank
 		$default_rank = 'core-faculty';
 		$current_rank = $default_rank;
+		$rank_name = 'Core Faculty';
 		// allowed ranks
 		$fac_ranks = get_terms( 
 			array(
@@ -245,29 +247,69 @@
 		?>
 		<nav class="faculty-pagination" aria-labelledby="faculty-pagination">
 			<h2 id="faculty-pagination" class="screen-reader-text"><?php _e( 'Faculty pagination', 'dgh-wp-theme' ); ?></h2>
-			<div class="faculty-pagination-buttons">
+			<div class="faculty-pagination-container">
 				<div class="faculty-pagination-rank">
 					<?php
+					// loop the faculty ranks to prepare the rank buttons and the select options
+					$rank_buttons = array();
+					$select_options = array();
+					$selected = 'selected';
 					// rank buttons
 					$btn_style = 'primary';
 					$rank_button_index = ( $get_request_passed && $_GET['page_index'] == 'all' ) ? 'all' : 0 ;
 					foreach ($fac_ranks as $rank ) {
 						if ( !$get_request_passed ) {
 							$btn_style = 'secondary';
+							$selected = '';
 						}
 						if ( $get_request_passed || is_null($get_request_passed) ) {
 							$btn_style = 'secondary';
+							$selected = '';
 						}
 						if ( $rank->slug == $current_rank ) {
 							$btn_style = 'primary'; 
+							$selected = 'selected';
+							$rank_name = $rank->name;
 						}
 						$faculty_rank_url = add_query_arg( 'rank', $rank->slug, get_permalink() );
 						$faculty_rank_url = add_query_arg( 'page_index', $rank_button_index, $faculty_rank_url );
 						$faculty_rank_url = add_query_arg( '_wpnonce', wp_create_nonce( 'dgh-fac-page-index-'.strval($rank_button_index) ), $faculty_rank_url );
 
-						echo do_shortcode( '[uw_button id="btn-faculty-page-'.$rank->slug.'" style="'.$btn_style.'" size="small" target="'.esc_url($faculty_rank_url).'"]<span class="screen-reader-text">'.__( 'Navigate to faculty page ', 'dgh-wp-theme' ).'</span>'.$rank->name.'[/uw_button]' );
+						// fill the select_options array to iterate in the .faculty-pagination-rank-select element
+						$select_options[] = '<option id="option-'.$rank->slug.'" value="'.esc_url($faculty_rank_url).'" '.$selected.'>'.$rank->name.'</option>';
+						// fill the rank_buttons array to iterate the noscript element and the .faculty-pagination-rank-links element
+						$rank_buttons[] = '[uw_button id="btn-faculty-page-'.$rank->slug.'" style="'.$btn_style.'" size="small" target="'.esc_url($faculty_rank_url).'"]<span class="screen-reader-text">'.__( 'Navigate to faculty page ', 'dgh-wp-theme' ).'</span>'.$rank->name.'[/uw_button]';						
 					}
 					?>
+					<div class="faculty-pagination-rank-links">
+						<?php
+						// show these buttons on breakpoint > 1200
+						foreach ($rank_buttons as $rank_button) {
+							echo do_shortcode( $rank_button );
+						}
+						?>
+					</div>
+					<noscript>
+						<?php
+						// show these buttons if javascript is not enabled
+						foreach ($rank_buttons as $rank_button) {
+							echo do_shortcode( $rank_button );
+						}
+						?>
+					</noscript>
+					<form class="faculty-pagination-rank-select">
+						<div class="form-group">
+							<label for="select-rank" class="screen-reader-text">Select a faculty rank for the listing</label>
+							<select id="select-rank" class="form-control" style="display:inline-block;">
+								<?php
+								// show the select options on breakpoint < 1200
+								foreach ($select_options as $option) {
+									echo $option;
+								}
+								?>
+							</select>
+						</div>
+					</form>
 				</div>
 				<div class="faculty-pagination-index">
 				<?php

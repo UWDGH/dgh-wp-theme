@@ -49,6 +49,16 @@
 				.attr( 'aria-label', DGH_Faculty.fac_btnPreviewPrefix + title);
         });
 		
+		// faculty rank select option redirect
+		$( '#select-rank' ).on('change', function(){
+			$( '.uw-spinner' ).addClass( 'is-active' );	// show spinner
+			window.location = $( this ).val();
+		});
+		// show spinner on link click
+		$(document).on('click', 'a[id^=btn-faculty-] , .nav-next a , .nav-previous a', function(e){
+			$( '.uw-spinner' ).addClass( 'is-active' );	// show spinner
+		});
+
 	});
 
 	// The window load event executes after the document ready event,
