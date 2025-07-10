@@ -300,12 +300,12 @@
 					</div>
 				</div>
 			</div>
-			<?php if ( $current_rank === 'core-faculty' ) : ?>
+			<?php //if ( $current_rank === 'core-faculty' ) : ?>
 			<?php echo do_shortcode('[wpdreams_ajaxsearchlite]'); ?>
-			<?php endif; ?>
+			<?php //endif; ?>
 		</nav>
+		<h2 id="faculty-listing" style="margin-top: 1em;"><?php echo esc_html( $rank_name ); ?></h2>
 		<section aria-labelledby="faculty-listing">
-			<h2 id="faculty-listing" class="screen-reader-text"><?php _e( 'Faculty list', 'dgh-wp-theme' ); ?></h2>
 			<?php
 
 			// construct the su_post shortcode that calls the loop template
