@@ -41,7 +41,8 @@ $fac_pubref_use = false;    // Use pubref
 $fac_pubref = '';		    // pubref
 $fac_image_url = get_stylesheet_directory_uri() . '/assets/img/W_placeholder.jpg';
 $fac_links = array();		// Links
-$fac_ranks = null;			// Faculty rank terms
+$fac_ranks = array();			// Faculty rank terms
+$fac_ranks_links = array();
 
 // output(i.e. print) vars are prefixed with 'p'
 $p_fac_bio = '';
@@ -55,6 +56,7 @@ $p_fac_office = '';
 $p_fac_publications = '';
 $p_fac_links = '';
 $p_fac_ranks = '';
+$p_fac_rank = '';
 
 // content headings vars are prefixed with 'h'
 $h_bio = '<h2>'.__('Bio', 'dgh-wp-theme').'</h2>';
@@ -177,7 +179,10 @@ if ( $fac_office ) {
 
 // construct contact
 if ( !empty($fac_office) || !empty($fac_email) || !empty($fac_phone_number) ) {
-	$p_fac_contact = $h_contact . $p_fac_office . $p_fac_phone_number . $p_fac_email;
+	// overwrite heading
+	$h_contact = '<h2>'.__('Contact Information', 'dgh-wp-theme').' <span class="screen-reader-text">'.__('for', 'dgh-wp-theme').' '.$title.'</span></h2>';
+	$p_fac_contact = $h_contact . '<address>' . $p_fac_office . $p_fac_phone_number . $p_fac_email . '</address>';
+	// $p_fac_contact = $h_contact . $p_fac_office . $p_fac_phone_number . $p_fac_email;
 }
 
 // construct bio
@@ -217,7 +222,9 @@ if ( $fac_links ) {
 }
 
 // construct faculty ranks linkbacks
-if ( ! is_null($fac_ranks) ) {
+// do_action('qm/debug', $fac_ranks);
+// do_action('qm/debug', is_null($fac_ranks));
+if ( $fac_ranks) {
 	$fac_page = DGH_WP_Theme::dgh_wp_theme_faculty_home_breadcrumb();
 	$fac_page_url = home_url( '/'.$fac_page['post_name'] );
 	$p_fac_ranks = '<h2>Faculty Rank</h2>';
@@ -226,10 +233,13 @@ if ( ! is_null($fac_ranks) ) {
 		$faculty_rank_linkback_url = add_query_arg( 'rank', $rank->slug, $fac_page_url );
 		$faculty_rank_linkback_url = add_query_arg( 'page_index', 0, $faculty_rank_linkback_url );
 		$faculty_rank_linkback_url = add_query_arg( '_wpnonce', wp_create_nonce( 'dgh-fac-page-index-0' ), $faculty_rank_linkback_url );
-		$faculty_rank_linkback = '<a href="'. esc_url($faculty_rank_linkback_url).'">'. esc_html($rank->name) .'</a>';
+		$faculty_rank_linkback = '<a href="'. esc_url($faculty_rank_linkback_url).'" style="">'. esc_html($rank->name) .'</a>';
+		$fac_ranks_links[] = $faculty_rank_linkback;
 		$p_fac_ranks .= '<li><span class="dashicons dashicons--fac dashicons-category"></span>'.$faculty_rank_linkback.'</li>';
 	}
 	$p_fac_ranks .= '</ul>';
+	// for the card
+	$p_fac_rank = '<div><small>' . $fac_ranks_links[0] .  '</small></div>';
 }
 
 ?>
