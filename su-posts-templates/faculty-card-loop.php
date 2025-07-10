@@ -152,7 +152,7 @@
 			$fac_email = get_post_meta( $post->ID, '_dgh_fac_email', true );
 			$p_fac_email = '';
 			if ( !empty( $fac_email ) ) {
-				$p_fac_email .= '<div class="fac-email" data-alt="Email">';
+				$p_fac_email .= '<div class="fac-email" data-alt="Email"><span class="dashicons dashicons--fac dashicons-email"></span>';
 				$p_fac_email .= ($fac_email_hidden) ? '<i>' . __('undisclosed','dgh-wp-theme') . '</i>' : '<a href="'.esc_url( 'mailto:' . $fac_email ).'">'.esc_html( $fac_email ).'</a>';
 				$p_fac_email .= '</div>';
 			}

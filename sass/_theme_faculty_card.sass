@@ -66,17 +66,25 @@
                 margin-top: auto
                 margin-bottom: 1rem
             .fac-email
+                span.dashicons
+                    &.dashicons--fac
+                        font-size: 20px
+                        width: 30px
+                        text-align: left
+                        display: inline-block
+                        height: 24px
+                        margin-top: 3px
                 a
                     word-break: break-all
-                &::before
-                    content: "✉"
-                    content: "\2709" / attr(data-alt)
-                    display: inline-block
-                    position: relative
-                    width: 30px
-                    top: 2px
-                    font-size: 20px
-                    color: $onyx
+                // &::before
+                //     content: "✉"
+                //     content: "\2709" / attr(data-alt)
+                //     display: inline-block
+                //     position: relative
+                //     width: 30px
+                //     top: 2px
+                //     font-size: 20px
+                //     color: $onyx
             .modal-dialog
                 .modal-content
                     border: 2px solid $uwAccentGreen
