@@ -220,6 +220,7 @@
 		// 	'numberposts' => -1
 		// ]);
 		$term = get_term_by( 'slug', $current_rank, 'dgh_faculty_rank', 'ARRAY_A' );
+		//do_action('qm/debug', $term );
 		$args = array(
 			'post_type' => 'dgh_faculty_profile',
 			'post_status' => 'publish',
@@ -244,6 +245,9 @@
 		
 		// view all button label
 		$view_all_label =  isset( $term['name'] ) ? 'View all '.$term['name'] : 'View All';
+
+		// rank description
+		$rank_description = isset( $term['description'] ) ? $term['description'] : '';
 		
 		the_content();
 
@@ -350,6 +354,9 @@
 			<?php //endif; ?>
 		</nav>
 		<h2 id="faculty-listing" style="margin-top: 1em;"><?php echo esc_html( $rank_name ); ?></h2>
+		<?php if ( $rank_description ) : ?>
+			<p><small><?php _e( $rank_description, 'dgh-wp-theme' ); ?></small></p>
+		<?php endif; ?>
 		<section aria-labelledby="faculty-listing">
 			<?php
 
