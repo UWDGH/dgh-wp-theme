@@ -242,6 +242,9 @@
 		$total_number_of_pages = (int)ceil($fac_total / $default_posts_per_page);
 		// do_action('qm/debug', $total_number_of_pages );
 		
+		// view all button label
+		$view_all_label =  isset( $term['name'] ) ? 'View all '.$term['name'] : 'View All';
+		
 		the_content();
 
 		?>
@@ -321,7 +324,7 @@
 				if ( isset( $_GET['page_index'] ) && 'all' === strtolower( $_GET['page_index'] ) && $get_request_passed ) { 
 					$btn_style = 'primary'; 
 				}
-				echo do_shortcode( '[uw_button id="btn-faculty-view-all" style="'.$btn_style.'" size="small" target="'.esc_url($view_all_url).'"]'.__('View all faculty','dgh-wp-theme').'[/uw_button]' );
+				echo do_shortcode( '[uw_button id="btn-faculty-view-all" style="'.$btn_style.'" size="small" target="'.esc_url($view_all_url).'"]'.__($view_all_label,'dgh-wp-theme').'[/uw_button]' );
 				// page nummber buttons
 				content_page_faculty_page_buttons( $total_number_of_pages, $current_rank, $current_faculty_page_index, $get_request_passed );
 				?>
