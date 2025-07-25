@@ -71,7 +71,7 @@
 		$next_faculty_page_index = 1;
 		$offset = 0;
 
-		$default_posts_per_page = 10;
+		$default_posts_per_page = 12;
 		$posts_per_page = $default_posts_per_page;
 
 		// current url
