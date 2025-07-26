@@ -154,26 +154,29 @@ if ( !empty( $fac_appts) || !empty( $fac_job_title)  ) {
 
 // construct email
 if ( $fac_email ) {
+	$hide_dashicon = ($fac_email_hidden) ? ' hide' : '';
 	$p_fac_email = '<div class="fac-email" data-alt="Email">';
-	$p_fac_email .= '<span class="dashicons dashicons--fac dashicons-email"><span class="screen-reader-text">'.__('Email','dgh-wp-theme').'</span></span>';
-	$p_fac_email .= ($fac_email_hidden) ? '<i>' . __('undisclosed','dgh-wp-theme') . '</i>' : '<p><a href="'.esc_url( 'mailto:' . $fac_email ).'">'.esc_html( $fac_email ).'</a></p>';
+	$p_fac_email .= '<span class="dashicons dashicons--fac dashicons-email'.$hide_dashicon.'"><span class="screen-reader-text">'.__('Email','dgh-wp-theme').'</span></span>';
+	$p_fac_email .= ($fac_email_hidden) ? '<i class="screen-reader-text">' . __('email undisclosed','dgh-wp-theme') . '</i>' : '<p><a href="'.esc_url( 'mailto:' . $fac_email ).'">'.esc_html( $fac_email ).'</a></p>';
 	$p_fac_email .= '</div>';
 }
 
 // construct phone number
 if ( $fac_phone_number ) {
+	$hide_dashicon = ($fac_phone_number_hidden) ? ' hide' : '';
 	$fac_phone_number_href = '+1' . preg_replace('/\D+/', '', $fac_phone_number);	// remove all non-digit characters from phone nr, prefix with '+1'
 	$p_fac_phone_number = '<div class="fac-phone" data-alt="Phone number">';
-	$p_fac_phone_number .= '<span class="dashicons dashicons--fac dashicons-phone"><span class="screen-reader-text">'.__('Phone number','dgh-wp-theme').'</span></span>';
-	$p_fac_phone_number .= ($fac_phone_number_hidden) ? '<i>' . __('undisclosed','dgh-wp-theme') . '</i>' :  '<p><a href="'.esc_url( 'tel:' . $fac_phone_number_href ).'">'.esc_html( $fac_phone_number ).'</a></p>';
+	$p_fac_phone_number .= '<span class="dashicons dashicons--fac dashicons-phone'.$hide_dashicon.'"><span class="screen-reader-text">'.__('Phone number','dgh-wp-theme').'</span></span>';
+	$p_fac_phone_number .= ($fac_phone_number_hidden) ? '<i class="screen-reader-text">' . __('Phone number undisclosed','dgh-wp-theme') . '</i>' :  '<p><a href="'.esc_url( 'tel:' . $fac_phone_number_href ).'">'.esc_html( $fac_phone_number ).'</a></p>';
 	$p_fac_phone_number .= '</div>';
 }
 
 // construct office location
 if ( $fac_office ) {
+	$hide_dashicon = ($fac_office_hidden) ? ' hide' : '';
 	$p_fac_office = '<div class="fac-office" data-alt="Office location">';
-	$p_fac_office .= '<span class="dashicons dashicons--fac dashicons-location"><span class="screen-reader-text">'.__('Office location','dgh-wp-theme').'</span></span>';
-	$p_fac_office .= ($fac_office_hidden) ? '<i>' . __('undisclosed','dgh-wp-theme') . '</i>' : wpautop( html_entity_decode( $fac_office ) );
+	$p_fac_office .= '<span class="dashicons dashicons--fac dashicons-location'.$hide_dashicon.'"><span class="screen-reader-text">'.__('Office location','dgh-wp-theme').'</span></span>';
+	$p_fac_office .= ($fac_office_hidden) ? '<i class="screen-reader-text">' . __('Office location undisclosed','dgh-wp-theme') . '</i>' : wpautop( html_entity_decode( $fac_office ) );
 	$p_fac_office .= '</div>';
 }
 
