@@ -1,6 +1,15 @@
 # Changelog
 
 
+## 3.5.0.22 / 2025‑07-28
+
+- Added faculty rank linkback to Faculty Profile template.
+- Added faculty rank to View All button.
+- Breakpoint switch between select options and button links for rank filter on Faculty Home page
+- Update dom structure for undisclosed fields
+- Update dom structure for teaser loop
+
+
 ## 3.5.0.21 / 2025‑07‑03
 
 - Integrated faculty rank filter on Faculty Home template.
