@@ -11,7 +11,7 @@
  * https://getshortcodes.com/docs/posts/#built-in-templates
  */
 ?>
-
+<?php do_action('qm/debug', $atts); ?>
 <div class="su-posts su-posts-teaser-loop su-posts-teaser-loop--dgh-faculty <?php echo esc_attr( $atts['class'] ); ?>">
 
 	<?php if ( $posts->have_posts() ) : ?>
@@ -100,12 +100,19 @@
 			}
 			?>
 			<div id="su-post-<?php the_ID(); ?>" class="su-post <?php echo esc_attr( $atts['class_single'] ); ?> col-12 col-xl-6 py-3 px-3">
-				<?php //if ( has_post_thumbnail() ) : ?>
-					<?php echo $thumbnail; ?>
-				<?php //endif; ?>
-				<h3 class=""><!--a href="<?php //the_permalink(); ?>"--><?php the_title(); ?><!--/a--></h3>
-				<?php echo $fac_appt_block; ?>
-				<?php echo ( $is_emeritus ) ? null : $p_fac_email ;	// don't show email for emeritus faculty ?>
+				<h3 id ="faculty-title-<?php the_ID(); ?>" class="screen-reader-text"><?php the_title(); ?></h3>
+				<div class="row" aria-describedby="faculty-title-<?php the_ID(); ?>">
+					<div class="col-5 col-sm-3 pr-md-0 pr-lg-3">
+						<?php echo $thumbnail; ?>
+					</div>
+					<div class="col-7 col-sm-9 pl-0">
+						<p>
+							<a class="h3 text-primary" href="<?php the_permalink(); ?>"><?php the_title(); ?><span class="screen-reader-text"> profile page</span></a>
+						</p>
+						<?php echo $fac_appt_block; ?>
+						<?php echo $p_fac_email; ?>
+					</div>
+				</div>
 			</div>
 
 		<?php endwhile; ?>
